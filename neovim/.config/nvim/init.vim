@@ -38,9 +38,8 @@ Plug 'timtro/glslView-nvim'
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'preservim/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'scrooloose/nerdtree-project-plugin' 
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
 
 " Other
 Plug 'wakatime/vim-wakatime'
@@ -163,6 +162,7 @@ endfunc
 command Build call Build()
 
 nnoremap <leader>ff :Telescope find_files<CR>
+nnoremap <leader>n :NeoTreeFloat<CR>
 
 nnoremap <leader><left> <c-w>h
 nnoremap <leader><right> <c-w>l
@@ -173,10 +173,6 @@ nnoremap <leader>h <c-w>h
 nnoremap <leader>l <c-w>l
 nnoremap <leader>k <c-w>k
 nnoremap <leader>j <c-w>j
-
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
 
 " Put a & at the start of the word
 func Ampersand()
