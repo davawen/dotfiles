@@ -50,7 +50,6 @@ Plug 'tomtom/templator_vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'plasticboy/vim-markdown'
 
-Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -147,6 +146,9 @@ command Vte vsplit | execute "normal! \<c-w>l" | term
 
 " Creates a terminal in a new tab
 command Nte tabnew | term
+
+" Creates a terminal in a split and executes a command in it
+command -nargs=+ Sh split | execute "normal! \<c-w>j" | term <args>;$SHELL
 
 " Executes "build.sh" in the current context then start a new shell
 func Build()
