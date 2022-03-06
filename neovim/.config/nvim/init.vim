@@ -127,15 +127,13 @@ inoremap <c-u> <esc>viwUea
 :tnoremap <esc> <C-\><C-n>
 
 " gm to see highlighting group
-function! SynStack ()
-    for i1 in synstack(line("."), col("."))
-        let i2 = synIDtrans(i1)
-        let n1 = synIDattr(i1, "name")
-        let n2 = synIDattr(i2, "name")
-        echom n1 "->" n2
-     endfor
-   endfunction
-map gm :call SynStack()<CR>
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nnoremap gm :call SynStack()<CR>
 
 " Save current buffer using root privileges
 " Does not work with neovim currently
