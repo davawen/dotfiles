@@ -36,6 +36,11 @@ Plug 'brgmnn/vim-opencl'
 Plug 'tikhomirov/vim-glsl'
 Plug 'timtro/glslView-nvim'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'godlygeek/tabular'
+Plug 'elzr/vim-json'
+Plug 'plasticboy/vim-markdown'
+
 " Navigation
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'MunifTanjim/nui.nvim'
@@ -46,9 +51,6 @@ Plug 'wakatime/vim-wakatime'
 Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
 "Plug 'github/copilot.vim'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'plasticboy/vim-markdown'
 
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }

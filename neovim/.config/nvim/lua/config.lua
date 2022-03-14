@@ -226,7 +226,8 @@ lspconfig.clangd.setup{
 		"clangd",
 		"--background-index",
 		"--completion-style=detailed",
-		"--header-insertion=iwyu"
+		"--header-insertion=iwyu",
+		"--header-insertion-decorators"
 	},
 	init_options = {
 		compilationDatabasePath = "build"
@@ -238,6 +239,7 @@ lspconfig.clangd.setup{
 }
 
 lspconfig.jedi_language_server.setup{
+	on_attach = on_attach,
 	cmd = { "jedi-language-server" },
 	filetypes = { "python" },
 	single_file_support = true,
@@ -245,6 +247,7 @@ lspconfig.jedi_language_server.setup{
 }
 
 lspconfig.tsserver.setup{
+	on_attach = on_attach,
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     init_options = {
@@ -258,6 +261,7 @@ lspconfig.tsserver.setup{
 local pid = vim.fn.getpid()
 
 lspconfig.omnisharp.setup{
+	on_attach = on_attach,
 	cmd = { vim.fn.getenv("HOME") .. "/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid) },
 	filetypes = { "cs", "vb" },
     init_options = {},
