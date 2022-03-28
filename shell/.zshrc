@@ -124,3 +124,5 @@ unsetopt share_history
 unsetopt LIST_BEEP
 
 alias luamake=/home/davawen/.build/lua-language-server/3rd/luamake/luamake
+
+eval $(thefuck --alias)

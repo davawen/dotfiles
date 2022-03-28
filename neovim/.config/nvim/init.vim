@@ -21,7 +21,8 @@ Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 
 " Snippets
-Plug 'L3MON4D3/LuaSnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 " Completion
 Plug 'hrsh7th/nvim-cmp'
@@ -29,7 +30,9 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'hrsh7th/cmp-vsnip'
+
+Plug 'simrat39/rust-tools.nvim'
 
 " Syntax highlight
 Plug 'brgmnn/vim-opencl'
@@ -193,6 +196,24 @@ func Ampersand()
 endfunc
 
 nnoremap & :call Ampersand()<cr>
+
+" {{{ vim-vsnip config
+
+" Expand
+imap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
+" Expand or jump
+imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" }}}
 
 " Get current git branch {{{
 function! GitBranch()

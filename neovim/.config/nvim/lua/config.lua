@@ -3,7 +3,7 @@ require('nvim-treesitter.configs').setup {
 	highlight = {
 		enable = true,
 		disable = { "vim" },
-		additional_vim_regex_highlighting = false,
+		additional_vim_regex_highlighting = true,
 	},
 }
 
@@ -40,7 +40,6 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 local cmp = require("cmp") 
 
@@ -76,21 +75,21 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
+		-- ["<Tab>"] = cmp.mapping(function(fallback)
+		-- 	if luasnip.expand_or_locally_jumpable() then
+		-- 		luasnip.expand_or_jump()
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
 
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
+		-- ["<S-Tab>"] = cmp.mapping(function(fallback)
+		-- 	if luasnip.jumpable(-1) then
+		-- 		luasnip.jump(-1)
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
 	},
 	
 	sources = {
@@ -98,13 +97,13 @@ cmp.setup({
 
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
+		{ name = "vsnip" },
 		{ name = "buffer", keyword_length = 5 },
 	},
 
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			vim.fn["vsnip#anonymous"](args.body)
 		end,
 	},
 
@@ -130,7 +129,6 @@ cmp.setup({
 		native_menu = false
 	}
 })
-
 
 -- nvim LSP configuration
 -- Mappings.
@@ -274,6 +272,74 @@ lspconfig.omnisharp.setup{
 	root_dir = lspconfig.util.root_pattern('*.sln', '*.csproj'),
 	capabilities = capabilities
 }
+
+lspconfig.texlab.setup{
+	cmd = { "texlab" },
+	filetypes = { "tex", "latex" },
+	settings = {
+	  texlab = {
+		auxDirectory = ".",
+		bibtexFormatter = "texlab",
+		build = {
+		  args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+		  executable = "latexmk",
+		  forwardSearchAfter = false,
+		  onSave = false
+		},
+		chktex = {
+		  onEdit = false,
+		  onOpenAndSave = false
+		},
+		diagnosticsDelay = 300,
+		formatterLineLength = 80,
+		forwardSearch = {
+		  args = {}
+		},
+		latexFormatter = "latexindent",
+		latexindent = {
+		  modifyLineBreaks = false
+		}
+	  }
+	},
+	single_file_support = true,
+	capabilities = capabilities
+}
+
+lspconfig.rust_analyzer.setup{
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
+	root_dir = lspconfig.util.root_pattern("Cargo.toml", "rust-project.json"),
+	settings = {
+		-- to enable rust-analyzer settings visit:
+		-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+		["rust-analyzer"] = {
+			-- enable clippy on save
+			checkOnSave = {
+				command = "clippy"
+			},
+		}
+	},
+	single_file_support = true,
+	capabilities = capabilities
+}
+
+-- Rust Tools configuration
+require('rust-tools').setup {
+	tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+}
+
 
 -- lualine
 require('lualine').setup({
