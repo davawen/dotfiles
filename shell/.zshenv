@@ -10,3 +10,4 @@ function Q()
 	
 	firefox --new-tab "https://www.google.com/search?q=$(urlencode "$*")"	
 }
+. "/home/davawen/.local/share/cargo/env"

@@ -23,6 +23,7 @@ Plug 'ray-x/lsp_signature.nvim'
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'rafamadriz/friendly-snippets'
 
 " Completion
 Plug 'hrsh7th/nvim-cmp'
@@ -71,6 +72,14 @@ call plug#end()
 colorscheme nord
 
 " Lua configuration
+lua << EOF
+-- Remove config file from cached files in case init.vim is reloaded
+for k, v in pairs(package.loaded) do
+    if string.match(k, "^config") then
+		package.loaded[k] = nil
+    end
+end
+EOF
 lua require("config")
 
 set number
@@ -142,7 +151,7 @@ nnoremap gm :call SynStack()<CR>
 
 " Save current buffer using root privileges
 " Does not work with neovim currently
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+" command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
 " Creates a terminal in a right split
 command Vte vsplit | execute "normal! \<c-w>l" | term

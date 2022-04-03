@@ -6,3 +6,9 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
+. "/home/davawen/.local/share/cargo/env"
+
+# fcitx input
+# export GTK_IM_MODULE=fcitx
+# export QT_IM_MODULE=fcitx
+# export XMODIFIERS=@im=fcitx

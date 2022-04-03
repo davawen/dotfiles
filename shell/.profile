@@ -157,3 +157,4 @@ alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAW
 alias clone='git clone --depth 1'
 alias ytdl='yt-dlp'
 alias xclipc='xclip -selection clipboard'
+. "/home/davawen/.local/share/cargo/env"
