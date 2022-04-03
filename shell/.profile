@@ -3,7 +3,6 @@ triangle=$'\uE0B0'
 
 if [ $0 = "bash" ]
 then
-	export PS1="\[\e[1;32m\][\u@\H]\[\e[1;37m\]:\[\e[1;36m\]\w\n \[\e[0m\]\[\e[90m\]\[\e[7m\]$triangle\[\e[0m\]\[\e[100m\]\[\e[38;5;214m\] $ \[\e[0m\]\[\e[90m\]$triangle\[\e[0m\] "
 	shopt -s cdspell
 fi
 
