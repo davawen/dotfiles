@@ -37,3 +37,4 @@ mkcdir ()
 source ~/.profile
 
 unset rc
+. "/home/davawen/.local/share/cargo/env"
