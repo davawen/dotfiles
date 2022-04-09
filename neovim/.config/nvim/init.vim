@@ -56,6 +56,7 @@ Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
 "Plug 'github/copilot.vim'
 
+Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
