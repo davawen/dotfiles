@@ -49,6 +49,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Other
 Plug 'wakatime/vim-wakatime'
@@ -56,7 +57,7 @@ Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
 "Plug 'github/copilot.vim'
 
-Plug 'windwp/nvim-autopairs'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
