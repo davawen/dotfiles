@@ -3,7 +3,7 @@
 		"prefix": ["nasm-bp"],
 		"body": [
 			"global _start",
-			"section .data",
+			"section .text",
 			"\n_start:",
 			"\t$0",
 			"\tmov rax, 60",
