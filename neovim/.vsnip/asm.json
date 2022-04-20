@@ -1,0 +1,15 @@
+{
+	"Nasm Boilerplate": {
+		"prefix": ["nasm-bp"],
+		"body": [
+			"global _start",
+			"section .data",
+			"\n_start:",
+			"\t$0",
+			"\tmov rax, 60",
+			"\txor rdi, rdi",
+			"\tsyscall"
+		],
+		"description": "Creates a basic NASM linux program."
+	}
+}
