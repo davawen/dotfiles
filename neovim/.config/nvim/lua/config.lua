@@ -54,6 +54,11 @@ cmp.setup({
 			select = false,
 		},
 
+		["<Tab>"] = cmp.mapping.confirm {
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true
+		},
+
 		["<c-space>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.close()
@@ -181,7 +186,7 @@ lspconfig.clangd.setup{
 		"clangd",
 		"--background-index",
 		"--completion-style=detailed",
-		"--header-insertion=iwyu",
+		"--header-insertion=never",
 		"--header-insertion-decorators"
 	},
 	init_options = {
@@ -208,9 +213,15 @@ lspconfig.tsserver.setup{
     init_options = {
 		hostInfo = "neovim"
     },
-    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
 	single_file_support = true,
 	capabilities = capabilities
+}
+
+lspconfig.svelte.setup{
+	cmd = { "svelteserver", "--stdio" },
+	filetypes = { "svelte" },
+	root_dir = lspconfig.util.root_pattern("package.json"),
 }
 
 local pid = vim.fn.getpid()

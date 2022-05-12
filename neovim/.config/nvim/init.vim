@@ -39,6 +39,7 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'brgmnn/vim-opencl'
 Plug 'tikhomirov/vim-glsl'
 Plug 'timtro/glslView-nvim'
+Plug 'evanleck/vim-svelte'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
