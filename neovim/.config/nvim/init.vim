@@ -57,6 +57,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
 "Plug 'github/copilot.vim'
+Plug 'junegunn/vim-easy-align'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -225,6 +226,14 @@ smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab
 imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
+" }}}
+
+" {{{ vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
 " Get current git branch {{{
