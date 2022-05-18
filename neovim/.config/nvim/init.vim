@@ -12,7 +12,7 @@ Plug 'nvim-lualine/lualine.nvim'
 " Plug 'vim-airline/vim-airline-themes'
 
 " Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
 Plug 'romgrk/nvim-treesitter-context'
 
 " LSP
@@ -225,6 +225,12 @@ imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab
 smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" }}}
+
+" {{{ vim-surround config
+
+let g:AutoPairs = {'[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 
 " }}}
 

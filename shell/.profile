@@ -149,8 +149,12 @@ alias :q='exit' # Too much vim in my fingers
 
 alias nh='sudo nethogs'
 alias py='python3'
+alias node='node --experimental-fetch'
 alias icat="kitty +kitten icat"
 alias suod='sudo'
+
+alias cat='bat -pp'
+alias less='bat'
 
 alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 alias install='sudo dnf install'
