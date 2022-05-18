@@ -58,6 +58,7 @@ Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
 "Plug 'github/copilot.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'numToStr/Comment.nvim'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
