@@ -57,7 +57,7 @@ cmp.setup({
 			select = false,
 		},
 
-		["<Tab>"] = cmp.mapping.confirm {
+		["<S-CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true
 		},
@@ -144,6 +144,11 @@ cmp.setup({
 	},
 })
 
+-- nvim-code-action-menu
+vim.g.code_action_menu_window_border = 'single'
+vim.g.code_action_menu_show_details = false
+vim.g.code_action_menu_show_diff = true
+
 -- nvim LSP configuration
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -171,7 +176,7 @@ local on_attach = function(client, bufnr)
   --vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
@@ -187,17 +192,18 @@ lspconfig.clangd.setup{
 	on_attach = on_attach,
 	cmd = {
 		"clangd",
-		"--background-index",
+		--"--background-index",
+		"--background-index=0",
 		"--completion-style=detailed",
-		"--header-insertion=never",
-		"--header-insertion-decorators"
+		"--header-insertion=never"
 	},
 	init_options = {
 		compilationDatabasePath = "build"
 	},
-	flags = {
+	--[[ flags = {
 		debounce_text_changes = 150
-	},
+	}, ]]
+    root_dir = lspconfig.util.root_pattern("CMakeLists.txt"),
 	capabilities = capabilities,
 }
 
@@ -314,6 +320,53 @@ require('rust-tools').setup {
 		capabilities = capabilities
 	}, -- rust-analyer options
 }
+
+-- Debugging
+local dap = require('dap')
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed, must be absolute path
+  name = 'lldb'
+}
+
+local dap = require('dap')
+dap.configurations.cpp = {
+  {
+    name = 'Launch',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+
+    -- 💀
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    -- runInTerminal = false,
+
+    -- 💀
+    -- If you use `runInTerminal = true` and resize the terminal window,
+    -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
+    -- To avoid that uncomment the following option
+    -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
+    -- postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
+require("dapui").setup()
 
 -- lualine
 require('lualine').setup({

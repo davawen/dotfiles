@@ -20,6 +20,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
 
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
@@ -33,6 +37,7 @@ Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
 
+Plug 'weilbith/nvim-code-action-menu'
 Plug 'simrat39/rust-tools.nvim'
 
 " Syntax highlight
@@ -75,6 +80,8 @@ call plug#end()
 " }}} Plugins end
 
 colorscheme nord
+
+let g:do_filetype_lua = 1
 
 " Lua configuration
 lua << EOF
@@ -231,7 +238,7 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 
 " {{{ vim-surround config
 
-let g:AutoPairs = {'[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
+let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''", '<': '>'}
 
 " }}}
 

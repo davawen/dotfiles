@@ -1,0 +1,16 @@
+{
+	"Vsnip Snippet": {
+		"prefix": "snippet",
+		"body": [
+			"{",
+			"\t\"$1\": {",
+			"\t\t\"prefix\": \"$2\",",
+			"\t\t\"body\": [",
+			"\t\t\t\"$0\",",
+			"\t\t],",
+			"\t\t\"description\": \"$3\"",
+			"}"
+		],
+		"description": "Creates the skeleton for a vim-vsnip snippet"
+	}
+}
