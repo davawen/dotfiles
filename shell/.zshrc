@@ -10,9 +10,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# put .zcompdup into XDG directory
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -92,6 +89,9 @@ plugins=(git zsh-autosuggestions copybuffer)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# put .zcompdup into XDG directory
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

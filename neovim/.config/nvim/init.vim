@@ -81,19 +81,10 @@ call plug#end()
 
 colorscheme nord
 
+" Load filetypes with lua (Neovim 0.7)
 let g:do_filetype_lua = 1
 
-" Lua configuration
-lua << EOF
--- Remove config file from cached files in case init.vim is reloaded
-for k, v in pairs(package.loaded) do
-    if string.match(k, "^config") then
-		package.loaded[k] = nil
-    end
-end
-EOF
-lua require("config")
-
+"" Top level config {{{
 set number
 set relativenumber
 
@@ -114,6 +105,19 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=1
 
 let mapleader=";"
+
+" }}}
+
+" Lua configuration
+lua << EOF
+-- Remove config file from cached files in case init.vim is reloaded
+for k, v in pairs(package.loaded) do
+    if string.match(k, "^config") then
+		package.loaded[k] = nil
+    end
+end
+EOF
+lua require("config")
 
 " Force h j k l
 nnoremap <Left> <nop>
@@ -238,7 +242,7 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 
 " {{{ vim-surround config
 
-let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''", '<': '>'}
+let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 
 " }}}
 

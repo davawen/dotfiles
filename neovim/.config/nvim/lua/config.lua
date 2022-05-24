@@ -10,6 +10,13 @@ require('nvim-treesitter.configs').setup {
 	},
 }
 
+vim.api.nvim_create_autocmd("BufNew", {
+	pattern = { "config.lua" },
+	callback = function()
+		vim.api.nvim_set_option("foldlevelstart", 0)
+	end
+})
+
 require('treesitter-context').setup {
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     throttle = true, -- Throttles plugin updates (may improve performance)
@@ -329,7 +336,6 @@ dap.adapters.lldb = {
   name = 'lldb'
 }
 
-local dap = require('dap')
 dap.configurations.cpp = {
   {
     name = 'Launch',
@@ -341,6 +347,9 @@ dap.configurations.cpp = {
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
     args = {},
+	env = { 
+		LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
+	},
 
     -- 💀
     -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
@@ -353,7 +362,7 @@ dap.configurations.cpp = {
     --
     -- But you should be aware of the implications:
     -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    -- runInTerminal = false,
+    runInTerminal = false,
 
     -- 💀
     -- If you use `runInTerminal = true` and resize the terminal window,
@@ -369,14 +378,32 @@ dap.configurations.rust = dap.configurations.cpp
 vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''});
 vim.fn.sign_define('DapStopped', {text='', texthl='', linehl='', numhl=''});
 
-vim.api.nvim_set_keymap("n", "<leader>dh", "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", {
-    noremap = true,
-    callback = function()
-        print("Hello world!")
-    end,
-})
--- vim.keymap.set("n", "<leader>dh", function() require('dap').toggle_breakpoint() end)
--- vim.cmd( [[ nnoremap <leader>dh :lua require'dap'.toggle_breakpoint()<CR> ]] )
+
+local function attach()
+	print("Attaching debugger...")
+	dap.run({
+		type = 'node2',
+		request = 'attach',
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = 'inspector',
+		skipFiles = {'<node_internals>/**/*.js'}
+	})
+end
+
+vim.keymap.set('n', '<leader>dh', dap.toggle_breakpoint)
+vim.keymap.set('n', '<leader>dd', dap.continue) -- start debugger and relaunch execution
+vim.keymap.set('n', '<leader>da', attach) -- attach debugger to process
+vim.keymap.set('n', '<leader>dr', function() dap.repl.open({}, 'vsplit') end)
+vim.keymap.set('n', '<leader>di', require'dap.ui.widgets'.hover)
+-- vim.keymap.set('v', '<leader>di', require'dap.ui.variables'.visual_hover)
+vim.keymap.set('n', '<leader>d?', function() local widgets = require'dap.ui.widgets'; widgets.centered_float(widgets.scope) end)
+vim.keymap.set('n', '<leader>dk', dap.step_out)
+vim.keymap.set('n', '<S-l>', dap.step_into)
+vim.keymap.set('n', '<S-j>', dap.step_over)
+vim.keymap.set('n', '<leader>k', dap.up) -- navigate up/down the callstack
+vim.keymap.set('n', '<leader>j', dap.down)
+
 require("dapui").setup()
 
 -- lualine
