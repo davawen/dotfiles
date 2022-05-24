@@ -1,5 +1,5 @@
 ## Load NVM and NPM
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$XDG_DATA_HOME"/nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -9,6 +9,9 @@ export NVM_DIR="$HOME/.nvm"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# put .zcompdup into XDG directory
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
