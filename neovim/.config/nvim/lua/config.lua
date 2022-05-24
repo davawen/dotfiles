@@ -366,6 +366,17 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
+vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''});
+vim.fn.sign_define('DapStopped', {text='', texthl='', linehl='', numhl=''});
+
+vim.api.nvim_set_keymap("n", "<leader>dh", "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", {
+    noremap = true,
+    callback = function()
+        print("Hello world!")
+    end,
+})
+-- vim.keymap.set("n", "<leader>dh", function() require('dap').toggle_breakpoint() end)
+-- vim.cmd( [[ nnoremap <leader>dh :lua require'dap'.toggle_breakpoint()<CR> ]] )
 require("dapui").setup()
 
 -- lualine
