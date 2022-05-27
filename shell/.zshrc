@@ -1,3 +1,6 @@
+## Load up custom XDG stuff
+source $HOME/xdg_home.sh
+
 ## Load NVM and NPM
 export NVM_DIR="$XDG_DATA_HOME"/nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

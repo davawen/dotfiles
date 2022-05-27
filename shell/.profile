@@ -141,8 +141,6 @@ export VISUAL='nvim'
 
 export CXX="$(which 'g++')"
 
-source $HOME/xdg_home.sh
-
 WPREFIXES="$HOME/.local/share/wineprefixes"
 
 alias e=$EDITOR
