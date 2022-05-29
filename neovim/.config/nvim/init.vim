@@ -98,6 +98,8 @@ set breakindent
 set formatoptions=l
 set lbr
 
+set conceallevel=0
+
 
 " Fold method
 set foldmethod=expr
@@ -330,4 +332,5 @@ let g:vim_markdown_json_frontmatter = 1  " for JSON format
 
 " }}} Vim-Markdown Config
 
+set conceallevel=0
 
