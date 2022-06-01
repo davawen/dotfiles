@@ -8,6 +8,9 @@ fi
 # User specific environment and startup programs
 . "/home/davawen/.local/share/cargo/env"
 
+export EDITOR=nvim
+alias nano=micro
+
 # fcitx input
 # export GTK_IM_MODULE=fcitx
 # export QT_IM_MODULE=fcitx

@@ -408,7 +408,7 @@ require("dapui").setup()
 
 -- lualine
 require('lualine').setup({
-    options = { theme = 'nord' },
+    options = { theme = 'everforest' },
     sections = {
         lualine_a = { 'branch'},
         lualine_b = { 'diagnostics', 'diff'},

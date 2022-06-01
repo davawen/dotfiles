@@ -5,6 +5,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
 " Themes
 Plug 'shaunsingh/nord.nvim'
+Plug 'sainnhe/everforest'
 
 Plug 'nvim-lualine/lualine.nvim'
 " Plug 'vim-airline/vim-airline' Switched to lualine
@@ -137,10 +138,6 @@ inoremap <C-v> <esc>
 
 " Avoid yanking replaced text
 vnoremap p "_dP
-
-" Buffer navigation
-nnoremap ) :bnext<cr>
-nnoremap ( :bprevious<cr>
 
 " ;; add semicolon at the end of the line
 nnoremap <leader>; mpA;<esc>`p
