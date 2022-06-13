@@ -1,5 +1,59 @@
 -- Vim auto-pairs config
-vim.g.AutoPairsMultilineClose = 0
+local npairs = require("nvim-autopairs");
+npairs.setup {
+	-- Lua pattern to check if plugin should apply depending on next character
+	-- |.thing -> (|.thing
+	ignored_next_char = "[%%%'%\"]",
+	enable_moveright = false,
+	enable_check_bracket_line = false, -- check bracket in same line
+	map_c_h = true,  -- Map the <C-h> key to delete a pair
+	fast_wrap = {
+		map = '<M-e>',
+		chars = { '{', '[', '(', '"', "'" },
+		pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+		end_key = '$',
+		keys = 'qwertyuiopzxcvbnmasdfghjkl',
+		check_comma = true,
+		highlight = 'Search',
+		highlight_grey='Comment'
+	}
+}
+
+local Rule = require('nvim-autopairs.rule')
+local cond = require('nvim-autopairs.conds')
+
+-- Template generics
+npairs.add_rule(
+	Rule("<", ">")
+		:with_pair(cond.before_regex("%w"))
+)
+
+-- Add spaces
+npairs.add_rules {
+  Rule(' ', ' ')
+    :with_pair(function (opts)
+      local pair = opts.line:sub(opts.col - 1, opts.col)
+      return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+    end),
+  Rule('( ', ' )')
+      :with_pair(function() return false end)
+      :with_move(function(opts)
+          return opts.prev_char:match('.%)') ~= nil
+      end)
+      :use_key(')'),
+  Rule('{ ', ' }')
+      :with_pair(function() return false end)
+      :with_move(function(opts)
+          return opts.prev_char:match('.%}') ~= nil
+      end)
+      :use_key('}'),
+  Rule('[ ', ' ]')
+      :with_pair(function() return false end)
+      :with_move(function(opts)
+          return opts.prev_char:match('.%]') ~= nil
+      end)
+      :use_key(']')
+}
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = "all",
@@ -151,6 +205,10 @@ cmp.setup({
 	},
 })
 
+-- In relation to nvim-autopairs plugin, insert '(' after selected a function or method ithem
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+
 -- nvim-code-action-menu
 vim.g.code_action_menu_window_border = 'single'
 vim.g.code_action_menu_show_details = false
@@ -199,14 +257,14 @@ lspconfig.clangd.setup{
 	on_attach = on_attach,
 	cmd = {
 		"clangd",
-		--"--background-index",
-		"--background-index=0",
+		"--background-index",
 		"--completion-style=detailed",
 		"--header-insertion=never"
 	},
 	init_options = {
 		compilationDatabasePath = "build"
 	},
+	filetypes = { "c", "cpp", "cuda", "opencl" },
 	--[[ flags = {
 		debounce_text_changes = 150
 	}, ]]

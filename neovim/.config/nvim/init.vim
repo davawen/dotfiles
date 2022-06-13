@@ -47,9 +47,10 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'timtro/glslView-nvim'
 Plug 'evanleck/vim-svelte'
 
+" Filetype specific
+Plug 'timonv/vim-cargo'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
-Plug 'elzr/vim-json'
 Plug 'plasticboy/vim-markdown'
 
 " Navigation
@@ -66,7 +67,8 @@ Plug 'tomtom/templator_vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'numToStr/Comment.nvim'
 
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -84,6 +86,7 @@ colorscheme nord
 
 " Load filetypes with lua (Neovim 0.7)
 let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
 
 "" Top level config {{{
 set number

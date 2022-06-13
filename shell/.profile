@@ -128,7 +128,7 @@ done
 
 export QT_QPA_PLATFORMTHEME="gtk2"
 
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin"
 
 export TASKDDATA=/var/taskd
 
