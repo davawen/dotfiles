@@ -1,13 +1,6 @@
-# User profile
-triangle=$'\uE0B0'
-
-if [ $0 = "bash" ]
 then
 	shopt -s cdspell
 fi
-
-LS_COLORS=$LS_COLORS:'di=1;93;100:ow=1;93;100' ; export LS_COLORS
-
 
 prjdir="/mnt/Projects"
 
@@ -48,9 +41,6 @@ function Project()
 
 		cd "$prjdir/${fdArray[$userInput]}"
 	fi
-	
-
-	# cd "$prjdir/"
 }
 
 function Calc()
@@ -107,12 +97,6 @@ function Extract()
 	fi
 }
 
-function ToDavinciMov()
-{
-	#ffmpeg -i ${1} -vcodec mjpeg -q:v 31 -acodec pcm_s16be -q:a 0 -f mov ${1%.*}.mov
-	ffmpeg -i ${1} ${1%.*}.avi
-}
-
 function Q()
 {
 	alias urlencode='python3 -c "import sys, urllib.parse as ul; \
@@ -121,7 +105,7 @@ function Q()
 	firefox --new-tab "https://www.google.com/search?q=$(urlencode "$*")"	
 }
 
-for f in $HOME/.config/.shell/*
+for f in $HOME/.config/shell/*
 do
 	source "$f"
 done
@@ -154,6 +138,8 @@ alias suod='sudo'
 
 alias cat='bat -pp'
 alias less='bat'
+alias ls='lsd'
+alias l='lsd -la'
 
 alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 alias install='sudo dnf install'
@@ -164,4 +150,3 @@ alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAW
 alias clone='git clone --depth 1'
 alias ytdl='yt-dlp'
 alias xclipc='xclip -selection clipboard'
-. "/home/davawen/.local/share/cargo/env"

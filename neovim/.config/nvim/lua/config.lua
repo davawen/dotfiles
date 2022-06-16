@@ -27,6 +27,11 @@ npairs.add_rule(
 	Rule("<", ">")
 		:with_pair(cond.before_regex("%w"))
 )
+-- Latex brackes
+npairs.add_rule(
+	Rule('\\[', '\\]', { "tex", "latex" })
+		:with_cr(cond.none())
+)
 
 -- Add spaces
 npairs.add_rules {

@@ -52,6 +52,7 @@ Plug 'timonv/vim-cargo'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim'
