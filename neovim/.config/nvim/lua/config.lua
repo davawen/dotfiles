@@ -6,7 +6,6 @@ npairs.setup {
 	ignored_next_char = "[%%%'%\"]",
 	enable_moveright = false,
 	enable_check_bracket_line = false, -- check bracket in same line
-	map_c_h = true,  -- Map the <C-h> key to delete a pair
 	fast_wrap = {
 		map = '<M-e>',
 		chars = { '{', '[', '(', '"', "'" },
