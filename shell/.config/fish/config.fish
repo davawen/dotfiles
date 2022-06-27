@@ -2,6 +2,8 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+set fzf_fd_opts --hidden
+
 fenv source "$HOME/xdg_home.sh"
 
 set -gx NVM_DIR "$XDG_DATA_HOME/nvm"

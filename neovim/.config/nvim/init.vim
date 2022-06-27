@@ -8,9 +8,6 @@ Plug 'shaunsingh/nord.nvim'
 Plug 'sainnhe/everforest'
 
 Plug 'nvim-lualine/lualine.nvim'
-" Plug 'vim-airline/vim-airline' Switched to lualine
-" Plug 'enricobacis/vim-airline-clock'
-" Plug 'vim-airline/vim-airline-themes'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
@@ -62,13 +59,10 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Other
 Plug 'wakatime/vim-wakatime'
-Plug 'andweeb/presence.nvim'
 Plug 'tomtom/templator_vim'
-"Plug 'github/copilot.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'numToStr/Comment.nvim'
 
-" Plug 'jiangmiao/auto-pairs'
 Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -114,6 +108,9 @@ set foldlevelstart=1
 let mapleader=";"
 
 " }}}
+
+" Remove neo-tree legacy commands before plugin is loaded
+let g:neo_tree_remove_legacy_commands = 1
 
 " Lua configuration
 lua << EOF
@@ -195,7 +192,8 @@ endfunc
 command Build call Build()
 
 nnoremap <leader>ff :Telescope find_files<CR>
-nnoremap <leader>n :NeoTreeFloat<CR>
+nnoremap <leader>n :Neotree source=filesystem reveal position=float toggle <CR>
+nnoremap <leader>b :Neotree source=buffers reveal position=float toggle <CR>
 
 nnoremap <leader><left> <c-w>h
 nnoremap <leader><right> <c-w>l
