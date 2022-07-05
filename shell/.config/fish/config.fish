@@ -14,7 +14,7 @@ set -g prjdir "/mnt/Projects"
 
 set -gx QT_QPA_PLATFORMTHEME "gtk2"
 
-set -gx PATH "$PATH:$HOME/bin:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin"
+set -gx PATH "$PATH:$HOME/bin:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin"
 
 set -gx TASKDDATA /var/taskd
 

@@ -10,7 +10,7 @@ npairs.setup {
 		map = '<M-e>',
 		pattern = [=[[%'%"%)%>%]%)%}%,]]=],
 		end_key = '$',
-		keys = 'qwertyuiopzxcvbnmasdfghjkl',
+		keys = 'qsdfghjklm',
 		check_comma = true,
 		highlight = 'Search',
 		highlight_grey='Comment'
@@ -452,20 +452,132 @@ local function attach()
 	})
 end
 
-vim.keymap.set('n', '<leader>dh', dap.toggle_breakpoint)
-vim.keymap.set('n', '<leader>dd', dap.continue) -- start debugger and relaunch execution
-vim.keymap.set('n', '<leader>da', attach) -- attach debugger to process
-vim.keymap.set('n', '<leader>dr', function() dap.repl.open({}, 'vsplit') end)
-vim.keymap.set('n', '<leader>di', require'dap.ui.widgets'.hover)
+local map = vim.keymap.set
+
+map('n', '<leader>dh', dap.toggle_breakpoint)
+map('n', '<leader>dd', dap.continue) -- start debugger and relaunch execution
+map('n', '<leader>da', attach) -- attach debugger to process
+map('n', '<leader>dr', function() dap.repl.open({}, 'vsplit') end)
+map('n', '<leader>di', require'dap.ui.widgets'.hover)
 -- vim.keymap.set('v', '<leader>di', require'dap.ui.variables'.visual_hover)
-vim.keymap.set('n', '<leader>d?', function() local widgets = require'dap.ui.widgets'; widgets.centered_float(widgets.scope) end)
-vim.keymap.set('n', '<leader>dk', dap.step_out)
-vim.keymap.set('n', '<S-l>', dap.step_into)
-vim.keymap.set('n', '<S-j>', dap.step_over)
-vim.keymap.set('n', '<leader>k', dap.up) -- navigate up/down the callstack
-vim.keymap.set('n', '<leader>j', dap.down)
+map('n', '<leader>d?', function() local widgets = require'dap.ui.widgets'; widgets.centered_float(widgets.scope) end)
+map('n', '<leader>dk', dap.step_out)
+map('n', '<S-l>', dap.step_into)
+map('n', '<S-j>', dap.step_over)
+map('n', '<leader>k', dap.up) -- navigate up/down the callstack
+map('n', '<leader>j', dap.down)
 
 require("dapui").setup()
+
+-- formatter.nvim
+-- Provides the Format and FormatWrite commands
+require("formatter").setup {
+  -- Enable or disable logging
+  logging = true,
+  -- Set the log level
+  log_level = vim.log.levels.WARN,
+  -- All formatter configurations are opt-in
+  filetype = {
+    -- Formatter configurations for filetype "lua" go here
+    -- and will be executed in order
+    typescript = require("formatter.filetypes.javascript").prettier,
+
+    -- Use the special "*" filetype for defining formatter configurations on
+    -- any filetype
+    ["*"] = {
+      -- "formatter.filetypes.any" defines default configurations for any
+      -- filetype
+      require("formatter.filetypes.any").remove_trailing_whitespace
+    }
+  }
+}
+
+-- barbar.nvim
+require('bufferline').setup {
+  -- Enable/disable animations
+  animation = true,
+  -- Enable/disable auto-hiding the tab bar when there is a single buffer
+  auto_hide = false,
+  -- Enable/disable current/total tabpages indicator (top right corner)
+  tabpages = true,
+  -- Enable/disable close button
+  closable = true,
+  -- Enables/disable clickable tabs
+  --  - left-click: go to buffer
+  --  - middle-click: delete buffer
+  clickable = true,
+  -- Excludes buffers from the tabline
+  exclude_ft = {},
+  exclude_name = {'package.json', 'init.vim', 'config.lua', 'Cargo.toml'},
+
+  -- Enable/disable icons
+  -- if set to 'numbers', will show buffer index in the tabline
+  -- if set to 'both', will show buffer index and icons in the tabline
+  icons = true,
+
+  -- If set, the icon color will follow its corresponding buffer
+  -- highlight group. By default, the Buffer*Icon group is linked to the
+  -- Buffer* group (see Highlighting below). Otherwise, it will take its
+  -- default value as defined by devicons.
+  icon_custom_colors = false,
+
+  -- Configure icons on the bufferline.
+  icon_separator_active = '▎ ',
+  icon_separator_inactive = '▎',
+  icon_close_tab = '',
+  icon_close_tab_modified = '●',
+  icon_pinned = '車',
+
+  -- If true, new buffers will be inserted at the start/end of the list.
+  -- Default is to insert after current buffer.
+  insert_at_end = true,
+  insert_at_start = false,
+
+  -- Sets the maximum padding width with which to surround each tab
+  maximum_padding = 1,
+
+  -- Sets the maximum buffer name length.
+  maximum_length = 30,
+
+  -- If set, the letters for each buffer in buffer-pick mode will be
+  -- assigned based on their name. Otherwise or in case all letters are
+  -- already assigned, the behavior is to assign letters in order of
+  -- usability (see order below)
+  semantic_letters = true,
+
+  -- New buffer letters are assigned in this order. This order is
+  -- optimal for the qwerty keyboard layout but might need adjustement
+  -- for other layouts.
+  letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+
+  -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
+  -- where X is the buffer number. But only a static string is accepted here.
+  no_name_title = nil,
+}
+
+map('n', '<A-,>', '<Cmd>BufferPrevious<Cr>')
+map('n', '<A-.>', '<Cmd>BufferNext<Cr>')
+
+map('n', '<C-[>', '<Cmd>BufferMovePrevious<Cr>')
+map('n', '<C-]>', '<Cmd>BufferMoveNext<Cr>')
+
+map('n', 'db', '<Cmd>BufferClose!<Cr>')
+map('n', 'gp', '<Cmd>BufferPick<Cr>')
+map('n', '<A-p>', '<Cmd>BufferPin<Cr>')
+
+map('n', '<A-1>', '<Cmd>BufferGoto 1<Cr>')
+map('n', '<A-2>', '<Cmd>BufferGoto 2<Cr>')
+map('n', '<A-3>', '<Cmd>BufferGoto 3<Cr>')
+map('n', '<A-4>', '<Cmd>BufferGoto 4<Cr>')
+map('n', '<A-5>', '<Cmd>BufferGoto 5<Cr>')
+map('n', '<A-6>', '<Cmd>BufferGoto 6<Cr>')
+map('n', '<A-7>', '<Cmd>BufferGoto 7<Cr>')
+map('n', '<A-8>', '<Cmd>BufferGoto 8<Cr>')
+map('n', '<A-9>', '<Cmd>BufferGoto 9<Cr>')
+map('n', '<A-9>', '<Cmd>BufferLast 9<Cr>')
+
+-- map('n', '<silent>dbe', '<Cmd>BufferLineSortByExtension<Cr>')
+-- map('n', '<silent>dbd', '<Cmd>BufferLineSortByDirectory<Cr>')
 
 -- lualine
 require('lualine').setup({
@@ -494,9 +606,9 @@ lsp_signature_cfg = {
                  -- This setting only take effect in insert mode, it does not affect signature help in normal
                  -- mode, 10 by default
 
-  floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+  floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
 
-  floating_window_above_cur_line = true, -- try to place the floating above the current line when possible Note:
+  floating_window_above_cur_line = false, -- try to place the floating above the current line when possible Note:
   -- will set to true when fully tested, set to false will use whichever side has more space
   -- this setting will be helpful if you do not want the PUM and floating win overlap
 
@@ -541,10 +653,12 @@ end
 _G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
                               function() vim.api.nvim_command('redrawstatus') end))
 
+-- Telescope.nvim
 require('telescope').setup {
 	defaults = { file_ignore_patterns = { "build"  } } 
 }
 
+-- neotree.nvim
 vim.cmd([[
 	hi link NeoTreeDirectoryName Directory
 	hi link NeoTreeDirectoryIcon NeoTreeDirectoryName
@@ -671,6 +785,7 @@ require('neo-tree').setup {
 	}
 }
 
+-- todo-comments
 require('todo-comments').setup {
 	keywords = {
 		DONE = { icon = " ", color = "hint", alt = { "FINISHED", "IMPL", "IMPLEMENTED" }  }

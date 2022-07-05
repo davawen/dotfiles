@@ -37,6 +37,7 @@ Plug 'hrsh7th/cmp-vsnip'
 
 Plug 'weilbith/nvim-code-action-menu'
 Plug 'simrat39/rust-tools.nvim'
+Plug 'mhartington/formatter.nvim'
 
 " Syntax highlight
 Plug 'brgmnn/vim-opencl'
@@ -55,7 +56,9 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'romgrk/barbar.nvim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'voldikss/vim-floaterm'
 
 " Other
 Plug 'wakatime/vim-wakatime'
@@ -71,8 +74,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 
-
+Plug 'sotte/presenting.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 
 " }}} Plugins end
@@ -86,6 +90,9 @@ let g:did_load_filetypes = 0
 "" Top level config {{{
 set number
 set relativenumber
+
+" Allow mouse support
+set mouse+=a
 
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -104,6 +111,8 @@ set conceallevel=0
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=1
+" set fillchars=fold:\ 
+set foldminlines=1
 
 let mapleader=";"
 
@@ -137,6 +146,9 @@ inoremap <esc> <nop>
 inoremap <C-c> <esc>
 inoremap <C-v> <esc>
 
+" Fix weird issue with barbar.nvim
+nnoremap <esc> <esc>
+
 " Avoid yanking replaced text
 vnoremap p "_dP
 
@@ -149,6 +161,9 @@ nnoremap <Leader>s :let @a=@" \| let @"=@+ \| let @+=@a<CR>
 " Set ;ev to open configs
 nnoremap <leader>ev1 :vsp<cr><c-w>l:e $MYVIMRC<cr>
 nnoremap <leader>ev2 :vsp<cr><c-w>l:e ~/.config/nvim/lua/config.lua<cr>
+
+" Open terminal
+nnoremap <silent><leader>te <Cmd>FloatermToggle<Cr>
 
 " ctrl-u uppercases a word
 inoremap <c-u> <esc>viwUea
