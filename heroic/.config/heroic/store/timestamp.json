@@ -1,12 +1,17 @@
 {
 	"CrabTest": {
 		"firstPlayed": "2020-05-04T15:36:32.215Z",
-		"lastPlayed": "2022-06-14T15:02:08.624Z",
-		"totalPlayed": 15744
+		"lastPlayed": "2022-07-10T22:19:20.487Z",
+		"totalPlayed": 15783
 	},
 	"Barbet": {
 		"firstPlayed": "2021-11-08T20:08:50.274Z",
 		"lastPlayed": "2021-11-08T20:31:21.506Z",
 		"totalPlayed": 22
+	},
+	"Catnip": {
+		"firstPlayed": "2022-07-06T23:44:11.812Z",
+		"lastPlayed": "2022-07-07T00:18:27.162Z",
+		"totalPlayed": 31
 	}
 }

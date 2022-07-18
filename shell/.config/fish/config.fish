@@ -10,11 +10,15 @@ set -gx NVM_DIR "$XDG_DATA_HOME/nvm"
 fenv source $NVM_DIR/nvm.sh
 alias nvm='fenv source $NVM_DIR/nvm.sh; nvm'
 
+for f in $HOME/.config/shell/*
+	fenv source $f
+end
+
 set -g prjdir "/mnt/Projects"
 
 set -gx QT_QPA_PLATFORMTHEME "gtk2"
 
-set -gx PATH "$PATH:$HOME/bin:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin"
+set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin"
 
 set -gx TASKDDATA /var/taskd
 

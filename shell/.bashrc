@@ -6,9 +6,9 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]
 then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+    PATH="$HOME/.local/bin:$PATH"
 fi
 export DENO_INSTALL="/home/davawen/.deno"
 export PATH=~/.npm/bin:~/.builds/v:$DENO_INSTALL/bin:$PATH

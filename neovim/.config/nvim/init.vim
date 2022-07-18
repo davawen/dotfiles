@@ -8,6 +8,7 @@ Plug 'shaunsingh/nord.nvim'
 Plug 'sainnhe/everforest'
 
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'startup-nvim/startup.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
@@ -23,9 +24,8 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 " Snippets
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'rafamadriz/friendly-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Completion
 Plug 'hrsh7th/nvim-cmp'
@@ -33,7 +33,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-vsnip'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 Plug 'weilbith/nvim-code-action-menu'
 Plug 'simrat39/rust-tools.nvim'
@@ -90,9 +90,6 @@ let g:did_load_filetypes = 0
 "" Top level config {{{
 set number
 set relativenumber
-
-" Allow mouse support
-set mouse+=a
 
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -164,12 +161,13 @@ nnoremap <leader>ev2 :vsp<cr><c-w>l:e ~/.config/nvim/lua/config.lua<cr>
 
 " Open terminal
 nnoremap <silent><leader>te <Cmd>FloatermToggle<Cr>
+tmap <silent><leader>te <Esc><leader>te
 
 " ctrl-u uppercases a word
 inoremap <c-u> <esc>viwUea
 
 " Escape to quit terminal
-:tnoremap <esc> <C-\><C-n>
+tnoremap <esc> <C-\><C-n>
 
 " gm to see highlighting group
 function! SynStack()
@@ -238,21 +236,18 @@ endfunc
 
 nnoremap & :call Ampersand()<cr>
 
-" {{{ vim-vsnip config
+" {{{ floaterm config
 
-" Expand
-imap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-smap <expr> <Tab>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+let g:floaterm_width=0.5
+let g:floaterm_height=1.0
+let g:floaterm_position="right"
 
-" Expand or jump
-imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+" }}}
 
-" Jump forward or backward
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" {{{ ultisnips config
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " }}}
 

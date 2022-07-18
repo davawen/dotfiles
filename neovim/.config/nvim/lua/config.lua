@@ -1,3 +1,5 @@
+local map = vim.keymap.set
+
 -- Vim auto-pairs config
 local npairs = require("nvim-autopairs");
 npairs.setup {
@@ -73,6 +75,8 @@ vim.api.nvim_create_autocmd("BufNew", {
 		vim.api.nvim_set_option("foldlevelstart", 0)
 	end
 })
+local map = vim.keymap.set
+
 
 require('treesitter-context').setup {
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -104,14 +108,24 @@ require('treesitter-context').setup {
 -- Comment.nvim setup
 require('Comment').setup()
 
--- nvim-cmp / luasnip configuration
+-- Startup.nvim
+require('startup').setup{
+	theme = "dashboard"
+}
+
+-- nvim-cmp/snippets configuration
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+require('cmp_nvim_ultisnips').setup{
+	filetype_source = "ultisnips_default"
+}
+
 local lspkind = require("lspkind")
 local cmp = require("cmp") 
+local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
 cmp.setup({
 
@@ -153,21 +167,13 @@ cmp.setup({
 		['<C-d>'] = cmp.mapping.scroll_docs(-4),
 		['<C-f>'] = cmp.mapping.scroll_docs(4),
 	
-		-- ["<Tab>"] = cmp.mapping(function(fallback)
-		-- 	if luasnip.expand_or_locally_jumpable() then
-		-- 		luasnip.expand_or_jump()
-		-- 	else
-		-- 		fallback()
-		-- 	end
-		-- end, { "i", "s" }),
+		["<Tab>"] = cmp.mapping(function(fallback)
+			cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+		end, { "i", "s" }),
 
-		-- ["<S-Tab>"] = cmp.mapping(function(fallback)
-		-- 	if luasnip.jumpable(-1) then
-		-- 		luasnip.jump(-1)
-		-- 	else
-		-- 		fallback()
-		-- 	end
-		-- end, { "i", "s" }),
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			cmp_ultisnips_mappings.jump_backwards(fallback)
+		end, { "i", "s" }),
 	},
 	
 	sources = {
@@ -175,13 +181,13 @@ cmp.setup({
 
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
-		{ name = "vsnip" },
+		{ name = "ultisnips" },
 		{ name = "buffer", keyword_length = 5 },
 	},
 
 	snippet = {
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
+			vim.fn["UltiSnips#Anon"](args.body)
 		end,
 	},
 
@@ -295,6 +301,17 @@ lspconfig.tsserver.setup{
 	capabilities = capabilities
 }
 
+vim.g.markdown_fenced_languages = { "ts=typescript" }
+lspconfig.denols.setup {
+	cmd = { "deno", "lsp" },
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+	init_options = {
+		enable = true,
+		unstable = false
+	},
+	root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
+}
+
 lspconfig.svelte.setup{
 	cmd = { "svelteserver", "--stdio" },
 	filetypes = { "svelte" },
@@ -305,7 +322,7 @@ local pid = vim.fn.getpid()
 
 lspconfig.omnisharp.setup{
 	on_attach = on_attach,
-	cmd = { vim.fn.getenv("HOME") .. "/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid) },
+	cmd = { vim.fn.getenv("HOME") .. "/.local/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid) },
 	filetypes = { "cs", "vb" },
     init_options = {},
     on_new_config = function(new_config, new_root_dir)
@@ -452,8 +469,6 @@ local function attach()
 	})
 end
 
-local map = vim.keymap.set
-
 map('n', '<leader>dh', dap.toggle_breakpoint)
 map('n', '<leader>dd', dap.continue) -- start debugger and relaunch execution
 map('n', '<leader>da', attach) -- attach debugger to process
@@ -480,6 +495,8 @@ require("formatter").setup {
   filetype = {
     -- Formatter configurations for filetype "lua" go here
     -- and will be executed in order
+    cpp = require("formatter.filetypes.cpp").clangformat,
+    c = require("formatter.filetypes.c").clangformat,
     typescript = require("formatter.filetypes.javascript").prettier,
 
     -- Use the special "*" filetype for defining formatter configurations on
@@ -513,7 +530,7 @@ require('bufferline').setup {
   -- Enable/disable icons
   -- if set to 'numbers', will show buffer index in the tabline
   -- if set to 'both', will show buffer index and icons in the tabline
-  icons = true,
+  icons = 'both',
 
   -- If set, the icon color will follow its corresponding buffer
   -- highlight group. By default, the Buffer*Icon group is linked to the
@@ -655,7 +672,7 @@ _G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
 
 -- Telescope.nvim
 require('telescope').setup {
-	defaults = { file_ignore_patterns = { "build"  } } 
+	defaults = { file_ignore_patterns = { "build", "dist", "node_modules" } } 
 }
 
 -- neotree.nvim
