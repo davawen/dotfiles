@@ -70,6 +70,8 @@ Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Plug 'kkharji/sqlite.lua'
+Plug 'AckslD/nvim-neoclip.lua'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
@@ -94,6 +96,8 @@ set relativenumber
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent
+
+set mouse=""
 
 " Indents word-wrapped lines as much as the 'parent' line
 set breakindent

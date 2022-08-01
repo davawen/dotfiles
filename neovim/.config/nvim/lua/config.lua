@@ -67,6 +67,18 @@ require('nvim-treesitter.configs').setup {
 		disable = { "vim" },
 		additional_vim_regex_highlighting = true,
 	},
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = "gnn",
+			node_incremental = "grn",
+			scope_incremental = "grc",
+			node_decremental = "grm"
+		}
+	},
+	indent = {
+		enable = true
+	}
 }
 
 vim.api.nvim_create_autocmd("BufNew", {
@@ -712,7 +724,7 @@ require('neo-tree').setup {
 	filesystem = {
 	  filters = { --These filters are applied to both browsing and searching
 		show_hidden = true,
-		respect_gitignore = true,
+		respect_gitignore = false,
 	  },
 	  follow_current_file = false, -- This will find and focus the file in the active buffer every
 								   -- time the current file is changed while the tree is open.
@@ -809,3 +821,9 @@ require('todo-comments').setup {
 	},
 	merge_keywords = true,
 }
+
+-- neoclip.lua
+require('neoclip').setup {
+	enable_persistent_history = false
+}
+map('n', '<leader>fp', require('telescope').extensions.neoclip.default)

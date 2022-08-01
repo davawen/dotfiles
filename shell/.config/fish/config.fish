@@ -49,7 +49,7 @@ alias ls='lsd'
 alias l='lsd -la'
 
 alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
-alias install='sudo dnf install'
+abbr install "sudo dnf install"
 
 alias pls='sudo $(fc -ln -1)'
 alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAWF8270723'

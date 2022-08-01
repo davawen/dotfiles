@@ -8,7 +8,8 @@ function add_app
 
 	set -l FILENAME "$argv[1].desktop"
 
-	echo "[Desktop Entry]
+	if ! test -e $FILENAME
+		echo "[Desktop Entry]
 Name=$argv[1]
 Comment=
 Exec=
@@ -16,6 +17,7 @@ Icon=
 Terminal=false
 Type=Application
 Categories=" > $FILENAME
+	end
 
 	$EDITOR $FILENAME
 end
