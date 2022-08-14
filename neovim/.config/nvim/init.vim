@@ -6,6 +6,7 @@ call plug#begin(stdpath('data') . '/plugged')
 " Themes
 Plug 'shaunsingh/nord.nvim'
 Plug 'sainnhe/everforest'
+Plug 'habamax/vim-polar'
 
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'startup-nvim/startup.nvim'
@@ -24,7 +25,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 " Snippets
-Plug 'SirVer/ultisnips'
+Plug 'dcampos/nvim-snippy'
 Plug 'honza/vim-snippets'
 
 " Completion
@@ -33,8 +34,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-
+Plug 'dcampos/cmp-snippy'
 Plug 'weilbith/nvim-code-action-menu'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mhartington/formatter.nvim'
@@ -59,6 +59,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'romgrk/barbar.nvim'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'voldikss/vim-floaterm'
+Plug 'unblevable/quick-scope'
 
 " Other
 Plug 'wakatime/vim-wakatime'
@@ -112,6 +113,7 @@ set conceallevel=0
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=1
+
 " set fillchars=fold:\ 
 set foldminlines=1
 
@@ -248,12 +250,6 @@ let g:floaterm_position="right"
 
 " }}}
 
-" {{{ ultisnips config
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" }}}
 
 " {{{ vim-surround config
 

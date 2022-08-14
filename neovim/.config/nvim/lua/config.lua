@@ -77,7 +77,7 @@ require('nvim-treesitter.configs').setup {
 		}
 	},
 	indent = {
-		enable = true
+		enable = false
 	}
 }
 
@@ -131,13 +131,20 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-require('cmp_nvim_ultisnips').setup{
-	filetype_source = "ultisnips_default"
-}
+require('snippy').setup({
+    mappings = {
+        is = {
+            ['<Tab>'] = 'expand_or_advance',
+            ['<S-Tab>'] = 'previous',
+        },
+        nx = {
+            ['<leader>x'] = 'cut_text',
+        },
+    },
+})
 
 local lspkind = require("lspkind")
 local cmp = require("cmp") 
-local cmp_ultisnips_mappings = require('cmp_nvim_ultisnips.mappings')
 
 cmp.setup({
 
@@ -177,15 +184,7 @@ cmp.setup({
 		end, { "i", "s" }),
 
 		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-	
-		["<Tab>"] = cmp.mapping(function(fallback)
-			cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-		end, { "i", "s" }),
-
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			cmp_ultisnips_mappings.jump_backwards(fallback)
-		end, { "i", "s" }),
+		['<C-f>'] = cmp.mapping.scroll_docs(4)
 	},
 	
 	sources = {
@@ -193,13 +192,13 @@ cmp.setup({
 
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
-		{ name = "ultisnips" },
+		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
 	},
 
 	snippet = {
 		expand = function(args)
-			vim.fn["UltiSnips#Anon"](args.body)
+			require('snippy').expand_snippet(args.body)
 		end,
 	},
 
