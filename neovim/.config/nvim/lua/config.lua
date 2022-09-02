@@ -10,7 +10,7 @@ npairs.setup {
 	enable_check_bracket_line = false, -- check bracket in same line
 	fast_wrap = {
 		map = '<M-e>',
-		pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+		pattern = [=[[%'%"%)%>%]%)%}%,%;]]=],
 		end_key = '$',
 		keys = 'qsdfghjklm',
 		check_comma = true,
@@ -77,9 +77,36 @@ require('nvim-treesitter.configs').setup {
 		}
 	},
 	indent = {
-		enable = false
+		enable = true
 	}
 }
+
+-- require('treesitter-context').setup {
+--     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+--     throttle = true, -- Throttles plugin updates (may improve performance)
+--     max_lines = 7, -- How many lines the window should span. Values <= 0 mean no limit.
+--     patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+--         -- For all filetypes
+--         -- Note that setting an entry here replaces all other patterns for this entry.
+--         -- By setting the 'default' entry below, you can control which nodes you want to
+--         -- appear in the context window.
+--         default = {
+--             'class',
+--             'function',
+--             'method',
+--             'for', -- These won't appear in the context
+--             'while',
+--             -- 'if',
+--             'switch',
+--             'case',
+--         },
+--         -- Example for a specific filetype.
+--         -- If a pattern is missing, *open a PR* so everyone can benefit.
+--         --   rust = {
+--         --       'impl_item',
+--         --   },
+--     },
+-- }
 
 vim.api.nvim_create_autocmd("BufNew", {
 	pattern = { "config.lua" },
@@ -89,40 +116,17 @@ vim.api.nvim_create_autocmd("BufNew", {
 })
 local map = vim.keymap.set
 
-
-require('treesitter-context').setup {
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true, -- Throttles plugin updates (may improve performance)
-    max_lines = 7, -- How many lines the window should span. Values <= 0 mean no limit.
-    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-        -- For all filetypes
-        -- Note that setting an entry here replaces all other patterns for this entry.
-        -- By setting the 'default' entry below, you can control which nodes you want to
-        -- appear in the context window.
-        default = {
-            'class',
-            'function',
-            'method',
-            'for', -- These won't appear in the context
-            'while',
-            -- 'if',
-            'switch',
-            'case',
-        },
-        -- Example for a specific filetype.
-        -- If a pattern is missing, *open a PR* so everyone can benefit.
-        --   rust = {
-        --       'impl_item',
-        --   },
-    },
-}
-
 -- Comment.nvim setup
 require('Comment').setup()
 
 -- Startup.nvim
 require('startup').setup{
 	theme = "dashboard"
+}
+
+-- Hologram.nvim
+require('hologram').setup{
+    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
 }
 
 -- nvim-cmp/snippets configuration
@@ -271,6 +275,23 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- capabilities.textDocument.completion.completionItem.snippetSupport = false
 
+require('lspfuzzy').setup {
+  methods = 'all',         -- either 'all' or a list of LSP methods (see below)
+  jump_one = true,         -- jump immediately if there is only one location
+  save_last = false,       -- save last location results for the :LspFuzzyLast command
+  callback = nil,          -- callback called after jumping to a location
+  fzf_preview = {          -- arguments to the FZF '--preview-window' option
+    'right:+{2}-/2'          -- preview on the right and centered on entry
+  },
+  fzf_action = {               -- FZF actions
+    ['ctrl-t'] = 'tab split',  -- go to location in a new tab
+    ['ctrl-v'] = 'vsplit',     -- go to location in a vertical split
+    ['ctrl-x'] = 'split',      -- go to location in a horizontal split
+  },
+  fzf_modifier = ':~:.',   -- format FZF entries, see |filename-modifiers|
+  fzf_trim = true,         -- trim FZF entries
+}
+
 local lspconfig = require('lspconfig')
 
 lspconfig.clangd.setup{
@@ -288,7 +309,7 @@ lspconfig.clangd.setup{
 	--[[ flags = {
 		debounce_text_changes = 150
 	}, ]]
-    root_dir = lspconfig.util.root_pattern("CMakeLists.txt"),
+    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "xmake.lua"),
 	capabilities = capabilities,
 }
 
@@ -329,22 +350,48 @@ lspconfig.svelte.setup{
 	root_dir = lspconfig.util.root_pattern("package.json"),
 }
 
-local pid = vim.fn.getpid()
-
 lspconfig.omnisharp.setup{
 	on_attach = on_attach,
-	cmd = { vim.fn.getenv("HOME") .. "/.local/bin/omnisharp/run", "--languageserver", "--hostPID", tostring(pid) },
 	filetypes = { "cs", "vb" },
-    init_options = {},
-    on_new_config = function(new_config, new_root_dir)
-		if new_root_dir then
-			table.insert(new_config.cmd, '-s')
-			table.insert(new_config.cmd, new_root_dir)
-		end
-	end,
+	cmd = { "dotnet", "/home/davawen/.local/bin/omnisharp/OmniSharp.dll" },
+	-- Enables support for reading code style, naming convention and analyzer
+    -- settings from .editorconfig.
+    enable_editorconfig_support = true,
+
+    -- If true, MSBuild project system will only load projects for files that
+    -- were opened in the editor. This setting is useful for big C# codebases
+    -- and allows for faster initialization of code navigation features only
+    -- for projects that are relevant to code that is being edited. With this
+    -- setting enabled OmniSharp may load fewer projects and may thus display
+    -- incomplete reference lists for symbols.
+    enable_ms_build_load_projects_on_demand = false,
+
+    -- Enables support for roslyn analyzers, code fixes and rulesets.
+    enable_roslyn_analyzers = true,
+
+    -- Specifies whether 'using' directives should be grouped and sorted during
+    -- document formatting.
+    organize_imports_on_format = true,
+
+    -- Enables support for showing unimported types and unimported extension
+    -- methods in completion lists. When committed, the appropriate using
+    -- directive will be added at the top of the current file. This option can
+    -- have a negative impact on initial completion responsiveness,
+    -- particularly for the first few completion sessions after opening a
+    -- solution.
+    enable_import_completion = false,
+
+    -- Specifies whether to include preview versions of the .NET SDK when
+    -- determining which version to use for project loading.
+    sdk_include_prereleases = true,
+
+    -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+    -- true
+    analyze_open_documents_only = false,
 	root_dir = lspconfig.util.root_pattern('*.sln', '*.csproj'),
 	capabilities = capabilities
 }
+
 
 lspconfig.texlab.setup{
 	cmd = { "texlab" },
@@ -435,7 +482,7 @@ dap.configurations.cpp = {
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
-    args = {},
+    args = { "-h" },
 	env = { 
 		LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
 	},
@@ -480,20 +527,81 @@ local function attach()
 	})
 end
 
+require("dapui").setup{
+	icons = { expanded = "▾", collapsed = "▸" },
+	mappings = {
+		-- Use a table to apply multiple mappings
+		expand = { "<CR>", "<2-LeftMouse>" },
+		open = "o",
+		remove = "d",
+		edit = "e",
+		repl = "r",
+		toggle = "t",
+	},
+	-- Expand lines larger than the window
+	-- Requires >= 0.7
+	expand_lines = vim.fn.has("nvim-0.7"),
+	-- Layouts define sections of the screen to place windows.
+	-- The position can be "left", "right", "top" or "bottom".
+	-- The size specifies the height/width depending on position. It can be an Int
+	-- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
+	-- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
+	-- Elements are the elements shown in the layout (in order).
+	-- Layouts are opened in order so that earlier layouts take priority in window sizing.
+	layouts = {
+		{
+			elements = {
+				-- Elements can be strings or table with id and size keys.
+				{ id = "scopes", size = 0.25 },
+				"breakpoints",
+				"stacks",
+				"watches",
+			},
+			size = 40, -- 40 columns
+			position = "left",
+		},
+		{
+			elements = {
+				"repl",
+				"console",
+			},
+			size = 0.25, -- 25% of total lines
+			position = "bottom",
+		},
+	},
+	floating = {
+		max_height = nil, -- These can be integers or a float between 0 and 1.
+		max_width = nil, -- Floats will be treated as percentage of your screen.
+		border = "single", -- Border style. Can be "single", "double" or "rounded"
+		mappings = {
+			close = { "q", "<Esc>" },
+		},
+	},
+	windows = { indent = 1 },
+	render = {
+		max_type_length = 30, -- Can be integer or nil.
+	}
+}
+
+local double_eval = function()
+	local eval = require("dapui").eval
+	eval()
+	eval()
+end
+
 map('n', '<leader>dh', dap.toggle_breakpoint)
 map('n', '<leader>dd', dap.continue) -- start debugger and relaunch execution
 map('n', '<leader>da', attach) -- attach debugger to process
-map('n', '<leader>dr', function() dap.repl.open({}, 'vsplit') end)
-map('n', '<leader>di', require'dap.ui.widgets'.hover)
--- vim.keymap.set('v', '<leader>di', require'dap.ui.variables'.visual_hover)
+map('n', '<leader>dr', function() dap.repl.open({}, 'belowright split') end)
+map('n', '<leader>di', double_eval)
+map('v', '<leader>di', double_eval)
 map('n', '<leader>d?', function() local widgets = require'dap.ui.widgets'; widgets.centered_float(widgets.scope) end)
 map('n', '<leader>dk', dap.step_out)
-map('n', '<S-l>', dap.step_into)
-map('n', '<S-j>', dap.step_over)
-map('n', '<leader>k', dap.up) -- navigate up/down the callstack
-map('n', '<leader>j', dap.down)
+map('n', 'd<S-l>', dap.step_into)
+map('n', 'd<S-j>', dap.step_over)
+map('n', 'dk', dap.up) -- navigate up/down the callstack
+map('n', 'dj', dap.down)
 
-require("dapui").setup()
 
 -- formatter.nvim
 -- Provides the Format and FormatWrite commands
@@ -609,10 +717,13 @@ map('n', '<A-9>', '<Cmd>BufferLast 9<Cr>')
 
 -- lualine
 require('lualine').setup({
-    options = { theme = 'everforest' },
+    options = { 
+		theme = 'everforest',
+		globalstatus = true
+	},
     sections = {
-        lualine_a = { 'branch'},
-        lualine_b = { 'diagnostics', 'diff'},
+        lualine_a = { 'mode'},
+        lualine_b = { 'branch', 'diagnostics', 'diff'},
         lualine_c = { "vim.fn.expand('%')"},
         lualine_x = { 'location', 'filetype'},
         lualine_y = { 'os.date("%I:%M:%S", os.time())'},

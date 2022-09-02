@@ -13,12 +13,13 @@ Plug 'startup-nvim/startup.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
-Plug 'romgrk/nvim-treesitter-context'
+" Plug 'romgrk/nvim-treesitter-context'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'onsails/lspkind-nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'ojroques/nvim-lspfuzzy'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap'
@@ -78,6 +79,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 
 Plug 'sotte/presenting.vim'
+Plug 'edluffy/hologram.nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
@@ -85,6 +87,8 @@ call plug#end()
 " }}} Plugins end
 
 colorscheme nord
+" Split windows border
+highlight WinSeparator guifg=#d8dee9
 
 " Load filetypes with lua (Neovim 0.7)
 let g:do_filetype_lua = 1
@@ -120,6 +124,9 @@ set foldminlines=1
 let mapleader=";"
 
 " }}}
+
+" Neovide font
+set guifont=Spleen\ 8x16:h12
 
 " Remove neo-tree legacy commands before plugin is loaded
 let g:neo_tree_remove_legacy_commands = 1
@@ -174,6 +181,9 @@ inoremap <c-u> <esc>viwUea
 
 " Escape to quit terminal
 tnoremap <esc> <C-\><C-n>
+
+" Quick return to line
+nnoremap d, ^d0kJ
 
 " gm to see highlighting group
 function! SynStack()
