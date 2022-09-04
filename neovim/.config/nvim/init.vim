@@ -152,7 +152,6 @@ nnoremap <Down> <nop>
 nnoremap <space> :
 
 " Force <c-c> for escape
-inoremap <esc> <nop>
 inoremap <C-c> <esc>
 inoremap <C-v> <esc>
 
@@ -290,7 +289,6 @@ endfunction
 augroup filetype
 	autocmd!
 	autocmd FileType vim setlocal wrap foldmethod=marker
-	autocmd BufRead,BufNewFile *.dotvm set filetype=dotvm
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 augroup END
 

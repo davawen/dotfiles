@@ -60,6 +60,15 @@ npairs.add_rules {
       :use_key(']')
 }
 
+-- Tree sitter
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.wgsl = {
+    install_info = {
+        url = "https://github.com/szebniok/tree-sitter-wgsl",
+        files = {"src/parser.c"}
+    },
+}
+
 require('nvim-treesitter.configs').setup {
 	ensure_installed = "all",
 	highlight = {
@@ -159,6 +168,10 @@ cmp.setup({
 		},
 
 		["<S-CR>"] = cmp.mapping.confirm {
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = true
+		},
+		["<C-CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true
 		},
