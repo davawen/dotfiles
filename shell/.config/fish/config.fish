@@ -18,7 +18,7 @@ set -g prjdir "/mnt/Projects"
 
 set -gx QT_QPA_PLATFORMTHEME "gtk2"
 
-set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin"
+set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin:/opt/rocm/bin"
 
 set -gx TASKDDATA /var/taskd
 
