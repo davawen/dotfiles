@@ -219,9 +219,11 @@ func Build()
 endfunc
 command Build call Build()
 
-nnoremap <leader>ff :Telescope find_files<CR>
-nnoremap <leader>n :Neotree source=filesystem reveal position=float toggle <CR>
-nnoremap <leader>b :Neotree source=buffers reveal position=float toggle <CR>
+nnoremap <silent><leader>ff <Cmd>Telescope find_files<CR>
+nnoremap <silent><leader>fs <Cmd>Telescope lsp_document_symbols<Cr>
+nnoremap <silent><leader>fr <Cmd>Telescope lsp_references<Cr>
+nnoremap <silent><leader>n <Cmd>Neotree source=filesystem reveal position=float toggle <CR>
+nnoremap <silent><leader>b <Cmd>Neotree source=buffers reveal position=float toggle <CR>
 
 nnoremap <leader><left> <c-w>h
 nnoremap <leader><right> <c-w>l
