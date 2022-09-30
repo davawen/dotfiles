@@ -442,7 +442,6 @@ lspconfig.texlab.setup{
 require('rust-tools').setup {
 	tools = { -- rust-tools options
         autoSetHints = true,
-        hover_with_actions = true,
         inlay_hints = {
             show_parameter_hints = false,
             parameter_hints_prefix = "",
@@ -476,6 +475,9 @@ require('rust-tools').setup {
 		capabilities = capabilities
 	}, -- rust-analyer options
 }
+
+lspconfig.wgsl_analyzer.setup{}
+
 
 -- Debugging
 local dap = require('dap')
@@ -845,9 +847,9 @@ require('neo-tree').setup {
 	  },
 	},
 	filesystem = {
-	  filters = { --These filters are applied to both browsing and searching
-		show_hidden = true,
-		respect_gitignore = false,
+	  filtered_items = { --These filters are applied to both browsing and searching
+		hide_dotfiles = false,
+		hide_gitignored = false,
 	  },
 	  follow_current_file = false, -- This will find and focus the file in the active buffer every
 								   -- time the current file is changed while the tree is open.
