@@ -49,6 +49,7 @@ Plug 'evanleck/vim-svelte'
 " Filetype specific
 Plug 'timonv/vim-cargo'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'shuntaka9576/preview-asciidoc.nvim',  { 'do': 'yarn install' }
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
