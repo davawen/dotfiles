@@ -52,6 +52,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'shuntaka9576/preview-asciidoc.nvim',  { 'do': 'yarn install' }
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'habamax/vim-godot'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 " Navigation
@@ -73,6 +74,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'gfanto/fzf-lsp.nvim'
 " Plug 'kkharji/sqlite.lua'
 Plug 'AckslD/nvim-neoclip.lua'
 

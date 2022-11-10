@@ -71,6 +71,7 @@ parser_config.wgsl = {
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = "all",
+	disable = { "gdscript" },
 	highlight = {
 		enable = true,
 		disable = { "vim" },
@@ -86,7 +87,8 @@ require('nvim-treesitter.configs').setup {
 		}
 	},
 	indent = {
-		enable = true
+		enable = true,
+		disable = { "python" }
 	}
 }
 
@@ -284,7 +286,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- capabilities.textDocument.completion.completionItem.snippetSupport = false
 
@@ -304,6 +306,7 @@ require('lspfuzzy').setup {
   fzf_modifier = ':~:.',   -- format FZF entries, see |filename-modifiers|
   fzf_trim = true,         -- trim FZF entries
 }
+map('n', "gs", "<Cmd>DocumentSymbols<Cr>", { silent = true })
 
 local lspconfig = require('lspconfig')
 
@@ -380,7 +383,7 @@ lspconfig.omnisharp.setup{
     enable_ms_build_load_projects_on_demand = false,
 
     -- Enables support for roslyn analyzers, code fixes and rulesets.
-    enable_roslyn_analyzers = true,
+    enable_roslyn_analyzers = false,
 
     -- Specifies whether 'using' directives should be grouped and sorted during
     -- document formatting.
@@ -392,7 +395,7 @@ lspconfig.omnisharp.setup{
     -- have a negative impact on initial completion responsiveness,
     -- particularly for the first few completion sessions after opening a
     -- solution.
-    enable_import_completion = false,
+    enable_import_completion = true,
 
     -- Specifies whether to include preview versions of the .NET SDK when
     -- determining which version to use for project loading.
@@ -405,6 +408,12 @@ lspconfig.omnisharp.setup{
 	capabilities = capabilities
 }
 
+lspconfig.gdscript.setup {
+	on_attach = on_attach,
+	filetypes = { "gd", "gdscript", "gdscript3" },
+	root_dir = lspconfig.util.root_pattern("project.godot", ".git"),
+	capabilities = capabilities
+}
 
 lspconfig.texlab.setup{
 	cmd = { "texlab" },
@@ -477,6 +486,33 @@ require('rust-tools').setup {
 }
 
 lspconfig.wgsl_analyzer.setup{}
+
+require'lspconfig'.sumneko_lua.setup {
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = 'LuaJIT',
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = {'vim'},
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = { 
+					vim.api.nvim_get_runtime_file("", true),
+					vim.fn.expand("~/.luarocks/share/lua/5.4"),
+					"/usr/share/lua/5.4/"
+				},
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+}
 
 
 -- Debugging
