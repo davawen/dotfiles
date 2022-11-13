@@ -1,13 +1,8 @@
 {
 	"CrabTest": {
 		"firstPlayed": "2020-05-04T15:36:32.215Z",
-<<<<<<< HEAD
-		"lastPlayed": "2022-10-24T13:56:44.686Z",
-		"totalPlayed": 16143
-=======
 		"lastPlayed": "2022-10-25T22:44:53.149Z",
 		"totalPlayed": 16162
->>>>>>> 301e457c0ae9524449494b8a981240fffeb01b73
 	},
 	"Barbet": {
 		"firstPlayed": "2021-11-08T20:08:50.274Z",
