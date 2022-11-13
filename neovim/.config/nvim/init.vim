@@ -77,6 +77,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'gfanto/fzf-lsp.nvim'
 " Plug 'kkharji/sqlite.lua'
 Plug 'AckslD/nvim-neoclip.lua'
+Plug 'fidian/hexmode'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'

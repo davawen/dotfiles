@@ -369,7 +369,7 @@ lspconfig.svelte.setup{
 lspconfig.omnisharp.setup{
 	on_attach = on_attach,
 	filetypes = { "cs", "vb" },
-	cmd = { "dotnet", "/home/davawen/.local/bin/omnisharp/OmniSharp.dll" },
+	cmd = { "mono", "/home/davawen/.local/bin/omnisharp/OmniSharp.exe" },
 	-- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
     enable_editorconfig_support = true,
