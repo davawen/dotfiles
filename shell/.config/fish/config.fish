@@ -6,17 +6,13 @@ set fzf_fd_opts --hidden
 
 fenv source "$HOME/xdg_home.sh"
 
-set -gx NVM_DIR "$XDG_DATA_HOME/nvm"
-fenv source $NVM_DIR/nvm.sh
-alias nvm='fenv source $NVM_DIR/nvm.sh; nvm'
-
 for f in $HOME/.config/shell/*
 	fenv source $f
 end
 
 set -g prjdir "/mnt/Projects"
 
-set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin:/opt/rocm/bin"
+set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$(yarn global bin):$HOME/.local/share/cargo/bin/:/usr/local/cuda-11.7/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin:/opt/rocm/bin"
 set -gx LS_COLORS "ow=36:"
 
 set -gx TASKDDATA /var/taskd
@@ -37,7 +33,6 @@ alias :q='exit' # Too much vim in my fingers
 
 alias nh='sudo nethogs'
 alias py='python3'
-alias node='node --experimental-fetch'
 alias icat="kitty +kitten icat"
 alias suod='sudo'
 

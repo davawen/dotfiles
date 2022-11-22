@@ -135,11 +135,6 @@ require('startup').setup{
 	theme = "dashboard"
 }
 
--- Hologram.nvim
-require('hologram').setup{
-    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
-}
-
 -- nvim-cmp/snippets configuration
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))

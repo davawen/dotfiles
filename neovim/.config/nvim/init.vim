@@ -83,7 +83,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 
 Plug 'sotte/presenting.vim'
-Plug 'edluffy/hologram.nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
