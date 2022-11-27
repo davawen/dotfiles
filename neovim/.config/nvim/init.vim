@@ -177,6 +177,9 @@ nnoremap <leader>ev2 :vsp<cr><c-w>l:e ~/.config/nvim/lua/config.lua<cr>
 " Open terminal
 nnoremap <silent><leader>te <Cmd>FloatermToggle<Cr>
 tmap <silent><leader>te <Esc><leader>te
+tmap <silent><leader>th <Esc><Cmd>FloatermPrev<Cr>
+tmap <silent><leader>tl <Esc><Cmd>FloatermNext<Cr>
+tmap <silent><leader>tn <Esc><Cmd>FloatermNew<Cr>
 
 " ctrl-u uppercases a word
 inoremap <c-u> <esc>viwUea

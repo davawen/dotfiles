@@ -74,7 +74,6 @@ require('nvim-treesitter.configs').setup {
 	disable = { "gdscript" },
 	highlight = {
 		enable = true,
-		disable = { "vim" },
 		additional_vim_regex_highlighting = true,
 	},
 	incremental_selection = {
@@ -320,7 +319,7 @@ lspconfig.clangd.setup{
 	--[[ flags = {
 		debounce_text_changes = 150
 	}, ]]
-    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "xmake.lua"),
+    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua"),
 	capabilities = capabilities,
 }
 
