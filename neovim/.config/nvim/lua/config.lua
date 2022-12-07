@@ -91,6 +91,10 @@ require('nvim-treesitter.configs').setup {
 	}
 }
 
+require('neogen').setup {
+	snippet_engine = "snippy"
+}
+
 -- require('treesitter-context').setup {
 --     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 --     throttle = true, -- Throttles plugin updates (may improve performance)
@@ -135,10 +139,10 @@ require('startup').setup{
 }
 
 -- nvim-cmp/snippets configuration
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+-- local has_words_before = function()
+--   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+--   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+-- end
 
 require('snippy').setup({
     mappings = {
@@ -345,6 +349,7 @@ lspconfig.tsserver.setup{
 
 vim.g.markdown_fenced_languages = { "ts=typescript" }
 lspconfig.denols.setup {
+	on_attach = on_attach,
 	cmd = { "deno", "lsp" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 	init_options = {
@@ -355,6 +360,7 @@ lspconfig.denols.setup {
 }
 
 lspconfig.svelte.setup{
+	on_attach = on_attach,
 	cmd = { "svelteserver", "--stdio" },
 	filetypes = { "svelte" },
 	root_dir = lspconfig.util.root_pattern("package.json"),
@@ -410,6 +416,7 @@ lspconfig.gdscript.setup {
 }
 
 lspconfig.texlab.setup{
+	on_attach = on_attach,
 	cmd = { "texlab" },
 	filetypes = { "tex", "latex" },
 	settings = {
@@ -482,6 +489,7 @@ require('rust-tools').setup {
 lspconfig.wgsl_analyzer.setup{}
 
 require'lspconfig'.sumneko_lua.setup {
+	on_attach = on_attach,
 	settings = {
 		Lua = {
 			runtime = {

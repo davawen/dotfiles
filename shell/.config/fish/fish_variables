@@ -65,6 +65,7 @@ SETUVAR _fish_abbr_gsts:git\x20status\x20\x2ds
 SETUVAR _fish_abbr_gsu:git\x20submodule\x20update
 SETUVAR _fish_abbr_gts:git\x20tag\x20\x2ds
 SETUVAR _fish_abbr_install:sudo\x20dnf\x20install
+SETUVAR _fish_abbr_legendary:/usr/lib64/heroic\x2dgames\x2dlauncher\x2dbin/resources/app\x2easar\x2eunpacked/build/bin/linux/legendary
 SETUVAR _fisher_lewisacidic_2F_fish_2D_git_2D_abbr_files:/home/davawen/\x2econfig/fish/conf\x2ed/git_abbr\x2efish
 SETUVAR _fisher_plugins:lewisacidic/fish\x2dgit\x2dabbr
 SETUVAR fish_color_autosuggestion:555\x1ebrblack

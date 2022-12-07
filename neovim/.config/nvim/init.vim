@@ -12,8 +12,9 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'startup-nvim/startup.nvim'
 
 " Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
 " Plug 'romgrk/nvim-treesitter-context'
+Plug 'danymat/neogen'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -78,9 +79,11 @@ Plug 'gfanto/fzf-lsp.nvim'
 " Plug 'kkharji/sqlite.lua'
 Plug 'AckslD/nvim-neoclip.lua'
 Plug 'fidian/hexmode'
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
+Plug 'davawen/neo-presence', { 'do': 'bash -c \"cmake -B build . && make -C build\"' }
 
 Plug 'sotte/presenting.vim'
 Plug 'ryanoasis/vim-devicons'
