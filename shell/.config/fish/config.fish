@@ -3,6 +3,7 @@ if status is-interactive
 end
 
 set fzf_fd_opts --hidden
+set -g theme_color_scheme terminal
 
 fenv source "$HOME/xdg_home.sh"
 

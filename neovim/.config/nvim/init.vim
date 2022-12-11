@@ -7,6 +7,7 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'shaunsingh/nord.nvim'
 Plug 'sainnhe/everforest'
 Plug 'habamax/vim-polar'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'nyoom-engineering/oxocarbon.nvim'
 
 Plug 'nvim-lualine/lualine.nvim'
@@ -94,7 +95,7 @@ call plug#end()
 
 " }}} Plugins end
 
-colorscheme nord
+colorscheme catppuccin-macchiato
 " Split windows border
 highlight WinSeparator guifg=#d8dee9
 
