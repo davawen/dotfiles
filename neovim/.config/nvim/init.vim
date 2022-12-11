@@ -7,6 +7,7 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'shaunsingh/nord.nvim'
 Plug 'sainnhe/everforest'
 Plug 'habamax/vim-polar'
+Plug 'nyoom-engineering/oxocarbon.nvim'
 
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'startup-nvim/startup.nvim'
@@ -84,6 +85,7 @@ Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'davawen/neo-presence', { 'do': 'bash -c \"cmake -B build . && make -C build\"' }
+Plug 'edluffy/hologram.nvim'
 
 Plug 'sotte/presenting.vim'
 Plug 'ryanoasis/vim-devicons'
