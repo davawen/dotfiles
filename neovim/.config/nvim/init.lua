@@ -1,4 +1,42 @@
-local map = vim.keymap.set
+-- Remove config file from cached files in case init.vim is reloaded
+-- for k, v in pairs(package.loaded) do
+--     if string.match(k, "^config") then
+-- 		package.loaded[k] = nil
+--     end
+-- end
+require("plugins")
+
+require("mappings")
+require("autocommands")
+require("commands")
+
+vim.cmd [[ source variables.vim ]]
+
+vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}]]
+
+-- Cmp Highlight
+local highlights = {
+	CmpItemAbbrDeprecated = { bg = "NONE", strikethrough = true, fg = "#616E88" },
+	CmpItemAbbrMatch = { bg = "NONE", fg = "#B48EAD" },
+	CmpItemAbbrMatchFuzzy = { bg = "NONE", fg = "#B48EAD" },
+	CmpItemKindVariable = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindClass = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindInterface = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindText = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindFunction = { bg = "NONE", fg = "#88C0D0" },
+	CmpItemKindConstructor = { bg = "NONE", fg = "#88C0D0" },
+	CmpItemKindMethod = { bg = "NONE", fg = "#88C0D0" },
+	CmpItemKindKeyword = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindProperty = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindUnit = { bg = "NONE", fg = "#81A1C1" },
+	CmpItemKindEnum = { bg = "NONE", fg = "#EBCB8B" },
+	CmpItemKindEnumMember = { bg = "NONE", fg = "#EBCB8B" },
+	CmpItemKindConstant = { bg = "NONE", fg = "#EBCB8B" },
+}
+
+for group, values in pairs(highlights) do
+	vim.api.nvim_set_hl(0, group, values)
+end
 
 -- Vim auto-pairs config
 local npairs = require("nvim-autopairs");
@@ -138,9 +176,9 @@ require('startup').setup{
 	theme = "dashboard"
 }
 
-require('hologram').setup{
-    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
-}
+-- require('hologram').setup{
+--     auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+-- }
 
 -- nvim-cmp/snippets configuration
 -- local has_words_before = function()
@@ -284,7 +322,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -490,10 +528,14 @@ require('rust-tools').setup {
 	}, -- rust-analyer options
 }
 
-lspconfig.wgsl_analyzer.setup{}
+lspconfig.wgsl_analyzer.setup{
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
 
 lspconfig.sumneko_lua.setup {
 	on_attach = on_attach,
+	capabilities = capabilities,
 	settings = {
 		Lua = {
 			runtime = {
