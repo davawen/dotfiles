@@ -31,17 +31,6 @@ map("n", "<leader>;", "mpA;<esc>`p")
 -- ;s cycles through unnamed and clipboard registers
 map("n", "<Leader>s", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
--- Set ;ev to open configs
-local function open_config(path)
-	if vim.bo.filetype == 'startup' then
-		vim.cmd('e ' .. path)
-	else
-		vim.cmd('normal! <cmd>vsp<cr><c-w>l<cmd>e ' .. path .. '<cr>')
-	end
-end
-map("n", "<leader>ev1", function() open_config("~/.config/nvim/init.vim") end)
-map("n", "<leader>ev2", function() open_config("~/.config/nvim/init.lua") end)
-
 -- Open floating terminal
 map("n", "<leader>te", "<Cmd>FloatermToggle<Cr>")
 remap("t", "<leader>te", "<Esc><leader>te")
@@ -58,12 +47,25 @@ map("t", "<esc>", "<C-\\><C-n>")
 -- Quick return to line
 map("n", "d,", "^d0kJ")
 
+-- Telescope mappings
 local telescope = require('telescope.builtin')
-map("n", "<silent><leader>ff", telescope.find_files)
-map("n", "<silent><leader>fs", telescope.lsp_document_symbols)
-map("n", "<silent><leader>fr", telescope.lsp_references)
-map("n", "<silent><leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
-map("n", "<silent><leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")
+map("n", "<leader>ff", telescope.find_files)
+map("n", "<leader>fs", telescope.lsp_document_symbols)
+map("n", "<leader>fr", telescope.lsp_references)
+map("n", "<leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
+map("n", "<leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")
+-- Use ;ev to open config directory
+local function open_config()
+	-- Open over startup page if it is opened
+	if vim.bo.filetype ~= 'startup' then
+		vim.cmd [[exe "normal! \<Cmd>vsp\<Cr>\<C-w>l"]]
+	end
+	telescope.find_files({
+		cwd = "~/.config/nvim"
+	})
+end
+map("n", "<leader>ev", open_config)
+
 
 map("n", "<leader><left>", "<c-w>h")
 map("n", "<leader><right>", "<c-w>l")

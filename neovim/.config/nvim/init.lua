@@ -1,16 +1,18 @@
 -- Remove config file from cached files in case init.vim is reloaded
--- for k, v in pairs(package.loaded) do
---     if string.match(k, "^config") then
--- 		package.loaded[k] = nil
---     end
--- end
+for k, v in pairs(package.loaded) do
+    if string.match(k, "^config") then
+		package.loaded[k] = nil
+    end
+end
 require("plugins")
+
+vim.cmd [[ packadd neo-tree.nvim]]
 
 require("mappings")
 require("autocommands")
 require("commands")
 
-vim.cmd [[ source variables.vim ]]
+vim.cmd [[ source ~/.config/nvim/variables.vim ]]
 
 vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}]]
 
@@ -98,67 +100,6 @@ npairs.add_rules {
       :use_key(']')
 }
 
--- Tree sitter
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.wgsl = {
-    install_info = {
-        url = "https://github.com/szebniok/tree-sitter-wgsl",
-        files = {"src/parser.c"}
-    },
-}
-
-require('nvim-treesitter.configs').setup {
-	ensure_installed = "all",
-	disable = { "gdscript" },
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = true,
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "gnn",
-			node_incremental = "grn",
-			scope_incremental = "grc",
-			node_decremental = "grm"
-		}
-	},
-	indent = {
-		enable = true,
-		disable = { "python" }
-	}
-}
-
-require('neogen').setup {
-	snippet_engine = "snippy"
-}
-
--- require('treesitter-context').setup {
---     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
---     throttle = true, -- Throttles plugin updates (may improve performance)
---     max_lines = 7, -- How many lines the window should span. Values <= 0 mean no limit.
---     patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
---         -- For all filetypes
---         -- Note that setting an entry here replaces all other patterns for this entry.
---         -- By setting the 'default' entry below, you can control which nodes you want to
---         -- appear in the context window.
---         default = {
---             'class',
---             'function',
---             'method',
---             'for', -- These won't appear in the context
---             'while',
---             -- 'if',
---             'switch',
---             'case',
---         },
---         -- Example for a specific filetype.
---         -- If a pattern is missing, *open a PR* so everyone can benefit.
---         --   rust = {
---         --       'impl_item',
---         --   },
---     },
--- }
 
 vim.api.nvim_create_autocmd("BufNew", {
 	pattern = { "config.lua" },
@@ -553,6 +494,7 @@ lspconfig.sumneko_lua.setup {
 					vim.fn.expand("~/.luarocks/share/lua/5.4"),
 					"/usr/share/lua/5.4/"
 				},
+				checkThirdParty = false
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {

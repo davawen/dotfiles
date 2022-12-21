@@ -25,12 +25,104 @@ return require'packer'.startup(function(use)
 	use 'startup-nvim/startup.nvim'
 
 	-- Treesitter
-	use { 'nvim-treesitter/nvim-treesitter', run = ":TSUpdate" }
-	-- 'romgrk/nvim-treesitter-context'
-	use 'danymat/neogen'
+	use { 'nvim-treesitter/nvim-treesitter',
+		run = ":TSUpdate",
+		config = function ()
+			local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+			parser_config.wgsl = {
+				install_info = {
+					url = "https://github.com/szebniok/tree-sitter-wgsl",
+					files = {"src/parser.c"}
+				},
+			}
+
+			require('nvim-treesitter.configs').setup {
+				ensure_installed = "all",
+				disable = { "gdscript" },
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = true,
+				},
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						init_selection = "gnn",
+						node_incremental = "grn",
+						scope_incremental = "grc",
+						node_decremental = "grm"
+					}
+				},
+				indent = {
+					enable = true,
+					disable = { "python", "c", "cpp" }
+				},
+				playground = {
+				enable = true,
+				disable = {},
+				updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+				persist_queries = false, -- Whether the query persists across vim sessions
+				keybindings = {
+					toggle_query_editor = 'o',
+					toggle_hl_groups = 'i',
+					toggle_injected_languages = 't',
+					toggle_anonymous_nodes = 'a',
+					toggle_language_display = 'I',
+					focus_language = 'f',
+					unfocus_language = 'F',
+					update = 'R',
+					goto_node = '<cr>',
+					show_help = '?',
+				},
+			  }
+			}
+		end
+	}
+	use { 'romgrk/nvim-treesitter-context',
+		requires = 'nvim-treesitter',
+		config = function ()
+			require('treesitter-context').setup {
+			    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			    throttle = true, -- Throttles plugin updates (may improve performance)
+			    max_lines = 7, -- How many lines the window should span. Values <= 0 mean no limit.
+			    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+			        -- For all filetypes
+			        -- Note that setting an entry here replaces all other patterns for this entry.
+			        -- By setting the 'default' entry below, you can control which nodes you want to
+			        -- appear in the context window.
+			        default = {
+			            'class',
+			            'function',
+			            'method',
+			            'for', -- These won't appear in the context
+			            'while',
+			            -- 'if',
+			            'switch',
+			            'case',
+			        },
+			        -- Example for a specific filetype.
+			        -- If a pattern is missing, *open a PR* so everyone can benefit.
+			        --   rust = {
+			        --       'impl_item',
+			        --   },
+			    },
+			}
+		end
+	}
+	use 'nvim-treesitter/playground'
+	use { 'danymat/neogen',
+		config = function ()
+			require('neogen').setup {
+				snippet_engine = "snippy"
+			}
+		end
+	}
 
 	-- LSP
-	use 'neovim/nvim-lspconfig'
+	use { 'neovim/nvim-lspconfig',
+		requires = {
+			'j-hui/fidget.nvim'
+		}
+	}
 	use 'onsails/lspkind-nvim'
 	use 'ray-x/lsp_signature.nvim'
 	use 'ojroques/nvim-lspfuzzy'
@@ -88,14 +180,15 @@ return require'packer'.startup(function(use)
 		-- Remove neo-tree legacy commands before plugin is loaded
 		setup = function ()
 			vim.g.neo_tree_remove_legacy_commands = 1
-		end
+		end,
+		opt = false
 	}
 	use 'romgrk/barbar.nvim'
 	use { 'mg979/vim-visual-multi', branch = 'master'}
 	use { 'voldikss/vim-floaterm',
 		config = function ()
 			vim.g.floaterm_width = 0.5
-			vim.g.floaterm_height = 1.0
+			vim.g.floaterm_height = 0.99999999 -- avoid implicit conversion to int
 			vim.g.floaterm_position = "right"
 		end
 	}
