@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/cmp-snippy",
     url = "https://github.com/dcampos/cmp-snippy"
   },
+  ["dressing.nvim"] = {
+    loaded = true,
+    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/dressing.nvim",
+    url = "https://github.com/stevearc/dressing.nvim"
+  },
   everforest = {
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/everforest",
@@ -128,21 +133,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
-  },
-  fzf = {
-    loaded = true,
-    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/fzf",
-    url = "https://github.com/junegunn/fzf"
-  },
-  ["fzf-lsp.nvim"] = {
-    loaded = true,
-    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/fzf-lsp.nvim",
-    url = "https://github.com/gfanto/fzf-lsp.nvim"
-  },
-  ["fzf.vim"] = {
-    loaded = true,
-    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
   },
   ["glslView-nvim"] = {
     loaded = true,
@@ -178,6 +168,22 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
+  },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
+  ["mind.nvim"] = {
+    config = { "\27LJ\2\n2\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\tmind\frequire\0" },
+    loaded = true,
+    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/mind.nvim",
+    url = "https://github.com/phaazon/mind.nvim"
   },
   ["neo-presence"] = {
     loaded = true,
@@ -236,11 +242,6 @@ _G.packer_plugins = {
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-lspfuzzy"] = {
-    loaded = true,
-    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-lspfuzzy",
-    url = "https://github.com/ojroques/nvim-lspfuzzy"
-  },
   ["nvim-neoclip.lua"] = {
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-neoclip.lua",
@@ -252,13 +253,13 @@ _G.packer_plugins = {
     url = "https://github.com/dcampos/nvim-snippy"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\n“\6\0\0\6\0\27\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0025\1\a\0005\2\4\0005\3\5\0=\3\6\2=\2\b\1=\1\3\0006\1\0\0'\3\t\0B\1\2\0029\1\n\0015\3\v\0005\4\f\0=\4\r\0035\4\14\0=\4\15\0035\4\16\0005\5\17\0=\5\18\4=\4\19\0035\4\20\0005\5\21\0=\5\r\4=\4\22\0035\4\23\0004\5\0\0=\5\r\0045\5\24\0=\5\25\4=\4\26\3B\1\2\1K\0\1\0\15playground\16keybindings\1\0\n\30toggle_injected_languages\6t\21toggle_hl_groups\6i\24toggle_query_editor\6o\14show_help\6?\14goto_node\t<cr>\vupdate\6R\21unfocus_language\6F\19focus_language\6f\28toggle_language_display\6I\27toggle_anonymous_nodes\6a\1\0\3\venable\2\20persist_queries\1\15updatetime\3\25\vindent\1\4\0\0\vpython\6c\bcpp\1\0\1\venable\2\26incremental_selection\fkeymaps\1\0\4\21node_incremental\bgrn\22scope_incremental\bgrc\19init_selection\bgnn\21node_decremental\bgrm\1\0\1\venable\2\14highlight\1\0\2&additional_vim_regex_highlighting\2\venable\2\fdisable\1\2\0\0\rgdscript\1\0\1\21ensure_installed\ball\nsetup\28nvim-treesitter.configs\17install_info\1\0\0\nfiles\1\2\0\0\17src/parser.c\1\0\1\burl1https://github.com/szebniok/tree-sitter-wgsl\twgsl\23get_parser_configs\28nvim-treesitter.parsers\frequire\0" },
+    config = { "\27LJ\2\n“\6\0\0\6\0\27\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0025\1\a\0005\2\4\0005\3\5\0=\3\6\2=\2\b\1=\1\3\0006\1\0\0'\3\t\0B\1\2\0029\1\n\0015\3\v\0005\4\f\0=\4\r\0035\4\14\0=\4\15\0035\4\16\0005\5\17\0=\5\18\4=\4\19\0035\4\20\0005\5\21\0=\5\r\4=\4\22\0035\4\23\0004\5\0\0=\5\r\0045\5\24\0=\5\25\4=\4\26\3B\1\2\1K\0\1\0\15playground\16keybindings\1\0\n\14show_help\6?\14goto_node\t<cr>\vupdate\6R\21unfocus_language\6F\19focus_language\6f\28toggle_language_display\6I\27toggle_anonymous_nodes\6a\30toggle_injected_languages\6t\21toggle_hl_groups\6i\24toggle_query_editor\6o\1\0\3\20persist_queries\1\venable\2\15updatetime\3\25\vindent\1\4\0\0\vpython\6c\bcpp\1\0\1\venable\2\26incremental_selection\fkeymaps\1\0\4\22scope_incremental\bgrc\21node_incremental\bgrn\21node_decremental\bgrm\19init_selection\bgnn\1\0\1\venable\2\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\2\fdisable\1\2\0\0\rgdscript\1\0\1\21ensure_installed\ball\nsetup\28nvim-treesitter.configs\17install_info\1\0\0\nfiles\1\2\0\0\17src/parser.c\1\0\1\burl1https://github.com/szebniok/tree-sitter-wgsl\twgsl\23get_parser_configs\28nvim-treesitter.parsers\frequire\0" },
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-treesitter-context"] = {
-    config = { "\27LJ\2\nπ\1\0\0\5\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\3=\3\a\2B\0\2\1K\0\1\0\rpatterns\fdefault\1\0\0\1\b\0\0\nclass\rfunction\vmethod\bfor\nwhile\vswitch\tcase\1\0\3\rthrottle\2\venable\2\14max_lines\3\a\nsetup\23treesitter-context\frequire\0" },
+    config = { "\27LJ\2\nπ\1\0\0\5\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\3=\3\a\2B\0\2\1K\0\1\0\rpatterns\fdefault\1\0\0\1\b\0\0\nclass\rfunction\vmethod\bfor\nwhile\vswitch\tcase\1\0\3\14max_lines\3\a\rthrottle\2\venable\2\nsetup\23treesitter-context\frequire\0" },
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
     url = "https://github.com/romgrk/nvim-treesitter-context"
@@ -267,11 +268,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/davawen/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
-  },
-  ["oxocarbon.nvim"] = {
-    loaded = true,
-    path = "/home/davawen/.local/share/nvim/site/pack/packer/start/oxocarbon.nvim",
-    url = "https://github.com/nyoom-engineering/oxocarbon.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -420,14 +416,6 @@ time([[Setup for neo-tree.nvim]], false)
 time([[packadd for neo-tree.nvim]], true)
 vim.cmd [[packadd neo-tree.nvim]]
 time([[packadd for neo-tree.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n“\6\0\0\6\0\27\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0025\1\a\0005\2\4\0005\3\5\0=\3\6\2=\2\b\1=\1\3\0006\1\0\0'\3\t\0B\1\2\0029\1\n\0015\3\v\0005\4\f\0=\4\r\0035\4\14\0=\4\15\0035\4\16\0005\5\17\0=\5\18\4=\4\19\0035\4\20\0005\5\21\0=\5\r\4=\4\22\0035\4\23\0004\5\0\0=\5\r\0045\5\24\0=\5\25\4=\4\26\3B\1\2\1K\0\1\0\15playground\16keybindings\1\0\n\30toggle_injected_languages\6t\21toggle_hl_groups\6i\24toggle_query_editor\6o\14show_help\6?\14goto_node\t<cr>\vupdate\6R\21unfocus_language\6F\19focus_language\6f\28toggle_language_display\6I\27toggle_anonymous_nodes\6a\1\0\3\venable\2\20persist_queries\1\15updatetime\3\25\vindent\1\4\0\0\vpython\6c\bcpp\1\0\1\venable\2\26incremental_selection\fkeymaps\1\0\4\21node_incremental\bgrn\22scope_incremental\bgrc\19init_selection\bgnn\21node_decremental\bgrm\1\0\1\venable\2\14highlight\1\0\2&additional_vim_regex_highlighting\2\venable\2\fdisable\1\2\0\0\rgdscript\1\0\1\21ensure_installed\ball\nsetup\28nvim-treesitter.configs\17install_info\1\0\0\nfiles\1\2\0\0\17src/parser.c\1\0\1\burl1https://github.com/szebniok/tree-sitter-wgsl\twgsl\23get_parser_configs\28nvim-treesitter.parsers\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: neogen
-time([[Config for neogen]], true)
-try_loadstring("\27LJ\2\nQ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\19snippet_engine\vsnippy\nsetup\vneogen\frequire\0", "config", "neogen")
-time([[Config for neogen]], false)
 -- Config for: vim-markdown
 time([[Config for vim-markdown]], true)
 try_loadstring("\27LJ\2\n®\2\0\0\2\0\n\0\0296\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\0\0=\1\3\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\1\0=\1\6\0006\0\0\0009\0\1\0)\1\1\0=\1\a\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\1\0=\1\t\0K\0\1\0\"vim_markdown_json_frontmatter\"vim_markdown_toml_frontmatter\29vim_markdown_frontmatter\22vim_markdown_math\5\16tex_conceal\25vim_markdown_conceal\"vim_markdown_folding_disabled\6g\bvim\0", "config", "vim-markdown")
@@ -436,10 +424,22 @@ time([[Config for vim-markdown]], false)
 time([[Config for vim-floaterm]], true)
 try_loadstring("\27LJ\2\nà\1\0\0\2\0\6\2\r6\0\0\0009\0\1\0*\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\1\0=\1\3\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0K\0\1\0\nright\22floaterm_position\20floaterm_height\19floaterm_width\6g\bvim\1ÄÄÄˇ\3èÒå™\31ˇˇøˇ\3\0", "config", "vim-floaterm")
 time([[Config for vim-floaterm]], false)
+-- Config for: mind.nvim
+time([[Config for mind.nvim]], true)
+try_loadstring("\27LJ\2\n2\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\tmind\frequire\0", "config", "mind.nvim")
+time([[Config for mind.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\n“\6\0\0\6\0\27\0$6\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0025\1\a\0005\2\4\0005\3\5\0=\3\6\2=\2\b\1=\1\3\0006\1\0\0'\3\t\0B\1\2\0029\1\n\0015\3\v\0005\4\f\0=\4\r\0035\4\14\0=\4\15\0035\4\16\0005\5\17\0=\5\18\4=\4\19\0035\4\20\0005\5\21\0=\5\r\4=\4\22\0035\4\23\0004\5\0\0=\5\r\0045\5\24\0=\5\25\4=\4\26\3B\1\2\1K\0\1\0\15playground\16keybindings\1\0\n\14show_help\6?\14goto_node\t<cr>\vupdate\6R\21unfocus_language\6F\19focus_language\6f\28toggle_language_display\6I\27toggle_anonymous_nodes\6a\30toggle_injected_languages\6t\21toggle_hl_groups\6i\24toggle_query_editor\6o\1\0\3\20persist_queries\1\venable\2\15updatetime\3\25\vindent\1\4\0\0\vpython\6c\bcpp\1\0\1\venable\2\26incremental_selection\fkeymaps\1\0\4\22scope_incremental\bgrc\21node_incremental\bgrn\21node_decremental\bgrm\19init_selection\bgnn\1\0\1\venable\2\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\2\fdisable\1\2\0\0\rgdscript\1\0\1\21ensure_installed\ball\nsetup\28nvim-treesitter.configs\17install_info\1\0\0\nfiles\1\2\0\0\17src/parser.c\1\0\1\burl1https://github.com/szebniok/tree-sitter-wgsl\twgsl\23get_parser_configs\28nvim-treesitter.parsers\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 -- Config for: nvim-treesitter-context
 time([[Config for nvim-treesitter-context]], true)
-try_loadstring("\27LJ\2\nπ\1\0\0\5\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\3=\3\a\2B\0\2\1K\0\1\0\rpatterns\fdefault\1\0\0\1\b\0\0\nclass\rfunction\vmethod\bfor\nwhile\vswitch\tcase\1\0\3\rthrottle\2\venable\2\14max_lines\3\a\nsetup\23treesitter-context\frequire\0", "config", "nvim-treesitter-context")
+try_loadstring("\27LJ\2\nπ\1\0\0\5\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\3=\3\a\2B\0\2\1K\0\1\0\rpatterns\fdefault\1\0\0\1\b\0\0\nclass\rfunction\vmethod\bfor\nwhile\vswitch\tcase\1\0\3\14max_lines\3\a\rthrottle\2\venable\2\nsetup\23treesitter-context\frequire\0", "config", "nvim-treesitter-context")
 time([[Config for nvim-treesitter-context]], false)
+-- Config for: neogen
+time([[Config for neogen]], true)
+try_loadstring("\27LJ\2\nQ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\19snippet_engine\vsnippy\nsetup\vneogen\frequire\0", "config", "neogen")
+time([[Config for neogen]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

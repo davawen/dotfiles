@@ -1,10 +1,6 @@
 vim.g.mapleader = ";"
-map = vim.keymap.set
-function remap(mode, key, value)
-	map(mode, key, value, {
-		remap = true
-	})
-end
+
+local map, remap = unpack(require("utils.map"))
 
 -- Force h j k l
 map("n", "<Left>", "<nop>")
@@ -50,8 +46,10 @@ map("n", "d,", "^d0kJ")
 -- Telescope mappings
 local telescope = require('telescope.builtin')
 map("n", "<leader>ff", telescope.find_files)
+map("n", "<leader>fw", telescope.lsp_workspace_symbols)
 map("n", "<leader>fs", telescope.lsp_document_symbols)
 map("n", "<leader>fr", telescope.lsp_references)
+
 map("n", "<leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
 map("n", "<leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")
 -- Use ;ev to open config directory
@@ -65,7 +63,6 @@ local function open_config()
 	})
 end
 map("n", "<leader>ev", open_config)
-
 
 map("n", "<leader><left>", "<c-w>h")
 map("n", "<leader><right>", "<c-w>l")

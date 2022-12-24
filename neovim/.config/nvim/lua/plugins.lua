@@ -19,7 +19,9 @@ return require'packer'.startup(function(use)
 	use 'sainnhe/everforest'
 	use 'habamax/vim-polar'
 	use { 'catppuccin/nvim', as = 'catppuccin' }
-	use'nyoom-engineering/oxocarbon.nvim'
+
+	use 'ryanoasis/vim-devicons'
+	use 'kyazdani42/nvim-web-devicons'
 
 	use 'nvim-lualine/lualine.nvim'
 	use 'startup-nvim/startup.nvim'
@@ -120,12 +122,13 @@ return require'packer'.startup(function(use)
 	-- LSP
 	use { 'neovim/nvim-lspconfig',
 		requires = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 			'j-hui/fidget.nvim'
 		}
 	}
 	use 'onsails/lspkind-nvim'
 	use 'ray-x/lsp_signature.nvim'
-	use 'ojroques/nvim-lspfuzzy'
 
 	-- Debugging
 	use 'mfussenegger/nvim-dap'
@@ -192,7 +195,18 @@ return require'packer'.startup(function(use)
 			vim.g.floaterm_position = "right"
 		end
 	}
+	use 'stevearc/dressing.nvim'
 	use 'unblevable/quick-scope'
+
+	-- Notes
+	use {
+		'phaazon/mind.nvim',
+		branch = 'v2.2',
+		requires = { 'nvim-lua/plenary.nvim' },
+		config = function()
+			require'mind'.setup()
+		end
+	}
 
 	-- Other
 	use 'wakatime/vim-wakatime'
@@ -202,9 +216,9 @@ return require'packer'.startup(function(use)
 
 	use 'windwp/nvim-autopairs'
 	use 'tpope/vim-surround'
-	use { 'junegunn/fzf', run = function() vim.cmd([[ -> fzf#install() ]]) end }
-	use 'junegunn/fzf.vim'
-	use 'gfanto/fzf-lsp.nvim'
+	-- use { 'junegunn/fzf', run = function() vim.cmd([[ -> fzf#install() ]]) end }
+	-- use 'junegunn/fzf.vim'
+	-- use 'gfanto/fzf-lsp.nvim'
 	-- use 'kkharji/sqlite.lua'
 	use 'AckslD/nvim-neoclip.lua'
 	use 'fidian/hexmode'
@@ -216,8 +230,6 @@ return require'packer'.startup(function(use)
 	use 'edluffy/hologram.nvim'
 
 	use 'sotte/presenting.vim'
-	use 'ryanoasis/vim-devicons'
-	use 'kyazdani42/nvim-web-devicons'
 
 	if packer_bootstrap then
 		require('packer').sync()
