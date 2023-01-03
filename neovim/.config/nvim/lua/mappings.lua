@@ -2,6 +2,16 @@ vim.g.mapleader = ";"
 
 local map, remap = unpack(require("utils.map"))
 
+--- Returns a new function wich calls the given function with the given arguments
+---@param fn function
+---@param args any[]
+---@return function
+local function fn_args(fn, args)
+	return function()
+		fn(unpack(args))
+	end
+end
+
 -- Force h j k l
 map("n", "<Left>", "<nop>")
 map("n", "<Right>", "<nop>")
@@ -49,20 +59,23 @@ map("n", "<leader>ff", telescope.find_files)
 map("n", "<leader>fw", telescope.lsp_workspace_symbols)
 map("n", "<leader>fs", telescope.lsp_document_symbols)
 map("n", "<leader>fr", telescope.lsp_references)
+map("n", "<leader>fk", telescope.keymaps)
+map("n", "<leader>fg", telescope.live_grep)
 
 map("n", "<leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
 map("n", "<leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")
 -- Use ;ev to open config directory
-local function open_config()
+local function open_config(split)
 	-- Open over startup page if it is opened
-	if vim.bo.filetype ~= 'startup' then
+	if split and vim.bo.filetype ~= 'startup' then
 		vim.cmd [[exe "normal! \<Cmd>vsp\<Cr>\<C-w>l"]]
 	end
 	telescope.find_files({
 		cwd = "~/.config/nvim"
 	})
 end
-map("n", "<leader>ev", open_config)
+map("n", "<leader>evs", fn_args(open_config, { true }))
+map("n", "<leader>evv", fn_args(open_config, { false }))
 
 map("n", "<leader><left>", "<c-w>h")
 map("n", "<leader><right>", "<c-w>l")
