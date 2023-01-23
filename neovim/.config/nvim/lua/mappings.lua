@@ -61,6 +61,7 @@ map("n", "<leader>fs", telescope.lsp_document_symbols)
 map("n", "<leader>fr", telescope.lsp_references)
 map("n", "<leader>fk", telescope.keymaps)
 map("n", "<leader>fg", telescope.live_grep)
+map("n", "<leader>fd", telescope.diagnostics)
 
 map("n", "<leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
 map("n", "<leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")

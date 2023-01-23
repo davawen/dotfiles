@@ -5,7 +5,7 @@ function project
 	if test -n "$_flag_l"
 		set -f fd_out "$(fd --base-directory $prjdir --exclude Prototyping --max-depth=1)"
 	else
-		set -f fd_out "$(fd --base-directory $prjdir --exclude Prototyping --min-depth=2)"
+		set -f fd_out "$(fd --base-directory $prjdir --exclude Prototyping --exact-depth=2)"
 	end
 		
 	set fzf_out $(echo $fd_out | fzf --query="$argv")

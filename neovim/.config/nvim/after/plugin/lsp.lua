@@ -274,7 +274,7 @@ require('rust-tools').setup {
 	tools = { -- rust-tools options
         autoSetHints = true,
         inlay_hints = {
-            show_parameter_hints = false,
+            show_parameter_hints = true,
             parameter_hints_prefix = "",
             other_hints_prefix = "",
         },
@@ -287,7 +287,6 @@ require('rust-tools').setup {
 		standalone = true,
 		on_attach = on_attach,
 		capabilities = capabilities,
-		cmd = { "rust-analyzer" },
 		filetypes = { "rust" },
 		-- Single file opening should is implemented but not sure how to enable it
 		single_file_support = true,
