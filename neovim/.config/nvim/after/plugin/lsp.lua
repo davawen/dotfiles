@@ -164,7 +164,7 @@ lspconfig.tsserver.setup{
 		hostInfo = "neovim"
     },
     root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
-	single_file_support = true,
+	single_file_support = false,
 	capabilities = capabilities
 }
 

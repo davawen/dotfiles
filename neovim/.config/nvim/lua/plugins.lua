@@ -19,6 +19,7 @@ return require'packer'.startup(function(use)
 	use 'sainnhe/everforest'
 	use 'habamax/vim-polar'
 	use { 'catppuccin/nvim', as = 'catppuccin' }
+	use 'AlexvZyl/nordic.nvim'
 
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
