@@ -40,17 +40,21 @@ local act = wezterm.action
 
 return {
 	color_scheme = "Catppuccin Macchiato",
-	font = wezterm.font_with_fallback{ 'Greybeard 18px', 'Symbols Nerd Font' },
-	font_size = 13.5,
+	font = wezterm.font_with_fallback{ 'Greybeard 17px', 'Symbols Nerd Font' },
+	font_size = 12.75,
 	keys = {
 		{ key = 'LeftArrow', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
 		{ key = 'RightArrow', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
+		{ key = 'h', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
+		{ key = 'l', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
 		{ key = '<', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(-1) },
 		{ key = '>', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(1) },
 		{ key = 't', mods = 'CTRL|SHIFT', action = act.SpawnCommandInNewTab { cwd = '~' }},
 
 		{ key = 'UpArrow', mods = 'CTRL|SHIFT', action = act.ScrollByLine(-1) },
 		{ key = 'DownArrow', mods = 'CTRL|SHIFT', action = act.ScrollByLine(1) },
+		{ key = 'PageUp', mods = 'CTRL|SHIFT', action = act.ScrollByPage(-1) },
+		{ key = 'PageDown', mods = 'CTRL|SHIFT', action = act.ScrollByPage(1) },
 
 		{ key = ';', mods = 'CTRL|ALT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
 		{ key = "'", mods = 'CTRL|ALT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
@@ -60,12 +64,7 @@ return {
 		{ key = 'l', mods = 'CTRL|ALT', action = act.ActivatePaneDirection 'Right' },
 		{ key = 'w', mods = 'CTRL|ALT', action = act.CloseCurrentPane { confirm = false } }
 	},
-	hyperlink_rules = {
-		{
-			regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
-			format = '$0',
-		}
-	},
+	hide_mouse_cursor_when_typing = false,
 	tab_bar_at_bottom = true,
 	use_fancy_tab_bar = false,
 	window_frame = {

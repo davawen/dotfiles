@@ -129,6 +129,18 @@ require("mason-lspconfig").setup()
 
 local lspconfig = require('lspconfig')
 
+-- Disable virtual text for warnings
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+	vim.lsp.diagnostic.on_publish_diagnostics, {
+		underline = {
+			severity = { max = vim.diagnostic.severity.WARN }
+		},
+		virtual_text = {
+			severity = vim.diagnostic.severity.ERROR
+		}
+	}
+)
+
 lspconfig.clangd.setup{
 	on_attach = on_attach,
 	cmd = {
@@ -148,12 +160,16 @@ lspconfig.clangd.setup{
 	capabilities = capabilities,
 }
 
-lspconfig.jedi_language_server.setup{
+lspconfig.pyright.setup {
+	python = {
+		analysis = {
+			autoSearchPaths = true,
+			diagnosticMode = "workspace",
+			useLibraryCodeForTypes = true
+		}
+	},
 	on_attach = on_attach,
-	cmd = { "jedi-language-server" },
-	filetypes = { "python" },
-	single_file_support = true,
-	capabilities = capabilities,
+	capabilities = capabilities
 }
 
 lspconfig.tsserver.setup{
@@ -285,6 +301,7 @@ require('rust-tools').setup {
 		-- standalone file support
 		-- setting it to false may improve startup time
 		standalone = true,
+		cmd = { "rustup",  "run", "stable", "rust-analyzer" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "rust" },
@@ -309,6 +326,17 @@ lspconfig.wgsl_analyzer.setup{
 	capabilities = capabilities,
 }
 
+local function sumneko_workspace()
+	local library = {
+		vim.fn.expand("~/.luarocks/share/lua/5.4"),
+		"/usr/share/lua/5.4/",
+		vim.fn.expand("~/.config/nvim/lua"),
+		vim.fn.expand("~/.config/nvim/after"),
+	}
+
+	return library
+end
+
 lspconfig.sumneko_lua.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -325,13 +353,7 @@ lspconfig.sumneko_lua.setup {
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
-				library = {
-					vim.fn.expand("~/.luarocks/share/lua/5.4"),
-					"/usr/share/lua/5.4/",
-					"~/.config/nvim/lua",
-					"~/.config/nvim/after",
-					-- unpack(vim.api.nvim_get_runtime_file("", true)), -- NOTE: Works fine as long as `unpack` is last in the table creation
-				},
+				library = sumneko_workspace(),
 				checkThirdParty = false
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier

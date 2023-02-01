@@ -48,8 +48,9 @@ alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 
 abbr dinstall "sudo dnf install"
 abbr dupdate "sudo dnf update"
-abbr dsearch "sudo dnf search -C"
-abbr dlist "sudo dnf list -C"
+abbr dsearch "dnf search -C"
+abbr dprovides "dnf provides -C"
+abbr dlist "dnf list -C"
 
 alias pls='sudo $(fc -ln -1)'
 alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAWF8270723'

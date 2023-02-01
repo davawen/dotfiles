@@ -18,6 +18,12 @@ map("n", "<Right>", "<nop>")
 map("n", "<Up>", "<nop>")
 map("n", "<Down>", "<nop>")
 
+-- Make j and k move by visible line for wrapped lines
+map("n", "j", "gj")
+map("n", "k", "gk")
+map("n", "gj", "j")
+map("n", "gk", "k")
+
 -- Space opens command menu
 map("n", "<space>", ":")
 
