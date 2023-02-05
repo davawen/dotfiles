@@ -1,1 +1,0 @@
-/mnt/Projects/Lua/saver-nvim/lua/saver.lua
