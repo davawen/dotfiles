@@ -19,8 +19,7 @@ vim.api.nvim_create_user_command('Save', function ()
 	vim.fn.mkdir(vim.fn.expand("~/.local/state/nvim/saver/"), "p")
 	vim.cmd [[ cd ~/.local/state/nvim/saver/ ]]
 
-	vim.cmd [[ mksession! ]]
-	vim.cmd([[ call rename("Session.vim", "]] .. escaped .. [[") ]])
+	vim.cmd([[ mksession! ]] .. escaped)
 	vim.cmd([[ cd ]] .. pwd)
 end, {})
 

@@ -130,6 +130,8 @@ return require'packer'.startup(function(use)
 	}
 	use 'onsails/lspkind-nvim'
 	use 'ray-x/lsp_signature.nvim'
+	use 'simrat39/rust-tools.nvim'
+	use 'mhartington/formatter.nvim'
 
 	-- Debugging
 	use 'mfussenegger/nvim-dap'
@@ -147,8 +149,6 @@ return require'packer'.startup(function(use)
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'dcampos/cmp-snippy'
 	use 'weilbith/nvim-code-action-menu'
-	use 'simrat39/rust-tools.nvim'
-	use 'mhartington/formatter.nvim'
 
 	-- Syntax highlight
 	use 'brgmnn/vim-opencl'
@@ -228,7 +228,6 @@ return require'packer'.startup(function(use)
 	use 'nvim-lua/plenary.nvim'
 	use 'folke/todo-comments.nvim'
 	use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" } }
-	use 'edluffy/hologram.nvim'
 
 	use 'sotte/presenting.vim'
 

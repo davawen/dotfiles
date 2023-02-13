@@ -18,6 +18,9 @@ vim.cmd [[ source ~/.config/nvim/variables.vim ]]
 
 vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}]]
 
+vim.cmd [[ set guifont=Greybeard\ 17px:h12.75 ]]
+-- vim.opt.guifont = { "Greybeard 17px", "h12.75" }
+
 -- Cmp Highlight
 local highlights = {
 	CmpItemAbbrDeprecated = { bg = "NONE", strikethrough = true, fg = "#616E88" },
@@ -118,9 +121,9 @@ require('startup').setup{
 	theme = "dashboard"
 }
 
-require('hologram').setup{
-    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
-}
+-- require('hologram').setup{
+--     auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+-- }
 
 -- nvim-cmp/snippets configuration
 -- local has_words_before = function()
