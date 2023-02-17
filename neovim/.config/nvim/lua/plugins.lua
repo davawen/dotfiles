@@ -57,7 +57,7 @@ return require'packer'.startup(function(use)
 				},
 				indent = {
 					enable = true,
-					disable = { "python", "cpp" }
+					disable = { "c", "python", "cpp" }
 				},
 				playground = {
 				enable = true,
@@ -161,19 +161,6 @@ return require'packer'.startup(function(use)
 	use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
 	use { 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' }
 	use 'godlygeek/tabular'
-	use { 'plasticboy/vim-markdown',
-		config = function ()
-			vim.g.vim_markdown_folding_disabled = 1
-			vim.g.vim_markdown_conceal = 0
-	
-			vim.g.tex_conceal = ""
-			vim.g.vim_markdown_math = 1
-	
-			vim.g.vim_markdown_frontmatter = 1  -- for YAML format
-			vim.g.vim_markdown_toml_frontmatter = 1  -- for TOML format
-			vim.g.vim_markdown_json_frontmatter = 1  -- for JSON format
-		end
-	}
 	use 'habamax/vim-godot'
 	use { 'xuhdev/vim-latex-live-preview', opt = true }
 
