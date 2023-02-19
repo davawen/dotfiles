@@ -177,6 +177,11 @@ lspconfig.pyright.setup {
 	capabilities = capabilities
 }
 
+lspconfig.cssls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities
+}
+
 lspconfig.tsserver.setup{
 	on_attach = on_attach,
 	cmd = { "typescript-language-server", "--stdio" },
@@ -306,7 +311,7 @@ require('rust-tools').setup {
 		-- standalone file support
 		-- setting it to false may improve startup time
 		standalone = true,
-		cmd = { "rustup",  "run", "stable", "rust-analyzer" },
+		cmd = { "rustup",  "run", "nightly", "rust-analyzer" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "rust" },
