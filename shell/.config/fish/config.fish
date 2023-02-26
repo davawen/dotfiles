@@ -59,3 +59,5 @@ alias clone='git clone --depth 1'
 alias ytdl='yt-dlp'
 alias xclipc='xclip -selection clipboard'
 
+# Starship
+starship init fish | source

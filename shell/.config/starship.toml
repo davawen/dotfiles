@@ -1,0 +1,68 @@
+# ~/dotfiles/shell/.config/starship.toml
+
+format = """
+$directory\
+$username\
+$fossil_branch\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$rust\
+$c\
+$meson\
+$deno\
+$nodejs\
+$go\
+$battery\
+$fill\
+$cmd_duration\
+$memory_usage\
+$time 
+$character"""
+
+add_newline = false
+
+[battery.display]
+threshold = 70
+
+[c]
+detect_extensions = ['c', 'h', 'cpp', 'hpp', 'cxx']
+detect_files = ["Makefile", "CMakeLists.txt"]
+
+[cmd_duration]
+style = 'bold black'
+
+[directory]
+truncation_length = 5
+truncation_symbol='···/'
+style = 'green'
+# fish_style_pwd_dir_length=3
+
+[git_branch]
+format = '[ @ $symbol$branch(:$remote_branch)]($style) '
+style = "#b7bdf8"
+
+[git_status]
+style = "#ed8796"
+
+[fill]
+symbol = ' ·'
+style = 'black'
+
+[memory_usage]
+disabled = false
+threshold = 30
+format = '[${ram}]($style) '
+style = "white"
+
+[username]
+format = '[\[$user\]]($style)'
+show_always = true
+style_user = "bold #f5a97f"
+
+[time]
+format = '[$time](yellow)'
+time_format = '%T'
+disabled = false

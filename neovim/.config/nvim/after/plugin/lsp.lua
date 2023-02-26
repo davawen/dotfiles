@@ -136,10 +136,13 @@ local lspconfig = require('lspconfig')
 -- Disable virtual text for warnings
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics, {
-		virtual_text = false,
+		virtual_text = {
+			severity = vim.diagnostic.severity.ERROR
+		},
 		underline = {
 			severity = { min = vim.diagnostic.severity.WARN }
-		}
+		},
+		severity_sort = true
 		-- virtual_text = {
 		-- 	severity = vim.diagnostic.severity.ERROR
 		-- }
