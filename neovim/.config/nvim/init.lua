@@ -21,7 +21,7 @@ vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'
 vim.cmd [[ set guifont=Greybeard\ 17px:h12.75 ]]
 -- vim.opt.guifont = { "Greybeard 17px", "h12.75" }
 
--- Cmp Highlight
+-- Set Highlights
 local highlights = {
 	CmpItemAbbrDeprecated = { bg = "NONE", strikethrough = true, fg = "#616E88" },
 	CmpItemAbbrMatch = { bg = "NONE", fg = "#B48EAD" },
@@ -39,6 +39,11 @@ local highlights = {
 	CmpItemKindEnum = { bg = "NONE", fg = "#EBCB8B" },
 	CmpItemKindEnumMember = { bg = "NONE", fg = "#EBCB8B" },
 	CmpItemKindConstant = { bg = "NONE", fg = "#EBCB8B" },
+
+	-- Use undercurls for warnings and lower
+	DiagnosticUnderlineWarn = { undercurl = true, sp = "#eed49f" },
+	DiagnosticUnderlineInfo = { undercurl = true, sp = "#91d7e3" },
+	DiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" }
 }
 
 for group, values in pairs(highlights) do
