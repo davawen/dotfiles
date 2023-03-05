@@ -8,6 +8,12 @@ vim.filetype.add({
 
 vim.filetype.add({
 	extension = {
+		bike = "bikelang"
+	}
+})
+
+vim.filetype.add({
+	extension = {
 		wgsl = "wgsl"
 	}
 })

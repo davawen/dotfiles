@@ -43,7 +43,10 @@ local highlights = {
 	-- Use undercurls for warnings and lower
 	DiagnosticUnderlineWarn = { undercurl = true, sp = "#eed49f" },
 	DiagnosticUnderlineInfo = { undercurl = true, sp = "#91d7e3" },
-	DiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" }
+	DiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" },
+
+	-- Overwrite catpuccin fold
+	Folded = { bg = "NONE", fg = "#6e738d" }
 }
 
 for group, values in pairs(highlights) do
@@ -65,19 +68,26 @@ npairs.setup {
 		keys = 'asdfghjkl',
 		check_comma = true,
 		highlight = 'Search',
-		highlight_grey='Comment'
+		highlight_grey = 'Comment'
 	}
 }
 
 local Rule = require('nvim-autopairs.rule')
 local cond = require('nvim-autopairs.conds')
 
+npairs.add_rule(
+	Rule("`", "`", { "markdown" })
+		:with_cr(cond.none())
+)
+
+npairs.remove_rule('```')
+
 -- Template generics
 npairs.add_rule(
 	Rule("<", ">")
 		:with_pair(cond.before_regex("%w"))
 )
--- Latex brackes
+-- Latex brackets
 npairs.add_rule(
 	Rule('\\[', '\\]', { "tex", "latex" })
 		:with_cr(cond.none())

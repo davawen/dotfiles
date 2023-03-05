@@ -46,6 +46,10 @@ style = "#b7bdf8"
 
 [git_status]
 style = "#ed8796"
+ahead = '[⇡$count](cyan)'
+behind = '[⇣$count](cyan)'
+modified = '!$count'
+staged = '[+$count](yellow)'
 
 [fill]
 symbol = ' ·'

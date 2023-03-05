@@ -20,6 +20,7 @@ return require'packer'.startup(function(use)
 	use 'habamax/vim-polar'
 	use { 'catppuccin/nvim', as = 'catppuccin' }
 	use 'AlexvZyl/nordic.nvim'
+	use 'joshdick/onedark.vim'
 	
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
@@ -183,7 +184,16 @@ return require'packer'.startup(function(use)
 			vim.g.floaterm_position = "right"
 		end
 	}
-	use 'stevearc/dressing.nvim'
+	use { 'stevearc/dressing.nvim',
+		config = function ()
+			require('dressing').setup {
+				input = {
+					insert_only = false,
+					start_in_insert = true,
+				}
+			}
+		end
+	}
 	use 'unblevable/quick-scope'
 
 	-- Notes
