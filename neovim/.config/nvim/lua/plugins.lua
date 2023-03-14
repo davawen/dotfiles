@@ -21,10 +21,10 @@ return require'packer'.startup(function(use)
 	use { 'catppuccin/nvim', as = 'catppuccin' }
 	use 'AlexvZyl/nordic.nvim'
 	use 'joshdick/onedark.vim'
-	
+
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
-	
+
 	use 'nvim-lualine/lualine.nvim'
 	use 'startup-nvim/startup.nvim'
 
@@ -32,14 +32,6 @@ return require'packer'.startup(function(use)
 	use { 'nvim-treesitter/nvim-treesitter',
 		run = ":TSUpdate",
 		config = function ()
-			local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-			parser_config.wgsl = {
-				install_info = {
-					url = "https://github.com/szebniok/tree-sitter-wgsl",
-					files = {"src/parser.c"}
-				},
-			}
-
 			require('nvim-treesitter.configs').setup {
 				ensure_installed = "all",
 				disable = { "gdscript" },
@@ -124,10 +116,15 @@ return require'packer'.startup(function(use)
 	-- LSP
 	use { 'neovim/nvim-lspconfig',
 		requires = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
 			'j-hui/fidget.nvim'
 		}
+	}
+	use { 'j-hui/fidget.nvim',
+		config = function ()
+			require('fidget').setup {}
+		end
 	}
 	use 'onsails/lspkind-nvim'
 	use 'ray-x/lsp_signature.nvim'
