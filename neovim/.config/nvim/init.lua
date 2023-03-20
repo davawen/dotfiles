@@ -46,7 +46,10 @@ local highlights = {
 	DiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" },
 
 	-- Overwrite catpuccin fold
-	Folded = { bg = "NONE", fg = "#6e738d" }
+	Folded = { bg = "NONE", fg = "#6e738d" },
+
+	-- Overwrite horrendous buffer line visible color
+	TabLineSel = { bg = "#1e2030", fg = "#81a1c1" },
 }
 
 for group, values in pairs(highlights) do
@@ -405,7 +408,7 @@ map('n', '<A-6>', '<Cmd>BufferGoto 6<Cr>')
 map('n', '<A-7>', '<Cmd>BufferGoto 7<Cr>')
 map('n', '<A-8>', '<Cmd>BufferGoto 8<Cr>')
 map('n', '<A-9>', '<Cmd>BufferGoto 9<Cr>')
-map('n', '<A-9>', '<Cmd>BufferLast 9<Cr>')
+map('n', '<A-0>', '<Cmd>BufferGoto 10<Cr>')
 
 -- map('n', '<silent>dbe', '<Cmd>BufferLineSortByExtension<Cr>')
 -- map('n', '<silent>dbd', '<Cmd>BufferLineSortByDirectory<Cr>')
@@ -438,7 +441,9 @@ _G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
 
 -- Telescope.nvim
 require('telescope').setup {
-	defaults = { file_ignore_patterns = { "build", "dist", "node_modules" } } 
+	defaults = {
+		file_ignore_patterns = { "build", "dist", "node_modules", "Cargo.lock" }
+	}
 }
 
 -- neotree.nvim

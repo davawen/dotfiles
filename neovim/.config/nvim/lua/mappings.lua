@@ -41,7 +41,7 @@ map("v", "p", '"_dP')
 map("n", "<leader>;", "mpA;<esc>`p")
 
 -- ;s cycles through unnamed and clipboard registers
-map("n", "<Leader>s", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
+map("n", "<leader>c", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
 map("n", "<leader>te", "<Cmd>FloatermToggle<Cr>")
@@ -58,6 +58,9 @@ map("t", "<esc>", "<C-\\><C-n>")
 
 -- Quick return to line
 map("n", "d,", "^d0kJ")
+
+-- Wrap selection in braces and break lines
+map("v", "<leader>S", [[di{<CR><CR>}<ESC>k"_Sx<ESC>p^x$]])
 
 -- Telescope mappings
 local telescope = require('telescope.builtin')

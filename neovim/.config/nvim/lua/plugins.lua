@@ -21,6 +21,7 @@ return require'packer'.startup(function(use)
 	use { 'catppuccin/nvim', as = 'catppuccin' }
 	use 'AlexvZyl/nordic.nvim'
 	use 'joshdick/onedark.vim'
+	use 'rebelot/kanagawa.nvim'
 
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
@@ -174,13 +175,6 @@ return require'packer'.startup(function(use)
 	}
 	use 'romgrk/barbar.nvim'
 	use { 'mg979/vim-visual-multi', branch = 'master'}
-	use { 'voldikss/vim-floaterm',
-		config = function ()
-			vim.g.floaterm_width = 0.5
-			vim.g.floaterm_height = 0.99999999 -- avoid implicit conversion to int
-			vim.g.floaterm_position = "right"
-		end
-	}
 	use { 'stevearc/dressing.nvim',
 		config = function ()
 			require('dressing').setup {
@@ -192,6 +186,15 @@ return require'packer'.startup(function(use)
 		end
 	}
 	use 'unblevable/quick-scope'
+	use { 'ggandor/leap.nvim',
+		config = function ()
+			require('leap').setup {}
+
+			vim.keymap.set("n", '<leader>s', '<Plug>(leap-forward-to)')
+			vim.keymap.set("n", '<leader>S', '<Plug>(leap-backward-to)')
+		end,
+		requires = 'tpope/vim-repeat'
+	}
 
 	-- Notes
 	use {
@@ -200,6 +203,20 @@ return require'packer'.startup(function(use)
 		requires = { 'nvim-lua/plenary.nvim' },
 		config = function()
 			require'mind'.setup()
+		end
+	}
+
+	-- Terminal
+	use { 'voldikss/vim-floaterm',
+		config = function ()
+			vim.g.floaterm_width = 0.5
+			vim.g.floaterm_height = 0.99999999 -- avoid implicit conversion to int
+			vim.g.floaterm_position = "right"
+		end
+	}
+	use { 'willothy/flatten.nvim',
+		config = function ()
+			require('flatten').setup {}
 		end
 	}
 

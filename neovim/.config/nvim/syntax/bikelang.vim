@@ -18,7 +18,7 @@ syntax match bikeStringEscape '\\.' contained
 syntax region bikeComment start='//' end='$'
 syntax region bikeString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=bikeStringEscape
 
-syntax keyword bikeKeyword func let return break loop if else
+syntax keyword bikeKeyword func let return break loop if else type struct
 syntax keyword bikeBool true false
 syntax keyword bikeType u8 i8 u32 i32 u64 i64 bool void str
 
