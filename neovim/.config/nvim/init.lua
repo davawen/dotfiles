@@ -134,11 +134,6 @@ vim.api.nvim_create_autocmd("BufNew", {
 -- Comment.nvim setup
 require('Comment').setup()
 
--- Startup.nvim
-require('startup').setup{
-	theme = "dashboard"
-}
-
 -- require('hologram').setup{
 --     auto_display = true -- WIP automatic markdown image display, may be prone to breaking
 -- }

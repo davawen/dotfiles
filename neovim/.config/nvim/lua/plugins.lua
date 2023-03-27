@@ -27,7 +27,11 @@ return require'packer'.startup(function(use)
 	use 'kyazdani42/nvim-web-devicons'
 
 	use 'nvim-lualine/lualine.nvim'
-	use 'startup-nvim/startup.nvim'
+	use { 'willothy/veil.nvim',
+		config = function ()
+			require('veil').setup {}
+		end
+	}
 
 	-- Treesitter
 	use { 'nvim-treesitter/nvim-treesitter',
@@ -219,6 +223,15 @@ return require'packer'.startup(function(use)
 			require('flatten').setup {}
 		end
 	}
+
+	-- Git
+	use {
+		'lewis6991/gitsigns.nvim',
+		config = function()
+			require('gitsigns').setup()
+		end
+	}
+	use 'tpope/vim-fugitive'
 
 	-- Other
 	use 'wakatime/vim-wakatime'

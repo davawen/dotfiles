@@ -40,7 +40,7 @@ map("v", "p", '"_dP')
 -- ;; add semicolon at the end of the line
 map("n", "<leader>;", "mpA;<esc>`p")
 
--- ;s cycles through unnamed and clipboard registers
+-- ;c cycles through unnamed and clipboard registers
 map("n", "<leader>c", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
