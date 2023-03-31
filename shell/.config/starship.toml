@@ -24,8 +24,9 @@ $character"""
 
 add_newline = false
 
-[battery.display]
-threshold = 70
+[[battery.display]]
+threshold = 95
+style = 'white'
 
 [c]
 detect_extensions = ['c', 'h', 'cpp', 'hpp', 'cxx']
