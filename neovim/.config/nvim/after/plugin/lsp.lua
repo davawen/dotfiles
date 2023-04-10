@@ -54,6 +54,9 @@ cmp.setup({
 		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
 	},
+	performance = {
+		debounce = 100
+	},
 
 	snippet = {
 		expand = function(args)

@@ -22,6 +22,7 @@ return require'packer'.startup(function(use)
 	use 'AlexvZyl/nordic.nvim'
 	use 'joshdick/onedark.vim'
 	use 'rebelot/kanagawa.nvim'
+	use { "bluz71/vim-nightfly-colors", as = "nightfly" }
 
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
@@ -232,6 +233,7 @@ return require'packer'.startup(function(use)
 		end
 	}
 	use 'tpope/vim-fugitive'
+	use 'wintermute-cell/gitignore.nvim'
 
 	-- Other
 	use 'wakatime/vim-wakatime'

@@ -1,8 +1,8 @@
 {
 	"CrabTest": {
 		"firstPlayed": "2020-05-04T15:36:32.215Z",
-		"lastPlayed": "2023-04-03T12:43:05.603Z",
-		"totalPlayed": 17556
+		"lastPlayed": "2023-04-10T16:18:11.404Z",
+		"totalPlayed": 18290
 	},
 	"Barbet": {
 		"firstPlayed": "2021-11-08T20:08:50.274Z",
@@ -23,5 +23,10 @@
 		"firstPlayed": "2023-03-04T22:31:16.210Z",
 		"lastPlayed": "2023-03-04T22:33:44.914Z",
 		"totalPlayed": 2
+	},
+	"e87a43f695bc409ca8858206678ac7e7": {
+		"firstPlayed": "2023-04-09T21:49:25.692Z",
+		"lastPlayed": "2023-04-09T22:00:56.103Z",
+		"totalPlayed": 11
 	}
 }

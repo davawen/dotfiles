@@ -41,7 +41,7 @@ map("v", "p", '"_dP')
 map("n", "<leader>;", "mpA;<esc>`p")
 
 -- ;c cycles through unnamed and clipboard registers
-map("n", "<leader>c", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
+map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
 map("n", "<leader>te", "<Cmd>FloatermToggle<Cr>")
