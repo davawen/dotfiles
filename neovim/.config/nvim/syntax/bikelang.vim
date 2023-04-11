@@ -3,6 +3,8 @@
 "
 " Usage: put this in your $MYVIMRUNTIME/syntax directory
 
+set commentstring=//%s
+
 if exists("b:current_syntax")
 	finish
 endif
