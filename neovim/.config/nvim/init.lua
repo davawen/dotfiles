@@ -19,7 +19,7 @@ vim.cmd [[ source ~/.config/nvim/variables.vim ]]
 vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}]]
 
 vim.cmd [[ set guifont=Greybeard\ 17px:h12.75 ]]
--- vim.opt.guifont = { "Greybeard 17px", "h12.75" }
+vim.cmd [[ let g:c_syntax_for_h = 1 ]] -- Set *.h files to be c instead of cpp
 
 -- Set Highlights
 local highlights = {

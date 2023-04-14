@@ -52,6 +52,8 @@ abbr dsearch "dnf search -C"
 abbr dprovides "dnf provides -C"
 abbr dlist "dnf list -C"
 
+abbr clang20 "clang++ -std=c++20"
+
 alias pls='sudo $(fc -ln -1)'
 alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAWF8270723'
 

@@ -17,3 +17,9 @@ vim.filetype.add({
 		wgsl = "wgsl"
 	}
 })
+
+vim.filetype.add({
+	extension = {
+		mpp = "cpp"
+	}
+})
