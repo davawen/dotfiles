@@ -38,6 +38,14 @@ return require'packer'.startup(function(use)
 	use { 'nvim-treesitter/nvim-treesitter',
 		run = ":TSUpdate",
 		config = function ()
+			local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+			parser_config.opencl = {
+				install_info = {
+					url = "https://github.com/lefp/tree-sitter-opencl",
+					files = { "src/parser.c" }
+				}
+			}
+
 			require('nvim-treesitter.configs').setup {
 				ensure_installed = "all",
 				disable = { "gdscript" },
@@ -77,9 +85,11 @@ return require'packer'.startup(function(use)
 				},
 			  }
 			}
+
+			vim.o.foldlevelstart = 99
 		end
 	}
-	use { 'romgrk/nvim-treesitter-context',
+	use { 'nvim-treesitter/nvim-treesitter-context',
 		requires = 'nvim-treesitter',
 		config = function ()
 			require('treesitter-context').setup {
