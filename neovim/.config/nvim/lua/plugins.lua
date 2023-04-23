@@ -213,11 +213,15 @@ return require'packer'.startup(function(use)
 
 	-- Notes
 	use {
-		'phaazon/mind.nvim',
-		branch = 'v2.2',
-		requires = { 'nvim-lua/plenary.nvim' },
-		config = function()
-			require'mind'.setup()
+		'lervag/wiki.vim',
+		config = function ()
+			vim.g.wiki_root = '~/wiki'
+			vim.cmd [[
+				augroup WikiGroup
+					autocmd!
+					autocmd User WikiBufferInitialized nnoremap gf <plug>(wiki-link-follow)
+				augroup END
+			]]
 		end
 	}
 

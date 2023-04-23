@@ -55,7 +55,7 @@ cmp.setup({
 		{ name = "buffer", keyword_length = 5 },
 	},
 	performance = {
-		debounce = 300
+		-- debounce = 1000
 	},
 	snippet = {
 		expand = function(args)
@@ -150,7 +150,19 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 lspconfig.clangd.setup{
-	on_attach = on_attach,
+	on_attach = function (client, bufnr)
+		on_attach(client, bufnr)
+		local augroup = vim.api.nvim_create_augroup("ClangdGroup", {})
+		vim.api.nvim_create_autocmd("CursorHoldI", {
+			pattern = "*",
+			callback = function ()
+				if cmp.visible() then
+					cmp.complete()
+				end
+			end,
+			group = augroup
+		})
+	end,
 	cmd = {
 		"clangd",
 		"--background-index",
@@ -161,9 +173,9 @@ lspconfig.clangd.setup{
 		compilationDatabasePath = "build"
 	},
 	filetypes = { "c", "cpp", "cuda", "opencl" },
-	--[[ flags = {
+	flags = {
 		debounce_text_changes = 150
-	}, ]]
+	},
     root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua"),
 	capabilities = capabilities,
 }

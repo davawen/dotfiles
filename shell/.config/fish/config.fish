@@ -15,6 +15,7 @@ set -g prjdir "/mnt/Projects"
 
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/opt/rocm/lib:/opt/rocm/lib64"
 set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$(yarn global bin):$HOME/.local/share/cargo/bin/:/usr/local/cuda/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin:/opt/rocm/bin:/opt/rocm/opencl/bin:$HOME/.local/share/go/bin"
+set -gx VCPKG_ROOT "$HOME/.local/share/vcpkg/"
 set -gx LS_COLORS "ow=36:"
 
 set -gx TASKDDATA /var/taskd

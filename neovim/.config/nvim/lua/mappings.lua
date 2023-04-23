@@ -97,6 +97,9 @@ map("n", "<leader>l", "<c-w>l")
 map("n", "<leader>k", "<c-w>k")
 map("n", "<leader>j", "<c-w>j")
 
+-- wiki.vim mappings
+map("n", "<leader>wf", "<plug>(wiki-pages)")
+
 -- vim-easy-align
 -- Start interactive EasyAlign in visual mode (e.g. vipga)
 map("x", "ga", "<Plug>(EasyAlign)")
