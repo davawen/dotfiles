@@ -49,9 +49,9 @@ alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 
 abbr dinstall "sudo dnf install"
 abbr dupdate "sudo dnf update"
-abbr dsearch "dnf search -C"
-abbr dprovides "dnf provides -C"
-abbr dlist "dnf list -C"
+abbr dsearch "dnf --nogpgcheck -C search"
+abbr dprovides "dnf --nogpgcheck -C provides"
+abbr dlist "dnf --nogpgcheck -C list"
 
 abbr clang20 "clang++ -std=c++20"
 
