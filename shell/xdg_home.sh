@@ -25,7 +25,6 @@ alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export KDEHOME="$XDG_CONFIG_HOME"/kde
 export MPLAYER_HOME="$XDG_CONFIG_HOME"/mplayer
 export WINEPREFIX="$XDG_DATA_HOME"/wine

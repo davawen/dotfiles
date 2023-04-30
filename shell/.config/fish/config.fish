@@ -47,11 +47,11 @@ alias l='lsd -la'
 
 alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 
-abbr dinstall "sudo dnf install"
-abbr dupdate "sudo dnf update"
-abbr dsearch "dnf --nogpgcheck -C search"
-abbr dprovides "dnf --nogpgcheck -C provides"
-abbr dlist "dnf --nogpgcheck -C list"
+abbr dnfi "sudo dnf install"
+abbr dnfu "sudo dnf update"
+abbr dnfs "sudo dnf -C search"
+abbr dnfp "sudo dnf -C provides"
+abbr dnfl "sudo dnf -C list"
 
 abbr clang20 "clang++ -std=c++20"
 
