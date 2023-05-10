@@ -224,9 +224,7 @@ lspconfig.denols.setup {
 
 lspconfig.svelte.setup{
 	on_attach = on_attach,
-	cmd = { "svelteserver", "--stdio" },
-	filetypes = { "svelte" },
-	root_dir = lspconfig.util.root_pattern("package.json"),
+	root_dir = lspconfig.util.root_pattern("svelte.config.js"),
 }
 
 lspconfig.omnisharp.setup{

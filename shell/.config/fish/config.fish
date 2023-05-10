@@ -5,11 +5,7 @@ end
 set fzf_fd_opts --hidden
 set -g theme_color_scheme terminal
 
-fenv source "$HOME/xdg_home.sh"
-
-for f in $HOME/.config/shell/*
-	fenv source $f
-end
+# fenv source "$HOME/xdg_home.sh"
 
 set -g prjdir "/mnt/Projects"
 
