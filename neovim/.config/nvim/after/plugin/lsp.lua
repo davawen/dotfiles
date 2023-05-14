@@ -85,7 +85,9 @@ cmp.setup({
 	-- 	documentation = cmp.config.window.bordered()
 	-- },
 	experimental = {
-		ghost_text = true
+		ghost_text = {
+			enabled = true
+		}
 	},
 })
 
@@ -193,6 +195,11 @@ lspconfig.pyright.setup {
 }
 
 lspconfig.cssls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities
+}
+
+lspconfig.html.setup {
 	on_attach = on_attach,
 	capabilities = capabilities
 }

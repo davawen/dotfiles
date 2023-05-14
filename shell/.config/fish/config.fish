@@ -10,7 +10,26 @@ set -g theme_color_scheme terminal
 set -g prjdir "/mnt/Projects"
 
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/opt/rocm/lib:/opt/rocm/lib64"
-set -gx PATH "$PATH:$HOME/.local/bin:$(npm config get prefix)/bin:$(yarn global bin):$HOME/.local/share/cargo/bin/:/usr/local/cuda/bin:/usr/sbin:/usr/share/sbin:$DENO_INSTALL/bin:/opt/rocm/bin:/opt/rocm/opencl/bin:$HOME/.local/share/go/bin"
+
+function add_path
+	if not string match -q -- "$argv" $PATH
+	  set -gx PATH $PATH "$argv" 
+	end
+end
+
+set -gx PNPM_HOME "/home/davawen/.local/share/pnpm"
+add_path "$PNPM_HOME"
+add_path "$HOME/.local/bin"
+# WARNING: Those two require PNPM above to be in the path and everything breaks if they are'nt
+add_path "$(npm config get prefix)/bin"
+add_path "$(yarn global bin)"
+add_path "$HOME/.local/share/cargo/bin/"
+add_path "/usr/local/cuda/bin"
+add_path "$DENO_INSTALL/bin"
+add_path "/opt/rocm/bin"
+add_path "/opt/rocm/opencl/bin"
+add_path "$HOME/.local/share/go/bin"
+
 set -gx VCPKG_ROOT "$HOME/.local/share/vcpkg/"
 set -gx LS_COLORS "ow=36:"
 
@@ -60,10 +79,3 @@ alias xclipc='xclip -selection clipboard'
 
 # Starship
 starship init fish | source
-
-# pnpm
-set -gx PNPM_HOME "/home/davawen/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
