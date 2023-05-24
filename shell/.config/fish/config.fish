@@ -5,7 +5,7 @@ end
 set fzf_fd_opts --hidden
 set -g theme_color_scheme terminal
 
-# fenv source "$HOME/xdg_home.sh"
+fenv source "$HOME/xdg_home.sh"
 
 set -g prjdir "/mnt/Projects"
 
@@ -29,6 +29,7 @@ add_path "$DENO_INSTALL/bin"
 add_path "/opt/rocm/bin"
 add_path "/opt/rocm/opencl/bin"
 add_path "$HOME/.local/share/go/bin"
+add_path "$HOME/.deno/bin/deno"
 
 set -gx VCPKG_ROOT "$HOME/.local/share/vcpkg/"
 set -gx LS_COLORS "ow=36:"
