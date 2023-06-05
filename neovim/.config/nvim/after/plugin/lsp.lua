@@ -55,7 +55,9 @@ cmp.setup({
 		{ name = "buffer", keyword_length = 5 },
 	},
 	performance = {
-		-- debounce = 1000
+		-- debounce = 1000,
+		-- throttle = 100,
+		async_budget = 60
 	},
 	snippet = {
 		expand = function(args)
@@ -234,9 +236,12 @@ lspconfig.svelte.setup{
 }
 
 lspconfig.omnisharp.setup{
-	on_attach = on_attach,
+	on_attach = function (client, bufnr)
+		on_attach(client, bufnr)
+		client.server_capabilities.semanticTokensProvider = nil
+	end,
 	filetypes = { "cs", "vb" },
-	cmd = { "mono", "/home/davawen/.local/bin/omnisharp/OmniSharp.exe" },
+	-- cmd = { "mono", "/home/davawen/.local/bin/omnisharp/OmniSharp.exe" },
 	-- Enables support for reading code style, naming convention and analyzer
     -- settings from .editorconfig.
     enable_editorconfig_support = true,
@@ -331,7 +336,7 @@ require('rust-tools').setup {
 		-- standalone file support
 		-- setting it to false may improve startup time
 		standalone = true,
-		cmd = { "rustup",  "run", "nightly", "rust-analyzer" },
+		cmd = { "rustup",  "run", "stable", "rust-analyzer" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "rust" },

@@ -23,6 +23,11 @@ return require'packer'.startup(function(use)
 	use 'joshdick/onedark.vim'
 	use 'rebelot/kanagawa.nvim'
 	use { "bluz71/vim-nightfly-colors", as = "nightfly" }
+	use { 'ribru17/bamboo.nvim',
+		config = function ()
+			-- require('bamboo').load()
+		end
+	}
 
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
@@ -86,7 +91,7 @@ return require'packer'.startup(function(use)
 			  }
 			}
 
-			vim.o.foldlevelstart = 99
+			vim.o.foldlevelstart = 4
 		end
 	}
 	use { 'nvim-treesitter/nvim-treesitter-context',
@@ -186,7 +191,6 @@ return require'packer'.startup(function(use)
 		setup = function ()
 			vim.g.neo_tree_remove_legacy_commands = 1
 		end,
-		opt = false
 	}
 	use 'romgrk/barbar.nvim'
 	use { 'mg979/vim-visual-multi', branch = 'master'}
@@ -267,7 +271,7 @@ return require'packer'.startup(function(use)
 
 	use 'nvim-lua/plenary.nvim'
 	use 'folke/todo-comments.nvim'
-	use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" } }
+	-- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" } }
 
 	use 'sotte/presenting.vim'
 
