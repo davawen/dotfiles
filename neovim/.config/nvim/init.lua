@@ -18,7 +18,22 @@ vim.cmd [[ source ~/.config/nvim/variables.vim ]]
 
 vim.cmd [[let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}]]
 
-vim.cmd [[ set guifont=Greybeard\ 17px:h12.75 ]]
+-- Neovide config
+vim.o.guifont = "Iosevka:h13.5"
+vim.g.neovide_refresh_rate = 144
+vim.g.neovide_cursor_animation_length = 0.05
+vim.g.neovide_cursor_trail_size = 0.2
+vim.g.neovide_cursor_animate_command_line = false
+vim.g.neovide_cursor_vfx_mode = "pixiedust"
+if vim.g.neovide then
+	vim.g.neovide_input_use_logo = 1 -- enable use of the logo (cmd) key
+	vim.keymap.set('v', '<D-c>', '"+y') -- Copy
+	vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
+	vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
+	vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+	vim.keymap.set('i', '<C-S-V>', '<ESC>l"+Pla') -- Paste insert mode
+end
+
 -- vim.cmd [[ set mouse=nv ]]
 vim.cmd [[ set wrap ]]
 vim.cmd [[ let g:c_syntax_for_h = 1 ]] -- Set *.h files to be c instead of cpp
