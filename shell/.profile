@@ -1,4 +1,5 @@
 
+
 # >>> xmake >>>
-[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
+test -f "/home/davawen/.xmake/profile" && source "/home/davawen/.xmake/profile"
 # <<< xmake <<<
