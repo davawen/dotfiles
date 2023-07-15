@@ -72,20 +72,14 @@ map("n", "<leader>fk", telescope.keymaps)
 map("n", "<leader>fg", telescope.live_grep)
 map("n", "<leader>fd", telescope.diagnostics)
 
-map("n", "<leader>n", "<Cmd>Neotree source=filesystem reveal position=float toggle<CR>")
-map("n", "<leader>b", "<Cmd>Neotree source=buffers reveal position=float toggle<CR>")
--- Use ;ev to open config directory
-local function open_config(split)
-	-- Open over startup page if it is opened
-	if split and vim.bo.filetype ~= 'startup' then
-		vim.cmd [[exe "normal! \<Cmd>vsp\<Cr>\<C-w>l"]]
-	end
-	telescope.find_files({
-		cwd = "~/.config/nvim"
-	})
-end
-map("n", "<leader>evs", fn_args(open_config, { true }))
-map("n", "<leader>evv", fn_args(open_config, { false }))
+-- Neotree mappings
+map("n", "<leader>nf", "<Cmd>Neotree source=filesystem reveal position=float focus<CR>")
+map("n", "<leader>nb", "<Cmd>Neotree source=buffers reveal position=float focus<CR>")
+map("n", "<leader>ns", "<Cmd>Neotree source=document_symbols position=float focus<CR>")
+
+-- Open config
+map("n", "<leader>evs", fn_args(telescope.live_grep, {{ cwd = "~/.config/nvim" }}))
+map("n", "<leader>evv", fn_args(telescope.find_files, {{ cwd = "~/.config/nvim" }}))
 
 map("n", "<leader><left>", "<c-w>h")
 map("n", "<leader><right>", "<c-w>l")

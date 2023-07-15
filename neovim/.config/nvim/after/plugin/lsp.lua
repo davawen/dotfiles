@@ -128,6 +128,10 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
+
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.inlay_hint(bufnr, true)
+	end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -323,11 +327,8 @@ lspconfig.texlab.setup{
 -- Rust Tools configuration
 require('rust-tools').setup {
 	tools = { -- rust-tools options
-        autoSetHints = true,
         inlay_hints = {
-            show_parameter_hints = true,
-            parameter_hints_prefix = "",
-            other_hints_prefix = ""
+			auto = false
         }
     },
 
