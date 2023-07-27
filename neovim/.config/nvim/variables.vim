@@ -16,6 +16,7 @@ set breakindent
 " Ensures word-wrap does not split words
 set formatoptions=l
 set lbr
+set wrap
 
 set conceallevel=0
 

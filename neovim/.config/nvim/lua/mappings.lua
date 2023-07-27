@@ -24,6 +24,9 @@ map("n", "k", "gk")
 map("n", "gj", "j")
 map("n", "gk", "k")
 
+-- Since leader key is ;, make \ be repetition
+map("n", "\\", ";")
+
 -- Space opens command menu
 map("n", "<space>", ":")
 
@@ -69,6 +72,7 @@ map("n", "<leader>fw", telescope.lsp_workspace_symbols)
 map("n", "<leader>fs", telescope.lsp_document_symbols)
 map("n", "<leader>fr", telescope.lsp_references)
 map("n", "<leader>fk", telescope.keymaps)
+map("n", "<leader>fh", telescope.help_tags)
 map("n", "<leader>fg", telescope.live_grep)
 map("n", "<leader>fd", telescope.diagnostics)
 

@@ -23,3 +23,5 @@ vim.filetype.add({
 		mpp = "cpp"
 	}
 })
+
+vim.filetype.add({ extension = { pest = "pest" } })

@@ -93,7 +93,8 @@ return require 'packer'.startup(function(use)
 				startup = true,
 				listed = false
 			}
-		end
+		end,
+		disable = true
 	}
 
 	-- Treesitter
@@ -225,6 +226,29 @@ return require 'packer'.startup(function(use)
 			})
 		end
 	}
+	use {
+		"lewis6991/hover.nvim",
+		config = function()
+			require("hover").setup {
+				init = function()
+					-- Require providers
+					require("hover.providers.lsp")
+					-- require('hover.providers.gh') -- require('hover.providers.gh_user') -- require('hover.providers.jira') -- require('hover.providers.man') -- require('hover.providers.dictionary')
+				end,
+				preview_opts = {
+					border = nil
+				},
+				-- Whether the contents of a currently open hover window should be moved
+				-- to a :h preview-window when pressing the hover keymap.
+				preview_window = false,
+				title = true
+			}
+
+			-- Setup keymaps
+			vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
+			vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
+		end
+	}
 	use 'onsails/lspkind-nvim'
 	use 'ray-x/lsp_signature.nvim'
 	use 'simrat39/rust-tools.nvim'
@@ -260,6 +284,7 @@ return require 'packer'.startup(function(use)
 	use 'godlygeek/tabular'
 	use 'habamax/vim-godot'
 	use { 'xuhdev/vim-latex-live-preview', opt = true }
+	use 'pest-parser/pest.vim'
 
 	-- Navigation
 	use 'nvim-telescope/telescope.nvim'
@@ -276,6 +301,7 @@ return require 'packer'.startup(function(use)
 			]])
 
 			require('neo-tree').setup {
+				enable_normal_mode_for_inputs = true,
 				default_component_configs = {
 					indent = {
 						indent_size = 2,
@@ -389,7 +415,8 @@ return require 'packer'.startup(function(use)
 	use { 'willothy/flatten.nvim',
 		config = function()
 			require('flatten').setup {}
-		end
+		end,
+		disable = true
 	}
 
 	-- Git
@@ -420,7 +447,7 @@ return require 'packer'.startup(function(use)
 
 	use 'nvim-lua/plenary.nvim'
 	use 'folke/todo-comments.nvim'
-	-- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" } }
+	-- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, disable = true }
 
 	use 'sotte/presenting.vim'
 
