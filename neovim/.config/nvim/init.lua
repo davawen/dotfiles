@@ -444,37 +444,6 @@ map('n', '<A-0>', '<Cmd>BufferGoto 10<Cr>')
 -- map('n', '<silent>dbe', '<Cmd>BufferLineSortByExtension<Cr>')
 -- map('n', '<silent>dbd', '<Cmd>BufferLineSortByDirectory<Cr>')
 
-local function signature_help()
-	local sig = require("lsp_signature").status_line(100)
-	return sig.label
-end
-
--- lualine
-require('lualine').setup({
-    options = {
-		theme = 'everforest',
-		globalstatus = true
-	},
-    sections = {
-        lualine_a = { 'mode'},
-        lualine_b = { 'branch', 'diagnostics', 'diff'},
-        lualine_c = { "filename", signature_help },
-        lualine_x = { 'location', 'filetype'},
-        lualine_y = { 'os.date("%I:%M:%S", os.time())'},
-        lualine_z = { }
-    }
-})
-
-
--- Trigger rerender of status line every second for clock
-if _G.Statusline_timer == nil then
-    _G.Statusline_timer = vim.loop.new_timer()
-else
-    _G.Statusline_timer:stop()
-end
-_G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
-                              function() vim.api.nvim_command('redrawstatus') end))
-
 -- Telescope.nvim
 require('telescope').setup {
 	defaults = {

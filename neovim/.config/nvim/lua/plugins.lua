@@ -1,3 +1,5 @@
+local map, remap = unpack(require("utils.map"))
+
 local ensure_packer = function()
 	local fn = vim.fn
 	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -33,7 +35,41 @@ return require 'packer'.startup(function(use)
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
 
-	use 'nvim-lualine/lualine.nvim'
+	use { 'nvim-lualine/lualine.nvim',
+		config = function ()
+			local function signature_help()
+				local sig = require("lsp_signature").status_line(100)
+				return sig.label
+			end
+
+			-- lualine
+			require('lualine').setup({
+				options = {
+					theme = 'everforest',
+					globalstatus = true
+				},
+				sections = {
+					lualine_a = { 'mode'},
+					lualine_b = { 'branch', 'diagnostics', 'diff'},
+					lualine_c = { "filename", signature_help },
+					lualine_x = { 'location', 'filetype'},
+					lualine_y = { 'os.date("%I:%M:%S", os.time())'},
+					lualine_z = { }
+				}
+			})
+
+
+			-- Trigger rerender of status line every second for clock
+			if _G.Statusline_timer == nil then
+				_G.Statusline_timer = vim.loop.new_timer()
+			else
+				_G.Statusline_timer:stop()
+			end
+			_G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
+				function() vim.api.nvim_command('redrawstatus') end))
+
+		end
+	}
 	use { 'willothy/veil.nvim',
 		config = function()
 			local builtin = require("veil.builtin")
@@ -253,6 +289,14 @@ return require 'packer'.startup(function(use)
 	use 'ray-x/lsp_signature.nvim'
 	use 'simrat39/rust-tools.nvim'
 	use 'mhartington/formatter.nvim'
+	use {'dgagn/diagflow.nvim',
+		config = function ()
+			require('diagflow').setup {
+				padding_right = 1,
+				update_event = { 'DiagnosticChanged', 'BufEnter' }
+			}
+		end
+	}
 
 	-- Debugging
 	use 'mfussenegger/nvim-dap'
@@ -387,7 +431,14 @@ return require 'packer'.startup(function(use)
 			vim.keymap.set("n", '<leader>s', '<Plug>(leap-forward-to)')
 			vim.keymap.set("n", '<leader>S', '<Plug>(leap-backward-to)')
 		end,
-		requires = 'tpope/vim-repeat'
+		requires = 'tpope/vim-repeat',
+	}
+	use { 'mizlan/iswap.nvim',
+		config = function ()
+			require('iswap').setup {
+				keys = 'qwertyuiop'
+			}
+		end
 	}
 
 	-- Notes
@@ -426,7 +477,11 @@ return require 'packer'.startup(function(use)
 			require('gitsigns').setup()
 		end
 	}
-	use 'tpope/vim-fugitive'
+	use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim',
+		config = function ()
+			require('neogit').setup {}
+		end
+	}
 	use 'wintermute-cell/gitignore.nvim'
 
 	-- Other
@@ -434,6 +489,7 @@ return require 'packer'.startup(function(use)
 	use 'tomtom/templator_vim'
 	use 'junegunn/vim-easy-align'
 	use 'numToStr/Comment.nvim'
+	use 'mbbill/undotree'
 
 	use 'windwp/nvim-autopairs'
 	use 'tpope/vim-surround'
