@@ -293,7 +293,7 @@ return require 'packer'.startup(function(use)
 		config = function ()
 			require('diagflow').setup {
 				padding_right = 1,
-				update_event = { 'DiagnosticChanged', 'BufEnter' }
+				update_event = { 'DiagnosticChanged', 'BufEnter', 'WinScrolled' }
 			}
 		end
 	}
