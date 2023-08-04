@@ -242,15 +242,14 @@ lspconfig.tsserver.setup{
 }
 
 vim.g.markdown_fenced_languages = { "ts=typescript" }
-lspconfig.denols.setup {
-	on_attach = on_attach,
-	cmd = { "deno", "lsp" },
-	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-	init_options = {
-		enable = true,
-		unstable = false
-	},
-	root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
+require("deno-nvim").setup {
+	server = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+		cmd = { "deno", "lsp" },
+		filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
+	}
 }
 
 lspconfig.svelte.setup{
