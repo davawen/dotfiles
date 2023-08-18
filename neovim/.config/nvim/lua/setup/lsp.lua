@@ -134,7 +134,7 @@ local on_attach = function(client, bufnr)
 	-- end
 end
 
-function inlay_hint()
+function Inlay_hint()
 	vim.lsp.inlay_hint(0, nil)
 end
 
@@ -214,6 +214,12 @@ lspconfig.html.setup {
 	capabilities = capabilities
 }
 
+lspconfig.emmet_ls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" }
+}
+
 lspconfig.pest_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities
@@ -252,8 +258,15 @@ require("deno-nvim").setup {
 	}
 }
 
+lspconfig.ocamllsp.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	single_file_support = true
+}
+
 lspconfig.svelte.setup{
 	on_attach = on_attach,
+	capabilities = capabilities,
 	root_dir = lspconfig.util.root_pattern("svelte.config.js"),
 }
 

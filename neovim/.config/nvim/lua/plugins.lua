@@ -1,5 +1,3 @@
-local map, remap = unpack(require("utils.map"))
-
 local ensure_packer = function()
 	local fn = vim.fn
 	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -14,6 +12,26 @@ end
 local packer_bootstrap = ensure_packer()
 
 return require 'packer'.startup(function(use)
+
+--- Takes a module and packages it into a function to be called by packer
+--- Use it like so:
+--- ```lua
+--- use { 'plugin',
+---     config = config('path.module')
+--- }
+--- 
+--- -- path/module.lua
+--- -- ...
+--- require('plugin').setup {
+---     -- ...
+--- }
+--- ```
+--- @param path string
+--- @return string
+local config = function(path)
+	return string.format("require('%s')", path)
+end
+
 	use 'wbthomason/packer.nvim'
 
 	-- Themes
@@ -25,168 +43,19 @@ return require 'packer'.startup(function(use)
 	use 'joshdick/onedark.vim'
 	use 'rebelot/kanagawa.nvim'
 	use { "bluz71/vim-nightfly-colors", as = "nightfly" }
-	use { 'ribru17/bamboo.nvim',
-		config = function()
-			-- require('bamboo').load()
-		end
-	}
+	use 'ribru17/bamboo.nvim'
 	use 'yorickpeterse/vim-paper'
 
 	use 'ryanoasis/vim-devicons'
 	use 'kyazdani42/nvim-web-devicons'
 
 	use { 'nvim-lualine/lualine.nvim',
-		config = function ()
-			local function signature_help()
-				local sig = require("lsp_signature").status_line(100)
-				return sig.label
-			end
-
-			-- lualine
-			require('lualine').setup({
-				options = {
-					theme = 'everforest',
-					globalstatus = true
-				},
-				sections = {
-					lualine_a = { 'mode'},
-					lualine_b = { 'branch', 'diagnostics', 'diff'},
-					lualine_c = { "filename", signature_help },
-					lualine_x = { 'location', 'filetype'},
-					lualine_y = { 'os.date("%I:%M:%S", os.time())'},
-					lualine_z = { }
-				}
-			})
-
-
-			-- Trigger rerender of status line every second for clock
-			if _G.Statusline_timer == nil then
-				_G.Statusline_timer = vim.loop.new_timer()
-			else
-				_G.Statusline_timer:stop()
-			end
-			_G.Statusline_timer:start(0, 1000, vim.schedule_wrap(
-				function() vim.api.nvim_command('redrawstatus') end))
-
-		end
-	}
-	use { 'willothy/veil.nvim',
-		config = function()
-			local builtin = require("veil.builtin")
-
-			require('veil').setup {
-				sections = {
-					builtin.sections.animated(builtin.headers.frames_nvim, {
-						hl = { fg = "#5de4c7" },
-					}),
-					builtin.sections.buttons({
-						{
-							icon = "",
-							text = "File Tree",
-							shortcut = "n",
-							callback = function ()
-								vim.cmd [[ Neotree source=filesystem reveal position=float focus ]]
-							end
-						},
-						{
-							icon = "",
-							text = "Find Files",
-							shortcut = "f",
-							callback = function()
-								require("telescope.builtin").find_files()
-							end,
-						},
-						{
-							icon = "",
-							text = "Find Word",
-							shortcut = "w",
-							callback = function()
-								require("telescope.builtin").live_grep()
-							end,
-						},
-						{
-							icon = "",
-							text = "Buffers",
-							shortcut = "b",
-							callback = function()
-								require("telescope.builtin").buffers()
-							end,
-						},
-						{
-							icon = "",
-							text = "Config",
-							shortcut = "c",
-							callback = function()
-								require("telescope").extensions.file_browser.file_browser({
-									path = vim.fn.stdpath("config"),
-								})
-							end,
-						},
-					}),
-					builtin.sections.oldfiles(),
-				},
-				mappings = {},
-				startup = true,
-				listed = false
-			}
-		end,
-		disable = true
+		config = config('setup.lualine')
 	}
 
 	-- Treesitter
 	use { 'nvim-treesitter/nvim-treesitter',
-		run = ":TSUpdate",
-		config = function()
-			local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-			parser_config.opencl = {
-				install_info = {
-					url = "https://github.com/lefp/tree-sitter-opencl",
-					files = { "src/parser.c" }
-				}
-			}
-
-			require('nvim-treesitter.configs').setup {
-				ensure_installed = "all",
-				disable = { "gdscript" },
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = false,
-				},
-				incremental_selection = {
-					enable = true,
-					keymaps = {
-						init_selection = "<CR>",
-						node_incremental = "<CR>",
-						scope_incremental = "<S-CR>",
-						node_decremental = "<BS>",
-					}
-				},
-				indent = {
-					enable = true,
-					disable = { "c", "python", "cpp" }
-				},
-				playground = {
-					enable = true,
-					disable = {},
-					updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-					persist_queries = false, -- Whether the query persists across vim sessions
-					keybindings = {
-						toggle_query_editor = 'o',
-						toggle_hl_groups = 'i',
-						toggle_injected_languages = 't',
-						toggle_anonymous_nodes = 'a',
-						toggle_language_display = 'I',
-						focus_language = 'f',
-						unfocus_language = 'F',
-						update = 'R',
-						goto_node = '<cr>',
-						show_help = '?',
-					},
-				}
-			}
-
-			vim.o.foldlevelstart = 4
-		end
+		config = config('setup.treesitter')
 	}
 	use { 'nvim-treesitter/nvim-treesitter-context',
 		requires = 'nvim-treesitter',
@@ -234,9 +103,11 @@ return require 'packer'.startup(function(use)
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
 			'j-hui/fidget.nvim'
-		}
+		},
+		config = config('setup.lsp')
 	}
 	use { 'j-hui/fidget.nvim',
+		tag = 'legacy',
 		config = function()
 			require('fidget').setup {}
 		end
@@ -268,7 +139,32 @@ return require 'packer'.startup(function(use)
 	use 'ray-x/lsp_signature.nvim'
 	use 'simrat39/rust-tools.nvim'
 	use 'sigmasd/deno-nvim'
-	use 'mhartington/formatter.nvim'
+	use { 'mhartington/formatter.nvim',
+	config = function()
+		require("formatter").setup {
+		  -- Enable or disable logging
+		  logging = true,
+		  -- Set the log level
+		  log_level = vim.log.levels.WARN,
+		  -- All formatter configurations are opt-in
+		  filetype = {
+			-- Formatter configurations for filetype "lua" go here
+			-- and will be executed in order
+			cpp = require("formatter.filetypes.cpp").clangformat,
+			c = require("formatter.filetypes.c").clangformat,
+			typescript = require("formatter.filetypes.javascript").prettier,
+
+			-- Use the special "*" filetype for defining formatter configurations on
+			-- any filetype
+			["*"] = {
+			  -- "formatter.filetypes.any" defines default configurations for any
+			  -- filetype
+			  require("formatter.filetypes.any").remove_trailing_whitespace
+			}
+		  }
+		}
+	end
+	}
 	use {'dgagn/diagflow.nvim',
 		config = function ()
 			require('diagflow').setup {
@@ -279,11 +175,17 @@ return require 'packer'.startup(function(use)
 	}
 
 	-- Debugging
-	use 'mfussenegger/nvim-dap'
-	use 'rcarriga/nvim-dap-ui'
+	use { 'mfussenegger/nvim-dap',
+		config = config('setup.dap')
+	}
+	use { 'rcarriga/nvim-dap-ui',
+		config = config('setup.dapui')
+	}
 
 	-- Snippets
-	use 'dcampos/nvim-snippy'
+	use { 'dcampos/nvim-snippy',
+		config = config('setup.snippy')
+	}
 	use 'honza/vim-snippets'
 
 	-- Completion
@@ -311,87 +213,27 @@ return require 'packer'.startup(function(use)
 	use 'pest-parser/pest.vim'
 
 	-- Navigation
-	use 'nvim-telescope/telescope.nvim'
+	use { 'nvim-telescope/telescope.nvim',
+		config = function()
+			require('telescope').setup {
+				defaults = {
+					file_ignore_patterns = { "build", "dist", "node_modules", "Cargo.lock" }
+				}
+			}
+		end
+	}
 	use 'MunifTanjim/nui.nvim'
 	use { 'nvim-neo-tree/neo-tree.nvim',
 		-- Remove neo-tree legacy commands before plugin is loaded
 		setup = function()
 			vim.g.neo_tree_remove_legacy_commands = 1
 		end,
-		config = function()
-			vim.cmd([[
-				highlight link NeoTreeDirectoryName Directory
-				highlight link NeoTreeDirectoryIcon NeoTreeDirectoryName
-			]])
-
-			require('neo-tree').setup {
-				enable_normal_mode_for_inputs = true,
-				default_component_configs = {
-					indent = {
-						indent_size = 2,
-						padding = 1, -- extra padding on left hand side
-						-- indent guides
-						with_markers = true,
-						indent_marker = "│",
-						last_indent_marker = "└",
-						highlight = "NeoTreeIndentMarker",
-						-- expander config, needed for nesting files
-						with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-						expander_collapsed = "",
-						expander_expanded = "",
-						expander_highlight = "NeoTreeExpander",
-					},
-					icon = {
-						folder_closed = "",
-						folder_open = "",
-						folder_empty = "ﰊ",
-						-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-						-- then these will never be used.
-						default = "*",
-						highlight = "NeoTreeFileIcon"
-					},
-					modified = {
-						symbol = "[+]",
-						highlight = "NeoTreeModified",
-					},
-				},
-				filesystem = {
-					filtered_items = {
-						visible = true,
-						hide_dotfiles = false
-					}
-				},
-				window = {
-					popup = {
-						position = { col = "100%", row = "2" },
-						size = function(state)
-							local root_name = vim.fn.fnamemodify(state.path, ":~")
-							local root_len = string.len(root_name) + 4
-							return {
-								width = math.max(root_len, 70),
-								height = vim.o.lines - 6
-							}
-						end
-					},
-				},
-				sources = {
-					"filesystem",
-					"git_status",
-					"buffers",
-					"document_symbols"
-				},
-				source_selector = {
-					winbar = false,
-					statusline = true,
-					sources = {
-						{ source = "filesystem", display_name = " 󰉓 Files " },
-						{ source = "git_status", display_name = " 󰊢 Git " },
-					}
-				}
-			}
-		end
+		config = config('setup.neotree'),
+		opt = false
 	}
-	use 'romgrk/barbar.nvim'
+	use { 'romgrk/barbar.nvim',
+		config = config('setup.barbar')
+	}
 	use { 'mg979/vim-visual-multi', branch = 'master' }
 	use { 'stevearc/dressing.nvim',
 		config = function()
@@ -418,20 +260,6 @@ return require 'packer'.startup(function(use)
 			require('iswap').setup {
 				keys = 'qwertyuiop'
 			}
-		end
-	}
-
-	-- Notes
-	use {
-		'lervag/wiki.vim',
-		config = function()
-			vim.g.wiki_root = '~/wiki'
-			vim.cmd [[
-				augroup WikiGroup
-					autocmd!
-					autocmd User WikiBufferInitialized nnoremap gf <plug>(wiki-link-follow)
-				augroup END
-			]]
 		end
 	}
 
@@ -466,24 +294,41 @@ return require 'packer'.startup(function(use)
 
 	-- Other
 	use 'wakatime/vim-wakatime'
-	use 'tomtom/templator_vim'
 	use 'junegunn/vim-easy-align'
-	use 'numToStr/Comment.nvim'
+	use { 'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup {}
+		end
+	}
 	use 'mbbill/undotree'
 
-	use 'windwp/nvim-autopairs'
+	use { 'windwp/nvim-autopairs',
+		config = config('setup.autopairs')
+	}
 	use 'tpope/vim-surround'
-	-- use { 'junegunn/fzf', run = function() vim.cmd([[ -> fzf#install() ]]) end }
-	-- use 'junegunn/fzf.vim'
-	-- use 'gfanto/fzf-lsp.nvim'
 	-- use 'kkharji/sqlite.lua'
-	use 'AckslD/nvim-neoclip.lua'
+	use { 'AckslD/nvim-neoclip.lua',
+		requires = 'telescope.nvim',
+		config = function()
+			require('neoclip').setup {}
+			vim.keymap.set('n', '<leader>fp', require('telescope').extensions.neoclip.default)
+		end
+	}
 	use 'fidian/hexmode'
-	use { 'michaelb/sniprun', run = 'bash install.sh' }
+	-- use { 'michaelb/sniprun', run = 'bash install.sh' }
 
 	use 'nvim-lua/plenary.nvim'
-	use 'folke/todo-comments.nvim'
-	-- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, disable = true }
+	use { 'folke/todo-comments.nvim',
+		config = function()
+			require('todo-comments').setup {
+				keywords = {
+					DONE = { icon = " ", color = "hint", alt = { "FINISHED", "IMPL", "IMPLEMENTED" }  }
+				},
+				merge_keywords = true,
+			}
+		end
+	}
+	-- -- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, disable = true }
 
 	use 'sotte/presenting.vim'
 

@@ -20,7 +20,7 @@ end
 set -gx PNPM_HOME "/home/davawen/.local/share/pnpm"
 add_path "$PNPM_HOME"
 add_path "$HOME/.local/bin"
-# WARNING: Those two require PNPM above to be in the path and everything breaks if they are'nt
+# WARNING: Those two require PNPM above to be in the path and everything breaks if they aren't
 add_path "$(npm config get prefix)/bin"
 add_path "$(yarn global bin)"
 add_path "$HOME/.local/share/cargo/bin/"
@@ -29,7 +29,6 @@ add_path "$DENO_INSTALL/bin"
 add_path "/opt/rocm/bin"
 add_path "/opt/rocm/opencl/bin"
 add_path "$HOME/.local/share/go/bin"
-add_path "$HOME/.deno/bin/deno"
 
 set -gx VCPKG_ROOT "$HOME/.local/share/vcpkg/"
 set -gx LS_COLORS "ow=36:"
@@ -80,3 +79,6 @@ alias xclipc='xclip -selection clipboard'
 
 # Starship
 starship init fish | source
+
+# opam configuration
+source /home/davawen/.local/share/opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

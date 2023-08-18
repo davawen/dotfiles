@@ -62,6 +62,9 @@ map("t", "<esc>", "<C-\\><C-n>")
 -- Quick return to line
 map("n", "d,", "^d0kJ")
 
+-- Select pasted text
+map("n", "gs", "`[v`]")
+
 -- Wrap selection in braces and break lines
 map("v", "<leader>S", [[di{<CR><CR>}<ESC>k"_Sx<ESC>p^x$]])
 
