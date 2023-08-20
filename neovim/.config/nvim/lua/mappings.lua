@@ -80,8 +80,8 @@ map("n", "<leader>fg", telescope.live_grep)
 map("n", "<leader>fd", telescope.diagnostics)
 
 -- Neotree mappings
-map("n", "<leader>nf", "<Cmd>Neotree source=filesystem reveal position=float focus<CR>")
-map("n", "<leader>nb", "<Cmd>Neotree source=buffers reveal position=float focus<CR>")
+map("n", "<leader>nf", "<Cmd>Neotree source=filesystem position=float focus<CR>")
+map("n", "<leader>nb", "<Cmd>Neotree source=buffers position=float focus<CR>")
 map("n", "<leader>ns", "<Cmd>Neotree source=document_symbols position=float focus<CR>")
 
 -- Open config

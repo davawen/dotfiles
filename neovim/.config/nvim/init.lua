@@ -1,7 +1,5 @@
 require("plugins")
 
-vim.cmd [[ packadd neo-tree.nvim]]
-
 require("mappings")
 require("autocommands")
 require("commands")
@@ -79,10 +77,3 @@ local highlights = {
 for group, values in pairs(highlights) do
 	vim.api.nvim_set_hl(0, group, values)
 end
-
-vim.api.nvim_create_autocmd("BufNew", {
-	pattern = { "plugins.lua" },
-	callback = function()
-		vim.api.nvim_set_option("foldlevelstart", 1)
-	end
-})

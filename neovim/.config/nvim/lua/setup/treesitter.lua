@@ -7,9 +7,10 @@
 -- }
 
 require('nvim-treesitter.configs').setup {
-	ensure_installed = "all",
+	ensure_installed = { "c", "cpp", "rust", "lua", "vim", "python" },
 	ignore_install = { "comment" },
 	disable = { "comment", "gdscript" },
+	auto_install = true,
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,

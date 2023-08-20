@@ -70,6 +70,8 @@ abbr dnfl "sudo dnf -C list"
 
 abbr clang20 "clang++ -std=c++20"
 
+alias homegit="git --git-dir=$HOME/homegit/.git --work-tree=$HOME"
+
 alias pls='sudo $(fc -ln -1)'
 alias spindown='sudo hdparm -y /dev/disk/by-id/ata-WDC_WD5000AAKS-60Z1A0_WD-WCAWF8270723'
 

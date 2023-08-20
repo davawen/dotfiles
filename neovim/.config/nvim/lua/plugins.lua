@@ -1,18 +1,3 @@
-local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-		vim.cmd [[packadd packer.nvim]]
-		return true
-	end
-	return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-return require 'packer'.startup(function(use)
-
 --- Takes a module and packages it into a function to be called by packer
 --- Use it like so:
 --- ```lua
@@ -27,38 +12,55 @@ return require 'packer'.startup(function(use)
 --- }
 --- ```
 --- @param path string
---- @return string
+--- @return function
 local config = function(path)
-	return string.format("require('%s')", path)
+	return function()
+		require(path)
+	end
 end
 
-	use 'wbthomason/packer.nvim'
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+
+local plugins = {
+	'shaunsingh/nord.nvim',
 
 	-- Themes
-	use 'shaunsingh/nord.nvim'
-	use 'sainnhe/everforest'
-	use 'habamax/vim-polar'
-	use { 'catppuccin/nvim', as = 'catppuccin' }
-	use 'AlexvZyl/nordic.nvim'
-	use 'joshdick/onedark.vim'
-	use 'rebelot/kanagawa.nvim'
-	use { "bluz71/vim-nightfly-colors", as = "nightfly" }
-	use 'ribru17/bamboo.nvim'
-	use 'yorickpeterse/vim-paper'
+	'shaunsingh/nord.nvim',
+	'sainnhe/everforest',
+	'habamax/vim-polar',
+	{ 'catppuccin/nvim', name ='catppuccin' },
+	'AlexvZyl/nordic.nvim',
+	'joshdick/onedark.vim',
+	'rebelot/kanagawa.nvim',
+	{ "bluz71/vim-nightfly-colors", name ="nightfly" },
+	'ribru17/bamboo.nvim',
+	'yorickpeterse/vim-paper',
 
-	use 'ryanoasis/vim-devicons'
-	use 'kyazdani42/nvim-web-devicons'
+	'ryanoasis/vim-devicons',
+	'kyazdani42/nvim-web-devicons',
 
-	use { 'nvim-lualine/lualine.nvim',
+	{ 'nvim-lualine/lualine.nvim',
 		config = config('setup.lualine')
-	}
+	},
 
 	-- Treesitter
-	use { 'nvim-treesitter/nvim-treesitter',
+	{ 'nvim-treesitter/nvim-treesitter',
 		config = config('setup.treesitter')
-	}
-	use { 'nvim-treesitter/nvim-treesitter-context',
-		requires = 'nvim-treesitter',
+	},
+	{ 'nvim-treesitter/nvim-treesitter-context',
+		dependencies = 'nvim-treesitter',
 		config = function()
 			require('treesitter-context').setup {
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -87,32 +89,32 @@ end
 				},
 			}
 		end
-	}
-	use 'nvim-treesitter/playground'
-	use { 'danymat/neogen',
+	},
+	'nvim-treesitter/playground',
+	{ 'danymat/neogen',
 		config = function()
 			require('neogen').setup {
 				snippet_engine = "snippy"
 			}
 		end
-	}
+	},
 
 	-- LSP
-	use { 'neovim/nvim-lspconfig',
-		requires = {
+	{ 'neovim/nvim-lspconfig',
+		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
 			'j-hui/fidget.nvim'
 		},
 		config = config('setup.lsp')
-	}
-	use { 'j-hui/fidget.nvim',
+	},
+	{ 'j-hui/fidget.nvim',
 		tag = 'legacy',
 		config = function()
 			require('fidget').setup {}
 		end
-	}
-	use {
+	},
+	{
 		"lewis6991/hover.nvim",
 		config = function()
 			require("hover").setup {
@@ -134,12 +136,12 @@ end
 			vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
 			vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
 		end
-	}
-	use 'onsails/lspkind-nvim'
-	use 'ray-x/lsp_signature.nvim'
-	use 'simrat39/rust-tools.nvim'
-	use 'sigmasd/deno-nvim'
-	use { 'mhartington/formatter.nvim',
+	},
+	'onsails/lspkind-nvim',
+	'ray-x/lsp_signature.nvim',
+	'simrat39/rust-tools.nvim',
+	'sigmasd/deno-nvim',
+	{ 'mhartington/formatter.nvim',
 	config = function()
 		require("formatter").setup {
 		  -- Enable or disable logging
@@ -164,56 +166,56 @@ end
 		  }
 		}
 	end
-	}
-	use {'dgagn/diagflow.nvim',
+	},
+	{'dgagn/diagflow.nvim',
 		config = function ()
 			require('diagflow').setup {
 				padding_right = 1,
 				update_event = { 'DiagnosticChanged', 'BufEnter', 'WinScrolled' }
 			}
 		end
-	}
+	},
 
 	-- Debugging
-	use { 'mfussenegger/nvim-dap',
+	{ 'mfussenegger/nvim-dap',
 		config = config('setup.dap')
-	}
-	use { 'rcarriga/nvim-dap-ui',
+	},
+	{ 'rcarriga/nvim-dap-ui',
 		config = config('setup.dapui')
-	}
+	},
 
 	-- Snippets
-	use { 'dcampos/nvim-snippy',
+	{ 'dcampos/nvim-snippy',
 		config = config('setup.snippy')
-	}
-	use 'honza/vim-snippets'
+	},
+	'honza/vim-snippets',
 
 	-- Completion
-	use 'hrsh7th/nvim-cmp'
-	use 'hrsh7th/cmp-buffer'
-	use 'hrsh7th/cmp-path'
-	use 'hrsh7th/cmp-nvim-lua'
-	use 'hrsh7th/cmp-nvim-lsp'
-	use 'dcampos/cmp-snippy'
-	use 'weilbith/nvim-code-action-menu'
+	'hrsh7th/nvim-cmp',
+	'hrsh7th/cmp-buffer',
+	'hrsh7th/cmp-path',
+	'hrsh7th/cmp-nvim-lua',
+	'hrsh7th/cmp-nvim-lsp',
+	'dcampos/cmp-snippy',
+	'weilbith/nvim-code-action-menu',
 
 	-- Syntax highlight
-	use 'brgmnn/vim-opencl'
-	use 'tikhomirov/vim-glsl'
-	use 'timtro/glslView-nvim'
-	use 'evanleck/vim-svelte'
+	'brgmnn/vim-opencl',
+	'tikhomirov/vim-glsl',
+	'timtro/glslView-nvim',
+	'evanleck/vim-svelte',
 
 	-- Filetype specific
-	use 'timonv/vim-cargo'
-	use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
-	use { 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' }
-	use 'godlygeek/tabular'
-	use 'habamax/vim-godot'
-	use { 'xuhdev/vim-latex-live-preview', opt = true }
-	use 'pest-parser/pest.vim'
+	'timonv/vim-cargo',
+	{ 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' },
+	{ 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' },
+	'godlygeek/tabular',
+	'habamax/vim-godot',
+	{ 'xuhdev/vim-latex-live-preview', lazy = true },
+	'pest-parser/pest.vim',
 
 	-- Navigation
-	use { 'nvim-telescope/telescope.nvim',
+	{ 'nvim-telescope/telescope.nvim',
 		config = function()
 			require('telescope').setup {
 				defaults = {
@@ -221,21 +223,22 @@ end
 				}
 			}
 		end
-	}
-	use 'MunifTanjim/nui.nvim'
-	use { 'nvim-neo-tree/neo-tree.nvim',
+	},
+	'MunifTanjim/nui.nvim',
+	{ 'nvim-neo-tree/neo-tree.nvim',
 		-- Remove neo-tree legacy commands before plugin is loaded
-		setup = function()
+		init = function()
 			vim.g.neo_tree_remove_legacy_commands = 1
 		end,
 		config = config('setup.neotree'),
-		opt = false
-	}
-	use { 'romgrk/barbar.nvim',
+		branch = "v3.x"
+		-- lazy = true
+	},
+	{ 'romgrk/barbar.nvim',
 		config = config('setup.barbar')
-	}
-	use { 'mg979/vim-visual-multi', branch = 'master' }
-	use { 'stevearc/dressing.nvim',
+	},
+	{ 'mg979/vim-visual-multi', branch = 'master' },
+	{ 'stevearc/dressing.nvim',
 		config = function()
 			require('dressing').setup {
 				input = {
@@ -244,81 +247,81 @@ end
 				}
 			}
 		end
-	}
-	use 'unblevable/quick-scope'
-	use { 'ggandor/leap.nvim',
+	},
+	'unblevable/quick-scope',
+	{ 'ggandor/leap.nvim',
 		config = function()
 			require('leap').setup {}
 
 			vim.keymap.set("n", '<leader>s', '<Plug>(leap-forward-to)')
 			vim.keymap.set("n", '<leader>S', '<Plug>(leap-backward-to)')
 		end,
-		requires = 'tpope/vim-repeat',
-	}
-	use { 'mizlan/iswap.nvim',
+		dependencies = 'tpope/vim-repeat',
+	},
+	{ 'mizlan/iswap.nvim',
 		config = function ()
 			require('iswap').setup {
 				keys = 'qwertyuiop'
 			}
 		end
-	}
+	},
 
 	-- Terminal
-	use { 'voldikss/vim-floaterm',
+	{ 'voldikss/vim-floaterm',
 		config = function()
 			vim.g.floaterm_width = 0.5
 			vim.g.floaterm_height = 0.99999999 -- avoid implicit conversion to int
 			vim.g.floaterm_position = "right"
 		end
-	}
-	use { 'willothy/flatten.nvim',
+	},
+	{ 'willothy/flatten.nvim',
 		config = function()
 			require('flatten').setup {}
 		end,
-		disable = true
-	}
+		enabled = false
+	},
 
 	-- Git
-	use {
+	{
 		'lewis6991/gitsigns.nvim',
 		config = function()
 			require('gitsigns').setup()
 		end
-	}
-	use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim',
+	},
+	{ 'NeogitOrg/neogit', dependencies = 'nvim-lua/plenary.nvim',
 		config = function ()
 			require('neogit').setup {}
 		end
-	}
-	use 'wintermute-cell/gitignore.nvim'
+	},
+	'wintermute-cell/gitignore.nvim',
 
 	-- Other
-	use 'wakatime/vim-wakatime'
-	use 'junegunn/vim-easy-align'
-	use { 'numToStr/Comment.nvim',
+	'wakatime/vim-wakatime',
+	'junegunn/vim-easy-align',
+	{ 'numToStr/Comment.nvim',
 		config = function()
 			require('Comment').setup {}
 		end
-	}
-	use 'mbbill/undotree'
+	},
+	'mbbill/undotree',
 
-	use { 'windwp/nvim-autopairs',
+	{ 'windwp/nvim-autopairs',
 		config = config('setup.autopairs')
-	}
-	use 'tpope/vim-surround'
-	-- use 'kkharji/sqlite.lua'
-	use { 'AckslD/nvim-neoclip.lua',
-		requires = 'telescope.nvim',
+	},
+	'tpope/vim-surround',
+	-- 'kkharji/sqlite.lua'
+	{ 'AckslD/nvim-neoclip.lua',
+		dependencies = 'telescope.nvim',
 		config = function()
 			require('neoclip').setup {}
 			vim.keymap.set('n', '<leader>fp', require('telescope').extensions.neoclip.default)
 		end
-	}
-	use 'fidian/hexmode'
-	-- use { 'michaelb/sniprun', run = 'bash install.sh' }
+	},
+	'fidian/hexmode',
+	-- { 'michaelb/sniprun', run = 'bash install.sh' }
 
-	use 'nvim-lua/plenary.nvim'
-	use { 'folke/todo-comments.nvim',
+	'nvim-lua/plenary.nvim',
+	{ 'folke/todo-comments.nvim',
 		config = function()
 			require('todo-comments').setup {
 				keywords = {
@@ -327,12 +330,14 @@ end
 				merge_keywords = true,
 			}
 		end
-	}
-	-- -- use { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, disable = true }
+	},
+	-- -- { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, enabled = true }
 
-	use 'sotte/presenting.vim'
+	'sotte/presenting.vim',
+}
 
-	if packer_bootstrap then
-		require('packer').sync()
-	end
-end)
+local opts = {
+
+}
+
+require('lazy').setup(plugins, opts)

@@ -25,9 +25,10 @@ autocmd("BufReadPost", {
 	group = augroup
 })
 
-autocmd("BufWritePost", {
-	pattern = "plugins.lua",
+
+vim.api.nvim_create_autocmd("BufNew", {
+	pattern = { "plugins.lua" },
 	callback = function()
-		vim.cmd [[source <afile> | PackerCompile]]
+		vim.o.foldlevel = 2
 	end
 })
