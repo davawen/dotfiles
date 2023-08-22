@@ -78,6 +78,7 @@ map("n", "<leader>fk", telescope.keymaps)
 map("n", "<leader>fh", telescope.help_tags)
 map("n", "<leader>fg", telescope.live_grep)
 map("n", "<leader>fd", telescope.diagnostics)
+map("n", "<leader>fb", telescope.buffers)
 
 -- Neotree mappings
 map("n", "<leader>nf", "<Cmd>Neotree source=filesystem position=float focus<CR>")

@@ -368,7 +368,7 @@ require('rust-tools').setup {
 		-- standalone file support
 		-- setting it to false may improve startup time
 		standalone = true,
-		cmd = { "rustup",  "run", "stable", "rust-analyzer" },
+		-- cmd = { "rustup",  "run", "stable", "rust-analyzer" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "rust" },

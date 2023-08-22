@@ -1,6 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-local augroup = vim.api.nvim_create_augroup("MyGroup", {})
+_G.augroup = vim.api.nvim_create_augroup("MyGroup", {})
 
 autocmd("FileType", {
 	pattern = "vim",
@@ -30,5 +30,6 @@ vim.api.nvim_create_autocmd("BufNew", {
 	pattern = { "plugins.lua" },
 	callback = function()
 		vim.o.foldlevel = 2
-	end
+	end,
+	group = augroup
 })

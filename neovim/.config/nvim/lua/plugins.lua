@@ -1,11 +1,11 @@
---- Takes a module and packages it into a function to be called by packer
+--- Takes a module and packages it into a function to be called by lazy
 --- Use it like so:
 --- ```lua
 --- use { 'plugin',
----     config = config('path.module')
+---     config = config('module')
 --- }
 --- 
---- -- path/module.lua
+--- -- config/module.lua
 --- -- ...
 --- require('plugin').setup {
 ---     -- ...
@@ -15,7 +15,7 @@
 --- @return function
 local config = function(path)
 	return function()
-		require(path)
+		require('config.' .. path)
 	end
 end
 
@@ -40,7 +40,14 @@ local plugins = {
 	'shaunsingh/nord.nvim',
 	'sainnhe/everforest',
 	'habamax/vim-polar',
-	{ 'catppuccin/nvim', name ='catppuccin' },
+	{ 'catppuccin/nvim', name ='catppuccin',
+		config = function ()
+			require('catppuccin').setup {
+				show_end_of_buffer = true,
+			}
+		end,
+		priority = 1000
+	},
 	'AlexvZyl/nordic.nvim',
 	'joshdick/onedark.vim',
 	'rebelot/kanagawa.nvim',
@@ -51,13 +58,17 @@ local plugins = {
 	'ryanoasis/vim-devicons',
 	'kyazdani42/nvim-web-devicons',
 
-	{ 'nvim-lualine/lualine.nvim',
-		config = config('setup.lualine')
+	-- Status info
+	{ 'rebelot/heirline.nvim',
+		config = config('heirline')
+	},
+	{ 'b0o/incline.nvim',
+		config = true
 	},
 
 	-- Treesitter
 	{ 'nvim-treesitter/nvim-treesitter',
-		config = config('setup.treesitter')
+		config = config('treesitter')
 	},
 	{ 'nvim-treesitter/nvim-treesitter-context',
 		dependencies = 'nvim-treesitter',
@@ -90,7 +101,6 @@ local plugins = {
 			}
 		end
 	},
-	'nvim-treesitter/playground',
 	{ 'danymat/neogen',
 		config = function()
 			require('neogen').setup {
@@ -106,7 +116,7 @@ local plugins = {
 			'williamboman/mason-lspconfig.nvim',
 			'j-hui/fidget.nvim'
 		},
-		config = config('setup.lsp')
+		config = config('lsp')
 	},
 	{ 'j-hui/fidget.nvim',
 		tag = 'legacy',
@@ -137,6 +147,7 @@ local plugins = {
 			vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
 		end
 	},
+	'SmiteshP/nvim-navic',
 	'onsails/lspkind-nvim',
 	'ray-x/lsp_signature.nvim',
 	'simrat39/rust-tools.nvim',
@@ -178,15 +189,15 @@ local plugins = {
 
 	-- Debugging
 	{ 'mfussenegger/nvim-dap',
-		config = config('setup.dap')
+		config = config('dap')
 	},
 	{ 'rcarriga/nvim-dap-ui',
-		config = config('setup.dapui')
+		config = config('dapui')
 	},
 
 	-- Snippets
 	{ 'dcampos/nvim-snippy',
-		config = config('setup.snippy')
+		config = config('snippy')
 	},
 	'honza/vim-snippets',
 
@@ -230,13 +241,14 @@ local plugins = {
 		init = function()
 			vim.g.neo_tree_remove_legacy_commands = 1
 		end,
-		config = config('setup.neotree'),
+		config = config('neotree'),
 		branch = "v3.x"
 		-- lazy = true
 	},
-	{ 'romgrk/barbar.nvim',
-		config = config('setup.barbar')
-	},
+	-- { 'romgrk/barbar.nvim',
+	-- 	config = config('barbar'),
+	-- 	cond = false
+	-- },
 	{ 'mg979/vim-visual-multi', branch = 'master' },
 	{ 'stevearc/dressing.nvim',
 		config = function()
@@ -291,7 +303,9 @@ local plugins = {
 	{ 'NeogitOrg/neogit', dependencies = 'nvim-lua/plenary.nvim',
 		config = function ()
 			require('neogit').setup {}
-		end
+		end,
+		lazy = true,
+		cmd = { "Neogit", "NeogitMessages", "NeogitResetState" }
 	},
 	'wintermute-cell/gitignore.nvim',
 
@@ -306,9 +320,13 @@ local plugins = {
 	'mbbill/undotree',
 
 	{ 'windwp/nvim-autopairs',
-		config = config('setup.autopairs')
+		config = config('autopairs')
 	},
-	'tpope/vim-surround',
+	{ 'kylechui/nvim-surround',
+		config = config('surround'),
+		lazy = true,
+		event = "VeryLazy"
+	},
 	-- 'kkharji/sqlite.lua'
 	{ 'AckslD/nvim-neoclip.lua',
 		dependencies = 'telescope.nvim',
@@ -329,7 +347,9 @@ local plugins = {
 				},
 				merge_keywords = true,
 			}
-		end
+		end,
+		lazy = true,
+		event = "VeryLazy"
 	},
 	-- -- { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, enabled = true }
 
@@ -337,7 +357,10 @@ local plugins = {
 }
 
 local opts = {
-
+	install = {
+		missing = false,
+		-- colorscheme = { "catppuccin" }
+	}
 }
 
 require('lazy').setup(plugins, opts)

@@ -16,11 +16,13 @@ vim.api.nvim_create_user_command('Save', function ()
 	local pwd = vim.fn.getcwd()
 	local escaped = pwd:gsub('/', "_")
 
-	vim.fn.mkdir(vim.fn.expand("~/.local/state/nvim/saver/"), "p")
-	vim.cmd [[ cd ~/.local/state/nvim/saver/ ]]
+	local saver_path = vim.fn.stdpath('state') .. "/saver/"
 
-	vim.cmd([[ mksession! ]] .. escaped)
-	vim.cmd([[ cd ]] .. pwd)
+	vim.fn.mkdir(saver_path, "p")
+	vim.cmd.cd(saver_path)
+
+	vim.cmd.mksession{ escaped, bang = true }
+	vim.cmd.cd(pwd)
 end, {})
 
 vim.api.nvim_create_user_command('Load', function ()
@@ -28,6 +30,8 @@ vim.api.nvim_create_user_command('Load', function ()
 	local pwd = vim.fn.getcwd()
 	local escaped = pwd:gsub('/', "_")
 
-	vim.cmd([[ so ~/.local/state/nvim/saver/]] .. escaped)
-	vim.cmd([[ cd ]] .. pwd)
+	local saver_path = vim.fn.stdpath('state') .. "/saver/"
+
+	vim.cmd.so(saver_path .. escaped)
+	vim.cmd.cd(pwd)
 end, {})

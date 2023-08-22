@@ -1,10 +1,12 @@
+vim.opt.shortmess:append({ I = true })
+
 require("plugins")
+
+vim.cmd.colorscheme("catppuccin-macchiato")
 
 require("mappings")
 require("autocommands")
 require("commands")
-
-vim.cmd.colorscheme("catppuccin-macchiato")
 
 vim.o.number = true
 vim.o.relativenumber = true
@@ -21,6 +23,9 @@ vim.o.lbr = true
 vim.o.wrap = true
 
 vim.o.conceallevel = 0
+
+vim.o.laststatus = 3
+vim.o.showtabline = 2
 
 local map, _ = unpack(require("utils.map"))
 
