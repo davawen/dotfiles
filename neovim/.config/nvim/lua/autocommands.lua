@@ -26,10 +26,10 @@ autocmd("BufReadPost", {
 })
 
 
-vim.api.nvim_create_autocmd("BufNew", {
-	pattern = { "plugins.lua" },
-	callback = function()
-		vim.o.foldlevel = 2
-	end,
-	group = augroup
-})
+-- vim.api.nvim_create_autocmd("BufNew", {
+-- 	pattern = { "*/.config/nvim/*" },
+-- 	callback = function()
+-- 		vim.bo.foldlevel = 2
+-- 	end,
+-- 	group = augroup
+-- })
