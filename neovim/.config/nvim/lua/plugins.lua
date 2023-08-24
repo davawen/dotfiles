@@ -45,6 +45,7 @@ local plugins = {
 			require('catppuccin').setup {
 				show_end_of_buffer = true,
 			}
+			vim.cmd.colorscheme("catppuccin-macchiato")
 		end,
 		priority = 1000
 	},

@@ -2,11 +2,11 @@ vim.opt.shortmess:append({ I = true })
 
 require("plugins")
 
-vim.cmd.colorscheme("catppuccin-macchiato")
-
 require("mappings")
 require("autocommands")
 require("commands")
+
+vim.g.man_hardwrap = true
 
 vim.o.number = true
 vim.o.relativenumber = true
@@ -21,6 +21,7 @@ vim.o.breakindent = true -- indent word wrapped lines as much as the parent line
 vim.o.formatoptions = "l" -- ensures word-wrap doesn't split words
 vim.o.lbr = true
 vim.o.wrap = true
+vim.o.splitright = true
 
 vim.o.conceallevel = 0
 

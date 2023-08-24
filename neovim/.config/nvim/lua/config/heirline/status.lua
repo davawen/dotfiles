@@ -225,8 +225,7 @@ local current_file = {
 local filetype = {
 	provider = function (self)
 		return " [" .. ternary(self.ft == "", "blank", self.ft) .. "] "
-	end,
-	update = { "WinEnter", "BufEnter" }
+	end
 }
 
 local file_encoding = {
@@ -263,7 +262,7 @@ local file = {
 		_, self.icon_color = require('nvim-web-devicons').get_icon_color_by_filetype(self.ft, { default = true })
 	end,
 	hl = function (self) return { fg = self.icon_color } end,
-	update = { "FileType" },
+	update = { "BufEnter", "WinEnter", "FileType" },
 	file_format,
 	file_encoding,
 	filetype,

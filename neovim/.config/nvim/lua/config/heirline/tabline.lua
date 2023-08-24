@@ -14,11 +14,24 @@ do
 	local bufs = vim.api.nvim_list_bufs()
 	local index = 1
 	for _, buf in ipairs(bufs) do
-		if  vim.fn.buflisted(buf) == 1 then
+		if vim.fn.buflisted(buf) == 1 and vim.bo[buf].buftype == "" then
 			table.insert(indices.index_to_buf, buf)
 			indices.buf_to_index[buf] = index
 			index = index + 1
 		end
+	end
+end
+
+local function remove_buffer(bufnr)
+	local index = indices.buf_to_index[bufnr]
+	if index then
+		indices.buf_to_index[bufnr] = nil
+		table.remove(indices.index_to_buf, index)
+		for i = index, #indices.index_to_buf do
+			indices.buf_to_index[indices.index_to_buf[i]] = i
+		end
+
+		vim.cmd.redrawtabline()
 	end
 end
 
@@ -28,11 +41,18 @@ vim.api.nvim_create_autocmd("BufAdd", {
 			return
 		end
 
-		if vim.fn.buflisted(args.buf) == 1 then
+		if vim.fn.buflisted(args.buf) == 1 and vim.bo[args.buf].buftype == "" then
 			table.insert(indices.index_to_buf, args.buf)
 
 			local index = #indices.index_to_buf
 			indices.buf_to_index[args.buf] = index
+
+			-- if a buffer gets added that shouldn't be (because of voodoo timing shit), remove it
+			vim.defer_fn(function ()
+				if vim.fn.buflisted(args.buf) ~= 1 or vim.bo[args.buf].buftype ~= "" then
+					remove_buffer(args.buf)
+				end
+			end, 150)
 
 			vim.cmd.redrawtabline()
 		end
@@ -45,13 +65,7 @@ vim.api.nvim_create_autocmd("BufDelete", {
 			return
 		end
 
-		local index = indices.buf_to_index[args.buf]
-		if index then
-			indices.buf_to_index[args.buf] = nil
-			table.remove(indices.index_to_buf, index)
-
-			vim.cmd.redrawtabline()
-		end
+		remove_buffer(args.buf)
 	end
 })
 
@@ -63,9 +77,16 @@ local function buffer_goto(index)
 	end
 end
 
-function _G.current_index()
+function _G.current_pos()
 	local current = vim.api.nvim_get_current_buf()
-	return indices.buf_to_index[current]
+	return {
+		bufnr = current,
+		index = indices.buf_to_index[current]
+	}
+end
+
+function _G.current_index()
+	return current_pos().index
 end
 
 local function buffer_swap(indexa, indexb)
@@ -95,7 +116,17 @@ map('n', '<A-.>', function() buffer_goto(current_index()+1) end)
 map('n', '<C-[>', function() buffer_swap(current_index(), current_index()-1) end)
 map('n', '<C-]>', function() buffer_swap(current_index(), current_index()+1) end )
 
-map('n', 'db', '<Cmd>bdelete!<Cr>')
+map('n', 'db', function ()
+	local pos = current_pos()
+	buffer_goto(pos.index+1)
+
+	local opts = {}
+	if vim.api.nvim_buf_get_name(pos.bufnr) == "" then -- anonymous buffer
+		opts.force = true
+	end
+
+	vim.api.nvim_buf_delete(pos.bufnr, opts)
+end)
 -- map('n', '<A-p>', '<Cmd>BufferPin<Cr>')
 
 map('n', '<A-1>', wrap(buffer_goto, 1))
