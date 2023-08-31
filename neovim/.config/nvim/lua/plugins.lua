@@ -61,7 +61,7 @@ local plugins = {
 
 	-- Status info
 	{ 'rebelot/heirline.nvim',
-		config = config('heirline')
+		config = config('heirline'),
 	},
 	{ 'b0o/incline.nvim',
 		config = true
@@ -154,30 +154,40 @@ local plugins = {
 	'simrat39/rust-tools.nvim',
 	'sigmasd/deno-nvim',
 	{ 'mhartington/formatter.nvim',
-	config = function()
-		require("formatter").setup {
-		  -- Enable or disable logging
-		  logging = true,
-		  -- Set the log level
-		  log_level = vim.log.levels.WARN,
-		  -- All formatter configurations are opt-in
-		  filetype = {
-			-- Formatter configurations for filetype "lua" go here
-			-- and will be executed in order
-			cpp = require("formatter.filetypes.cpp").clangformat,
-			c = require("formatter.filetypes.c").clangformat,
-			typescript = require("formatter.filetypes.javascript").prettier,
+		config = function()
+			require("formatter").setup {
+			  -- Enable or disable logging
+			  logging = true,
+			  -- Set the log level
+			  log_level = vim.log.levels.WARN,
+			  -- All formatter configurations are opt-in
+			  filetype = {
+				-- Formatter configurations for filetype "lua" go here
+				-- and will be executed in order
+				cpp = require("formatter.filetypes.cpp").clangformat,
+				c = require("formatter.filetypes.c").clangformat,
+				typescript = require("formatter.filetypes.javascript").prettier,
 
-			-- Use the special "*" filetype for defining formatter configurations on
-			-- any filetype
-			["*"] = {
-			  -- "formatter.filetypes.any" defines default configurations for any
-			  -- filetype
-			  require("formatter.filetypes.any").remove_trailing_whitespace
+				-- Use the special "*" filetype for defining formatter configurations on
+				-- any filetype
+				["*"] = {
+				  -- "formatter.filetypes.any" defines default configurations for any
+				  -- filetype
+				  require("formatter.filetypes.any").remove_trailing_whitespace
+				}
+			  }
 			}
-		  }
-		}
-	end
+		end
+	},
+	{ 'jmbuhr/otter.nvim',
+		dependencies = {
+			'hrsh7th/nvim-cmp',
+			'neovim/nvim-lspconfig',
+			'nvim-treesitter/nvim-treesitter'
+		},
+		config = function ()
+			require('otter').activate({ 'python', 'c', 'cpp' })
+		end
 	},
 	{'dgagn/diagflow.nvim',
 		config = function ()
@@ -330,11 +340,14 @@ local plugins = {
 	},
 	-- 'kkharji/sqlite.lua'
 	{ 'AckslD/nvim-neoclip.lua',
-		dependencies = 'telescope.nvim',
+		dependencies = 'nvim-telescope/telescope.nvim',
 		config = function()
 			require('neoclip').setup {}
-			vim.keymap.set('n', '<leader>fp', require('telescope').extensions.neoclip.default)
-		end
+			vim.keymap.set('n', '<leader>fc', function () -- sometimes, neoclip isn't loaded in telescope at this moment, so we only call it when the keymap's called
+				require('telescope').extensions.neoclip.default()
+			end)
+		end,
+		event = "VeryLazy"
 	},
 	'fidian/hexmode',
 	-- { 'michaelb/sniprun', run = 'bash install.sh' }

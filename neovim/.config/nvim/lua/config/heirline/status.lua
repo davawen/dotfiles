@@ -216,6 +216,7 @@ local current_file = {
 	init = function (self)
 		self.filename = vim.api.nvim_buf_get_name(0)
 		self.ext = vim.fn.fnamemodify(self.filename, ":e")
+		self.filetype = vim.bo.filetype
 	end,
 	file_icon,
 	file_name_modifier

@@ -50,6 +50,7 @@
   "nvim-treesitter-context": { "branch": "master", "commit": "14856c9ee6eb0ede0ae9b43782c9be5e7bd946e6" },
   "nvim-web-devicons": { "branch": "master", "commit": "cfc8824cc1db316a276b36517f093baccb8e799a" },
   "onedark.vim": { "branch": "main", "commit": "57b77747694ea5676c3ca0eeaf9567dc499730c0" },
+  "otter.nvim": { "branch": "main", "commit": "e82a3db760a67cf4b765709e8c49ae9b287c351f" },
   "pest.vim": { "branch": "master", "commit": "78a65344a89804ec86a0d025a3799f47c2331389" },
   "plenary.nvim": { "branch": "master", "commit": "267282a9ce242bbb0c5dc31445b6d353bed978bb" },
   "presenting.vim": { "branch": "master", "commit": "e960e204d8e4526d2650c23eaea908317c6becb9" },

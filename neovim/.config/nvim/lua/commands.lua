@@ -2,7 +2,7 @@
 -- Does not work with neovim currently
 -- command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-vim.cmd [[ cnoreabbrev M vert Man ]]
+vim.cmd [[cnoreabbrev M vert Man]]
 
 -- Creates a terminal in a right split
 vim.api.nvim_create_user_command('Vte', 'vsplit | term', {})

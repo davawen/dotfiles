@@ -1,10 +1,10 @@
 vim.opt.shortmess:append({ I = true })
 
 require("plugins")
-
 require("mappings")
 require("autocommands")
 require("commands")
+require("custom_cursor_hold")
 
 vim.g.man_hardwrap = true
 

@@ -9,12 +9,16 @@ _G.show_tabline = function ()
 	vim.print(indices)
 end
 
+local function valid_buffer(bufnr)
+	return vim.fn.buflisted(bufnr) == 1 and (vim.bo[bufnr].buftype == "" or vim.bo[bufnr].buftype == "terminal")
+end
+
 -- add already open buffers to tabline
 do
 	local bufs = vim.api.nvim_list_bufs()
 	local index = 1
 	for _, buf in ipairs(bufs) do
-		if vim.fn.buflisted(buf) == 1 and vim.bo[buf].buftype == "" then
+		if valid_buffer(bufnr) then
 			table.insert(indices.index_to_buf, buf)
 			indices.buf_to_index[buf] = index
 			index = index + 1
@@ -27,10 +31,11 @@ local function remove_buffer(bufnr)
 	if index then
 		indices.buf_to_index[bufnr] = nil
 		table.remove(indices.index_to_buf, index)
-		for i = index, #indices.index_to_buf do
-			indices.buf_to_index[indices.index_to_buf[i]] = i
+		local num = #indices.index_to_buf
+		for i = index, num do -- sync buffer list
+			local buf = indices.index_to_buf[i]
+			indices.buf_to_index[buf] = i
 		end
-
 		vim.cmd.redrawtabline()
 	end
 end
@@ -41,7 +46,7 @@ vim.api.nvim_create_autocmd("BufAdd", {
 			return
 		end
 
-		if vim.fn.buflisted(args.buf) == 1 and vim.bo[args.buf].buftype == "" then
+		if valid_buffer(args.buf) then
 			table.insert(indices.index_to_buf, args.buf)
 
 			local index = #indices.index_to_buf
@@ -49,7 +54,7 @@ vim.api.nvim_create_autocmd("BufAdd", {
 
 			-- if a buffer gets added that shouldn't be (because of voodoo timing shit), remove it
 			vim.defer_fn(function ()
-				if vim.fn.buflisted(args.buf) ~= 1 or vim.bo[args.buf].buftype ~= "" then
+				if not valid_buffer(args.buf) then
 					remove_buffer(args.buf)
 				end
 			end, 150)
@@ -118,13 +123,19 @@ map('n', '<C-]>', function() buffer_swap(current_index(), current_index()+1) end
 
 map('n', 'db', function ()
 	local pos = current_pos()
-	buffer_goto(pos.index+1)
+	local num = #indices.index_to_buf
+
+
+	if pos.index == num and num > 1 then -- if there no buffer after, set to last buffer
+		buffer_goto(pos.index-1)
+	elseif num > 1 then
+		buffer_goto(pos.index+1)
+	end
 
 	local opts = {}
 	if vim.api.nvim_buf_get_name(pos.bufnr) == "" then -- anonymous buffer
 		opts.force = true
 	end
-
 	vim.api.nvim_buf_delete(pos.bufnr, opts)
 end)
 -- map('n', '<A-p>', '<Cmd>BufferPin<Cr>')
@@ -193,6 +204,7 @@ local TablineFileNameBlock = {
     init = function(self)
         self.filename = vim.api.nvim_buf_get_name(self.bufnr)
 		self.ext = vim.fn.fnamemodify(self.filename, ":e")
+		self.filetype = vim.bo[self.bufnr].filetype
     end,
     hl = function(self)
         if self.is_active then

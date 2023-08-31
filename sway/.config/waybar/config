@@ -1,0 +1,85 @@
+{
+	"layer": "top",
+	"modules-left": ["custom/launcher", "custom/nemo", "sway/workspaces", "sway/scratchpad", "sway/mode"],
+	"modules-center": [],
+	"modules-right": ["custom/playerctl", "tray", "battery", "pulseaudio", "network", "memory", "clock"],
+	"custom/launcher": {
+		"exec": "echo \"  \nLaunch ULauncher\n\"",
+		"interval": "once",
+		"on-click": "ulauncher-toggle"
+	},
+	"custom/nemo": {
+		"exec": "echo \"  \nLaunch nemo\n\"",
+		"interval": "once",
+		"on-click": "nemo"
+	},
+	"sway/workspaces": {
+		"persistent_workspaces": {
+			"1": ["DP-1"], "2": ["DP-3"], 
+			"3": ["DP-1"], "4": ["DP-3"],
+			"5": ["DP-1"], "6": ["DP-3"], 
+			"7": ["DP-1"], "8": ["DP-3"], 
+		}
+	},
+	"sway/window": {
+		"max-length": 50
+	},
+	"custom/playerctl": {
+		"format": "{}",
+		"max-length": 80,
+		"interval": 1,
+		"exec": "/home/davawen/.config/waybar/player.nu 2> /dev/null",
+		"on-click": "playerctl play-pause",
+		"on-scroll-up": "playerctl volume 0.05+",
+		"on-scroll-down": "playerctl volume 0.05-",
+		"align": 1
+	},
+	"battery": {
+		"format": "{capacity}% {icon}",
+		"format-icons": ["", "", "", "", ""]
+	},
+	"tray": {
+		"spacing": 7,
+		"show-passive-items": true
+	},
+	"pulseaudio": {
+		"format": "{icon} {volume:2}%",
+		"format-bluetooth": "{icon}  {volume}%",
+		"format-muted": "MUTE",
+		"format-icons": {
+			"headphones": "",
+			"default": [
+				"",
+				""
+			]
+		},
+		"scroll-step": 5,
+		"on-click": "pamixer -t",
+		"on-click-right": "pavucontrol"
+	},
+	"network": {
+		"interval": 1,
+		"interface": "enp2s0f0u3",
+		"format": "{ifname}",
+		"format-wifi": "{bandwidthDownBytes} {bandwidthUpBytes} ({signalStrength}%) ",
+		"format-ethernet": "{bandwidthDownBytes} {bandwidthUpBytes} 󰈀",
+		"format-linked": "{bandwidthDownBytes} {bandwidthUpBytes} ",
+		"format-disconnected": "󰅛",
+		"tooltip-format": "Connected to: {ifname} with {ipaddr}",
+		"tooltip-format-wifi": "Connected to: {ifname}({essid}) with {ipaddr}",
+		"tooltip-format-disconnected": "Disconnected",
+		"min-length": 21,
+		"max-length": 21
+	},
+	"memory": {
+		"format": "{icon} {used}GB / {total}GB",
+		"format-icons": [
+			"󰡳", "󰡵", "󰊚", "󰡴"
+		]
+	},
+	"clock": {
+		"interval": 1,
+		"format": "{:%I:%M:%S}",
+		"tooltip-format": "{:%a, %d. %b  %H:%M}"
+	}
+}

@@ -9,7 +9,6 @@ cmp.setup({
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = false,
 		},
-
 		["<S-CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = true
@@ -43,13 +42,15 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4)
+		['<C-f>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
+		['<C-e>'] = cmp.mapping.abort()
 	},
 	sources = {
 		{ name = "path" },
 
 		{ name = "nvim_lua" },
+		{ name = "otter" },
 		{ name = "nvim_lsp" },
 		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
@@ -68,7 +69,7 @@ cmp.setup({
 	formatting = {
 		format = lspkind.cmp_format({
 			with_text = true,
-			max_width = 50,
+			max_width = 80,
 			ellipsis_char = "...",
 			menu = {
 				buffer = "[buf]",
@@ -190,7 +191,7 @@ lspconfig.clangd.setup{
 	flags = {
 		debounce_text_changes = 150
 	},
-    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua"),
+    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua", "meson.build"),
 	capabilities = capabilities,
 }
 
