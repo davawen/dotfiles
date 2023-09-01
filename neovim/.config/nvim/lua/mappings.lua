@@ -48,16 +48,16 @@ map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
 map("n", "<leader>te", "<Cmd>FloatermToggle<Cr>")
-remap("t", "<leader>te", "<Esc><leader>te")
-remap("t", "<leader>th", "<Esc><Cmd>FloatermPrev<Cr>")
-remap("t", "<leader>tl", "<Esc><Cmd>FloatermNext<Cr>")
-remap("t", "<leader>tn", "<Esc><Cmd>FloatermNew<Cr>")
+remap("t", "<leader>te", "<C-\\><leader>te")
+remap("t", "<leader>th", "<C-\\><Cmd>FloatermPrev<Cr>")
+remap("t", "<leader>tl", "<C-\\><Cmd>FloatermNext<Cr>")
+remap("t", "<leader>tn", "<C-\\><Cmd>FloatermNew<Cr>")
 
 -- ctrl-u uppercases a word
 map("i", "<c-u>", "<esc>viwUea")
 
--- Escape to quit terminal
-map("t", "<esc>", "<C-\\><C-n>")
+-- C-\ to quit terminal
+map("t", "<C-\\>", "<C-\\><C-n>")
 
 -- Quick return to line
 map("n", "d,", "^d0kJ")

@@ -5,7 +5,14 @@ local file_icon = require('config.heirline.file_icon')
 
 local indices = { buf_to_index = {}, index_to_buf = {} }
 
-_G.show_tabline = function ()
+---@param b boolean
+---@param v1 any
+---@param v2 any
+local function ternary(b, v1, v2)
+	if b then return v1 else return v2 end
+end
+
+show_bufferline = function ()
 	vim.print(indices)
 end
 
@@ -17,10 +24,10 @@ end
 do
 	local bufs = vim.api.nvim_list_bufs()
 	local index = 1
-	for _, buf in ipairs(bufs) do
+	for _, bufnr in ipairs(bufs) do
 		if valid_buffer(bufnr) then
-			table.insert(indices.index_to_buf, buf)
-			indices.buf_to_index[buf] = index
+			table.insert(indices.index_to_buf, bufnr)
+			indices.buf_to_index[bufnr] = index
 			index = index + 1
 		end
 	end
@@ -47,10 +54,16 @@ vim.api.nvim_create_autocmd("BufAdd", {
 		end
 
 		if valid_buffer(args.buf) then
-			table.insert(indices.index_to_buf, args.buf)
+			local index = (current_index() or #indices.index_to_buf) + 1
 
-			local index = #indices.index_to_buf
+			table.insert(indices.index_to_buf, index, args.buf)
+
 			indices.buf_to_index[args.buf] = index
+
+			for i = index+1, #indices.index_to_buf do
+				local bufnr = indices.index_to_buf[i]
+				indices.buf_to_index[bufnr] = i
+			end
 
 			-- if a buffer gets added that shouldn't be (because of voodoo timing shit), remove it
 			vim.defer_fn(function ()
@@ -82,7 +95,7 @@ local function buffer_goto(index)
 	end
 end
 
-function _G.current_pos()
+function current_pos()
 	local current = vim.api.nvim_get_current_buf()
 	return {
 		bufnr = current,
@@ -90,7 +103,7 @@ function _G.current_pos()
 	}
 end
 
-function _G.current_index()
+function current_index()
 	return current_pos().index
 end
 
@@ -115,8 +128,8 @@ local function wrap(f, ...)
 end
 
 local map, _ = unpack(require('utils.map'))
-map('n', '<A-,>', function() buffer_goto(current_index()-1) end);
-map('n', '<A-.>', function() buffer_goto(current_index()+1) end)
+map('n', '<A-,>', function() buffer_goto((current_index() or #indices.index_to_buf+1)-1) end);
+map('n', '<A-.>', function() buffer_goto((current_index() or 0)+1) end)
 
 map('n', '<C-[>', function() buffer_swap(current_index(), current_index()-1) end)
 map('n', '<C-]>', function() buffer_swap(current_index(), current_index()+1) end )
@@ -124,7 +137,6 @@ map('n', '<C-]>', function() buffer_swap(current_index(), current_index()+1) end
 map('n', 'db', function ()
 	local pos = current_pos()
 	local num = #indices.index_to_buf
-
 
 	if pos.index == num and num > 1 then -- if there no buffer after, set to last buffer
 		buffer_goto(pos.index-1)
@@ -151,7 +163,7 @@ map('n', '<A-8>', wrap(buffer_goto, 8))
 map('n', '<A-9>', wrap(buffer_goto, 9))
 map('n', '<A-0>', wrap(buffer_goto, 10))
 
-local TablineBufnr = {
+local BufferlineBufnr = {
     provider = function(self)
 		local index = indices.buf_to_index[self.bufnr]
         return tostring(index or self.bufnr) .. ". "
@@ -160,7 +172,7 @@ local TablineBufnr = {
 }
 
 -- we redefine the filename component, as we probably only want the tail and not the relative path
-local TablineFileName = {
+local BufferlineFileName = {
     provider = function(self)
         -- self.filename will be defined later, just keep looking at the example!
         local filename = self.filename
@@ -175,7 +187,7 @@ local TablineFileName = {
 -- this looks exactly like the FileFlags component that we saw in
 -- #crash-course-part-ii-filename-and-friends, but we are indexing the bufnr explicitly
 -- also, we are adding a nice icon for terminal buffers.
-local TablineFileFlags = {
+local BufferlineFileFlags = {
     {
         condition = function(self)
             return vim.api.nvim_buf_get_option(self.bufnr, "modified")
@@ -200,7 +212,7 @@ local TablineFileFlags = {
 }
 
 -- Here the filename block finally comes together
-local TablineFileNameBlock = {
+local BufferlineFileNameBlock = {
     init = function(self)
         self.filename = vim.api.nvim_buf_get_name(self.bufnr)
 		self.ext = vim.fn.fnamemodify(self.filename, ":e")
@@ -230,14 +242,14 @@ local TablineFileNameBlock = {
         end,
         name = "heirline_tabline_buffer_callback",
     },
-    TablineBufnr,
+    BufferlineBufnr,
     file_icon,
-    TablineFileName,
-    TablineFileFlags,
+    BufferlineFileName,
+    BufferlineFileFlags,
 }
 
 -- a nice "x" button to close the buffer
-local TablineCloseButton = {
+local BufferlineCloseButton = {
     condition = function(self)
         return not vim.api.nvim_buf_get_option(self.bufnr, "modified")
     end,
@@ -260,22 +272,35 @@ local TablineCloseButton = {
     },
 }
 
-local TablineBufferBlock = u.surround({ "", "" }, function(self)
+local BufferlineBufferBlock = u.surround({ "", "" }, function(self)
     if self.is_active then
         return u.get_highlight("TabLineSel").bg
     else
         return u.get_highlight("TabLine").bg
     end
-end, { TablineFileNameBlock, TablineCloseButton })
+end, { BufferlineFileNameBlock, BufferlineCloseButton })
 
-local BufferLine = u.make_buflist(
-    TablineBufferBlock,
+local BufferList = u.make_buflist(
+    BufferlineBufferBlock,
     { provider = "", hl = { fg = "gray" } }, -- left truncation, optional (defaults to "<")
     { provider = "", hl = { fg = "gray" } }, -- right trunctation, also optional (defaults to ...... yep, ">")
 	function () return indices.index_to_buf end,
 	false
 )
 
+local tablist_component = {
+	provider = function (self)
+		return " " .. self.tabnr .. " "
+	end,
+	hl = function (self)
+		return { fg = ternary(self.is_active, "rosewater", "gray"), bg = "mantle" }
+	end
+}
+
+local tablist = u.make_tablist(tablist_component)
+
 return {
-	BufferLine
+	BufferList,
+	{ provider = "%=" },
+	tablist
 }

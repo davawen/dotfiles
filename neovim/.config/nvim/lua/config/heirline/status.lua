@@ -271,7 +271,7 @@ local file = {
 }
 
 local position = {
-	provider = "%l/%L:%-2c %p%% ",
+	provider = "%3l/%L:%-2c %3p%% ",
 	hl = { fg = "rosewater" }
 }
 

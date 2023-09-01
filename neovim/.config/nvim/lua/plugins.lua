@@ -372,9 +372,10 @@ local plugins = {
 
 local opts = {
 	install = {
-		missing = false,
+		missing = true,
 		-- colorscheme = { "catppuccin" }
-	}
+	},
+	lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json", -- lockfile generated after running update.
 }
 
 require('lazy').setup(plugins, opts)

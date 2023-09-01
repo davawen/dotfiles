@@ -155,12 +155,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 			severity = vim.diagnostic.severity.ERROR
 		},
 		underline = {
-			severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR }
+			severity = { min = vim.diagnostic.severity.INFO, max = vim.diagnostic.severity.ERROR }
 		},
 		severity_sort = true
-		-- virtual_text = {
-		-- 	severity = vim.diagnostic.severity.ERROR
-		-- }
 	}
 )
 
