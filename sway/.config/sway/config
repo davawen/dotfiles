@@ -16,7 +16,7 @@ default_border pixel 3
 #set $borderwidth 1
 hide_edge_borders both
 
-set $scripts ~/.config/sway/scripts/
+set $scripts /home/davawen/.config/sway/scripts/
 
 set $gnome-schema org.gnome.desktop.interface
 # exec_always gsettings set $gnome-schema gtk-theme 'Arc-Dark'
@@ -235,8 +235,7 @@ bindsym XF86AudioPrev  exec playerctl previous
 bindsym XF86AudioPause exec playerctl pause
 
 bar {
-    swaybar_command waybar
-    workspace_buttons yes
+	swaybar_command $scripts/launch_waybar.sh
 }
 
 # Launcher
