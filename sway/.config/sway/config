@@ -124,21 +124,14 @@ input "type:pointer" {
     pointer_accel -0.65
 }
 
-# Configure outputs here
-# How to get outputs configurable - $ swaymsg -t get_outputs
-set $output1 DP-1
-set $output2 DP-3
-
-output $output1 mode 1920x1200 pos 1920 0 bg ~/Pictures/推しのこ/abiko_16_10.png fill
-output $output2 mode 1920x1080 pos 0 430 bg ~/Pictures/推しのこ/92.jpg fit #000000
-
 exec_always nm-applet --indicator
 
+# Configure outputs here
+include output/`hostname`.sway
+
+# expects output1 and output2 to be set
+
 # Workspace Variables
-
-# Rename workspace with i3-input using numbers and text
-# bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
-
 workspace 1 output $output1
 workspace 2 output $output2
 workspace 3 output $output1

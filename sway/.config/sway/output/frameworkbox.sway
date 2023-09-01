@@ -1,0 +1,4 @@
+set $output1 eDP-1
+set $output2 eDP-1
+
+output $output1 mode 2256x1504 scale 1.0 bg ~/Pictures/推しのこ/abiko_16_10.png fill

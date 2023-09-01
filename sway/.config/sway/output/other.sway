@@ -1,0 +1,5 @@
+set $output1 DP-1
+set $output2 DP-3
+
+output $output1 mode 1920x1200 pos 1920 0 bg ~/Pictures/推しのこ/abiko_16_10.png fill
+output $output2 mode 1920x1080 pos 0 430 bg ~/Pictures/推しのこ/92.jpg fit #000000

@@ -9,7 +9,7 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NVM_DIR="$XDG_DATA_HOME"/nvm
-export DENO_INSTALL="/home/davawen/.deno"
+export DENO_INSTALL="$HOME/.deno"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/pythonrc"
 export GOPATH="$XDG_DATA_HOME/go"
