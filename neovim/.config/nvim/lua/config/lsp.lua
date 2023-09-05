@@ -49,16 +49,15 @@ cmp.setup({
 	sources = {
 		{ name = "path" },
 
-		{ name = "nvim_lua" },
-		{ name = "otter" },
 		{ name = "nvim_lsp" },
+		-- { name = "otter" },
 		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
 	},
 	performance = {
-		-- debounce = 1000,
+		debounce = 16,
 		-- throttle = 100,
-		async_budget = 60
+		async_budget = 10
 	},
 	snippet = {
 		expand = function(args)
@@ -165,15 +164,15 @@ lspconfig.clangd.setup{
 	on_attach = function (client, bufnr)
 		on_attach(client, bufnr)
 		local augroup = vim.api.nvim_create_augroup("ClangdGroup", {})
-		vim.api.nvim_create_autocmd("CursorHoldI", {
-			pattern = "*",
-			callback = function ()
-				if cmp.visible() then
-					cmp.complete()
-				end
-			end,
-			group = augroup
-		})
+		-- vim.api.nvim_create_autocmd("CursorHoldI", {
+		-- 	pattern = "*",
+		-- 	callback = function ()
+		-- 		if cmp.visible() then
+		-- 			cmp.complete()
+		-- 		end
+		-- 	end,
+		-- 	group = augroup
+		-- })
 	end,
 	cmd = {
 		"clangd",
@@ -247,7 +246,6 @@ lspconfig.tsserver.setup{
 	single_file_support = false
 }
 
-vim.g.markdown_fenced_languages = { "ts=typescript" }
 require("deno-nvim").setup {
 	server = {
 		on_attach = on_attach,
@@ -405,6 +403,7 @@ local function sumneko_workspace()
 end
 
 lspconfig.lua_ls.setup {
+	before_init = require("neodev.lsp").before_init,
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -416,7 +415,7 @@ lspconfig.lua_ls.setup {
 			},
 			diagnostics = {
 				-- Get the language server to recognize the `vim` global
-				globals = {'vim'},
+				-- globals = {'vim'},
 			},
 			workspace = {
 				-- Make the server aware of Neovim runtime files
@@ -427,6 +426,9 @@ lspconfig.lua_ls.setup {
 			telemetry = {
 				enable = false,
 			},
+			completion = {
+				callSnippet = "Replace"
+			}
 		},
 	},
 }

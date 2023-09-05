@@ -70,6 +70,7 @@ map("v", "<leader>S", [[di{<CR><CR>}<ESC>k"_Sx<ESC>p^x$]])
 
 -- Telescope mappings
 local telescope = require('telescope.builtin')
+
 map("n", "<leader>ff", telescope.find_files)
 map("n", "<leader>fw", telescope.lsp_workspace_symbols)
 map("n", "<leader>fs", telescope.lsp_document_symbols)

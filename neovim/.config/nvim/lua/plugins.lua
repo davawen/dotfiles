@@ -111,11 +111,21 @@ local plugins = {
 	},
 
 	-- LSP
+	{ "folke/neodev.nvim",
+		config = function ()
+			require('neodev').setup { 
+				library = {
+					plugins = false
+				},
+				lspconfig = false
+			}
+		end,
+	},
 	{ 'neovim/nvim-lspconfig',
 		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
-			'j-hui/fidget.nvim'
+			'j-hui/fidget.nvim',
 		},
 		config = config('lsp')
 	},
@@ -179,16 +189,16 @@ local plugins = {
 			}
 		end
 	},
-	{ 'jmbuhr/otter.nvim',
-		dependencies = {
-			'hrsh7th/nvim-cmp',
-			'neovim/nvim-lspconfig',
-			'nvim-treesitter/nvim-treesitter'
-		},
-		config = function ()
-			require('otter').activate({ 'python', 'c', 'cpp' })
-		end
-	},
+	-- { 'jmbuhr/otter.nvim',
+	-- 	dependencies = {
+	-- 		'hrsh7th/nvim-cmp',
+	-- 		'neovim/nvim-lspconfig',
+	-- 		'nvim-treesitter/nvim-treesitter'
+	-- 	},
+	-- 	config = function ()
+	-- 		require('otter').activate({ 'python', 'c', 'cpp' })
+	-- 	end
+	-- },
 	{'dgagn/diagflow.nvim',
 		config = function ()
 			require('diagflow').setup {
@@ -216,7 +226,6 @@ local plugins = {
 	'hrsh7th/nvim-cmp',
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
-	'hrsh7th/cmp-nvim-lua',
 	'hrsh7th/cmp-nvim-lsp',
 	'dcampos/cmp-snippy',
 	'weilbith/nvim-code-action-menu',
@@ -229,7 +238,6 @@ local plugins = {
 
 	-- Filetype specific
 	'timonv/vim-cargo',
-	{ 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' },
 	{ 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' },
 	'godlygeek/tabular',
 	'habamax/vim-godot',
@@ -365,7 +373,14 @@ local plugins = {
 		lazy = true,
 		event = "VeryLazy"
 	},
-	-- -- { 'davawen/neo-presence', run = { "cmake -B build .", "make -C build" }, enabled = true }
+	{ 'davawen/neo-presence.lua', 
+		dev = true,
+		build = "./build.sh",
+		dir = "/mnt/Projects/Neovim/neo-presence.lua",
+		config = function ()
+			require('neo-presence').setup {}
+		end
+	},
 
 	'sotte/presenting.vim',
 }
@@ -376,6 +391,9 @@ local opts = {
 		-- colorscheme = { "catppuccin" }
 	},
 	lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json", -- lockfile generated after running update.
+	dev = {
+		path = "/mnt/Projects/Lua"
+	}
 }
 
 require('lazy').setup(plugins, opts)
