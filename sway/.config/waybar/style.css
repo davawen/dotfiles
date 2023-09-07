@@ -48,7 +48,7 @@ button:hover {
 /* } */
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0 0.7em;
     background-color: transparent;
     color: #ffffff;
 }
@@ -69,13 +69,8 @@ button:hover {
     background-color: #eb4d4b;
 }
 
-#scratchpad {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#scratchpad.empty {
-	background-color: transparent;
-}
+/* #scratchpad.empty { */
+/* } */
 
 #mode {
 	color: #c6a0f6;
