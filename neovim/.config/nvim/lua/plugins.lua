@@ -298,11 +298,17 @@ local plugins = {
 	},
 
 	-- Terminal
-	{ 'voldikss/vim-floaterm',
+	{ 'numToStr/FTerm.nvim',
 		config = function()
-			vim.g.floaterm_width = 0.5
-			vim.g.floaterm_height = 0.99999999 -- avoid implicit conversion to int
-			vim.g.floaterm_position = "right"
+			require('FTerm').setup {
+				border = 'single',
+				dimensions = {
+					height = 0.95,
+					width = 0.5,
+					x = 1.0,
+					y = 0.5
+				}
+			}
 		end
 	},
 	{ 'willothy/flatten.nvim',

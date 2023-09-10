@@ -18,7 +18,10 @@ function add_path
 end
 
 set -gx PNPM_HOME "/home/davawen/.local/share/pnpm"
+set --export BUN_INSTALL "$HOME/.bun"
+
 add_path "$PNPM_HOME"
+add_path "$BUN_INSTALL/bin"
 add_path "$HOME/.local/bin"
 # WARNING: Those two require PNPM above to be in the path and everything breaks if they aren't
 add_path "$(npm config get prefix)/bin"
@@ -67,6 +70,7 @@ abbr dnfu "sudo dnf update"
 abbr dnfs "sudo dnf -C search"
 abbr dnfp "sudo dnf -C provides"
 abbr dnfl "sudo dnf -C list"
+abbr dnff "sudo dnf -C info"
 
 abbr clang20 "clang++ -std=c++20"
 

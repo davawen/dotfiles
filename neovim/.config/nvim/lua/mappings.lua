@@ -47,11 +47,16 @@ map("n", "<leader>;", "mpA;<esc>`p")
 map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
-map("n", "<leader>te", "<Cmd>FloatermToggle<Cr>")
+map("n", "<leader>te", function () require('FTerm').toggle() end)
 remap("t", "<leader>te", "<C-\\><leader>te")
-remap("t", "<leader>th", "<C-\\><Cmd>FloatermPrev<Cr>")
-remap("t", "<leader>tl", "<C-\\><Cmd>FloatermNext<Cr>")
-remap("t", "<leader>tn", "<C-\\><Cmd>FloatermNew<Cr>")
+
+vim.api.nvim_create_user_command('FTermExit', function () require('FTerm').exit() end, { bang = true })
+
+map("n", "<leader>ts", function ()
+	vim.ui.input({ prompt = "Command to run: " }, function (input)
+		require('FTerm').scratch({ cmd = input })
+	end)
+end)
 
 -- ctrl-u uppercases a word
 map("i", "<c-u>", "<esc>viwUea")
