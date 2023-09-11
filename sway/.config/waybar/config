@@ -32,7 +32,9 @@
 		"on-click": "playerctl play-pause",
 		"on-scroll-up": "playerctl volume 0.05+",
 		"on-scroll-down": "playerctl volume 0.05-",
-		"align": 1
+		"align": 1,
+		"return-type": "json",
+		"escape": true
 	},
 	"battery": {
 		"format": "{capacity}% {icon}",

@@ -1,4 +1,4 @@
-# Please see https://github.com/swaywm/sway/wiki for a complete reference!
+include /etc/sway/config.d/*
 
 set $mod Mod4
 set $mod1 Mod1
@@ -253,6 +253,7 @@ bar {
 bindsym $mod+d exec fuzzel
 
 assign [class="discord"] 2
+assign [app_id="VencordDesktop"] 2
 
 # Resize floating kitty window
 for_window [app_id="kitty" floating] resize set width 50ppt height 50ppt
@@ -280,6 +281,7 @@ for_window [class="flameshot"] floating enable
 for_window [class="PlayOnLinux"] floating enable
 for_window [title="Event Tester"] floating enable
 #for_window [class="VirtualBox"] floating enable
+for_window [app_id="firefox" title="Sharing Indicator"] floating enable
 
 # Sticky window
 for_window [instance="file_progress"]  sticky enable
