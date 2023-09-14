@@ -4,9 +4,9 @@
 	"modules-center": [],
 	"modules-right": ["custom/playerctl", "tray", "battery", "pulseaudio", "network", "memory", "clock"],
 	"custom/launcher": {
-		"exec": "echo \"  \nLaunch ULauncher\n\"",
+		"exec": "echo \"  \nLaunch Fuzzel\n\"",
 		"interval": "once",
-		"on-click": "ulauncher-toggle"
+		"on-click": "fuzzel"
 	},
 	"custom/nemo": {
 		"exec": "echo \"  \nLaunch nemo\n\"",
