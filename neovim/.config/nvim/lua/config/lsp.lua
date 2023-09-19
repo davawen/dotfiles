@@ -216,7 +216,7 @@ lspconfig.html.setup {
 lspconfig.emmet_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" }
+	filetypes = { "css", "eruby", "html", "less", "sass", "scss", "svelte", "pug", "vue" }
 }
 
 lspconfig.pest_ls.setup {
