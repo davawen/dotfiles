@@ -68,7 +68,7 @@ cmp.setup({
 	formatting = {
 		format = lspkind.cmp_format({
 			with_text = true,
-			max_width = 80,
+			-- max_width = 80,
 			ellipsis_char = "...",
 			menu = {
 				buffer = "[buf]",
@@ -163,7 +163,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 lspconfig.clangd.setup{
 	on_attach = function (client, bufnr)
 		on_attach(client, bufnr)
-		local augroup = vim.api.nvim_create_augroup("ClangdGroup", {})
 		-- vim.api.nvim_create_autocmd("CursorHoldI", {
 		-- 	pattern = "*",
 		-- 	callback = function ()
