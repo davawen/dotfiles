@@ -381,8 +381,8 @@ local plugins = {
 	},
 	{ 'davawen/neo-presence.lua', 
 		dev = true,
-		build = "./build.sh",
 		dir = "/mnt/Projects/Neovim/neo-presence.lua",
+		build = "./build.sh",
 		config = function ()
 			require('neo-presence').setup {}
 		end

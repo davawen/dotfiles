@@ -4,9 +4,9 @@
 	"modules-center": [],
 	"modules-right": ["custom/playerctl", "tray", "battery", "pulseaudio", "network", "memory", "clock"],
 	"custom/launcher": {
-		"exec": "echo \"  \nLaunch ULauncher\n\"",
+		"exec": "echo \"  \nLaunch Fuzzel\n\"",
 		"interval": "once",
-		"on-click": "ulauncher-toggle"
+		"on-click": "fuzzel"
 	},
 	"custom/nemo": {
 		"exec": "echo \"  \nLaunch nemo\n\"",
@@ -32,7 +32,9 @@
 		"on-click": "playerctl play-pause",
 		"on-scroll-up": "playerctl volume 0.05+",
 		"on-scroll-down": "playerctl volume 0.05-",
-		"align": 1
+		"align": 1,
+		"return-type": "json",
+		"escape": true
 	},
 	"battery": {
 		"format": "{capacity}% {icon}",

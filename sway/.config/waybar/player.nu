@@ -21,4 +21,9 @@ let volume = if ($volume | is-empty) { "" } else {
 
 let icon = if $status == "Playing" { "󰏤" } else { "󰐊" }
 
-$"󰒮 ($icon) 󰒭 ($volume) ($name)\n($album)\n($status | str downcase)"
+{
+	"text": $"󰒮 ($icon) 󰒭 ($volume) ($name)",
+	"tooltip": $album,
+	"class": ($status | str downcase),
+	"percentage": 0
+} | to json -r
