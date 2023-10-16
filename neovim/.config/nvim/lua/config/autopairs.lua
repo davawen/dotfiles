@@ -25,6 +25,7 @@ npairs.add_rule(
 )
 
 npairs.remove_rule('```')
+npairs.remove_rule("'")
 
 -- Template generics
 npairs.add_rule(
