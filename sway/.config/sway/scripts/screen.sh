@@ -16,9 +16,9 @@ EDIT=${1:-"false"}
 TMPIMG=${2:-"$(mktemp --suffix ss.png)"}
 IMGCLASS=${3:-"swayimg-screenshot"}
 SLURPARG="-f %w:%h:%x:%y -d -b 00000066"
-DESKTOPSIZE="0,0 3840x1510"
+# DESKTOPSIZE="0,0 3840x1510" -g "$DESKTOPSIZE"
 
-grim -c -t png -l 0 -s 1 -g "$DESKTOPSIZE" "$TMPIMG"
+grim -c -t png -l 0 -s 1  "$TMPIMG"
 swayimg -b none -s real -c "$IMGCLASS" -n "$TMPIMG" &
 
 trim() {
