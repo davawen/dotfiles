@@ -258,7 +258,11 @@ require("deno-nvim").setup {
 lspconfig.ocamllsp.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	single_file_support = true
+	single_file_support = true,
+	filetypes = vim.list_extend(
+		require('lspconfig.server_configurations.ocamllsp').default_config.filetypes,
+		{ "ocaml_interface", "ocamllex", "menhir" }
+	)
 }
 
 lspconfig.svelte.setup{
