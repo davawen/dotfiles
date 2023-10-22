@@ -382,8 +382,6 @@ local plugins = {
 		event = "VeryLazy"
 	},
 	{ 'davawen/neo-presence.lua', 
-		dev = true,
-		dir = "/mnt/Projects/Neovim/neo-presence.lua",
 		build = "./build.sh",
 		config = function ()
 			require('neo-presence').setup {}
