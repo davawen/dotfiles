@@ -73,6 +73,10 @@ local highlights = {
 	DiagnosticUnderlineInfo = { undercurl = true, sp = "#91d7e3" },
 	DiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" },
 
+	LspDiagnosticUnderlineWarning = { undercurl = true, sp = "#eed49f" },
+	LspDiagnosticUnderlineInformation = { undercurl = true, sp = "#91d7e3" },
+	LspDiagnosticUnderlineHint = { undercurl = true, sp = "#8bd5ca" },
+
 	-- Overwrite catpuccin fold
 	Folded = { bg = "NONE", fg = "#6e738d" },
 

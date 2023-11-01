@@ -115,11 +115,16 @@ local plugins = {
 		config = function ()
 			require('neodev').setup { 
 				library = {
-					plugins = false
+					plugins = true,
 				},
 				lspconfig = false
 			}
 		end,
+	},
+	{ "rcarriga/nvim-notify",
+		config = function ()
+			vim.notify = require("notify")
+		end
 	},
 	{ 'neovim/nvim-lspconfig',
 		dependencies = {
@@ -384,7 +389,9 @@ local plugins = {
 	{ 'davawen/neo-presence.lua', 
 		build = "./build.sh",
 		config = function ()
-			require('neo-presence').setup {}
+			require('neo-presence').setup {
+				autostart = true
+			}
 		end
 	},
 

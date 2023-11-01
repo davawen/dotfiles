@@ -121,7 +121,7 @@ input "type:keyboard" {
 
 input "type:pointer" {
     accel_profile flat
-    pointer_accel -0.7
+    pointer_accel -0.73
 }
 
 input "type:touchpad" {
@@ -286,6 +286,8 @@ for_window [class="PlayOnLinux"] floating enable
 for_window [title="Event Tester"] floating enable
 #for_window [class="VirtualBox"] floating enable
 for_window [app_id="firefox" title="Sharing Indicator"] floating enable
+
+for_window [title="Keal"] floating enable, border none
 
 # Sticky window
 for_window [instance="file_progress"]  sticky enable

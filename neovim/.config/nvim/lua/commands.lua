@@ -24,6 +24,8 @@ vim.api.nvim_create_user_command('Save', function ()
 
 	vim.cmd.mksession{ escaped, bang = true }
 	vim.cmd.cd{ pwd, mods = { silent = true } }
+
+	vim.notify("Saved session.", vim.log.levels.INFO);
 end, {})
 
 vim.api.nvim_create_user_command('Load', function ()
@@ -32,7 +34,15 @@ vim.api.nvim_create_user_command('Load', function ()
 	local escaped = pwd:gsub('/', "_")
 
 	local saver_path = vim.fn.stdpath('state') .. "/saver/"
+	local file_path = saver_path .. escaped
 
-	vim.cmd.source(saver_path .. escaped)
-	vim.cmd.cd{ pwd, mods = { silent = true } }
+	if vim.fn.filereadable(file_path) == 1 then
+		vim.cmd.source(file_path)
+		vim.cmd.cd{ pwd, mods = { silent = true } }
+
+		vim.notify("Loaded session.", vim.log.levels.INFO);
+	else
+		vim.notify("Session doesn't exist.", vim.log.levels.INFO);
+	end
+
 end, {})
