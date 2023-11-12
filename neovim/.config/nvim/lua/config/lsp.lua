@@ -366,13 +366,13 @@ require('rust-tools').setup {
 	server = {
 		-- standalone file support
 		-- setting it to false may improve startup time
-		standalone = true,
+		standalone = false,
 		-- cmd = { "rustup",  "run", "stable", "rust-analyzer" },
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = { "rust" },
 		-- Single file opening should is implemented but not sure how to enable it
-		single_file_support = true,
+		single_file_support = false,
 		root_dir = lspconfig.util.root_pattern("Cargo.toml", "rust-project.json"),
 		settings = {
 			-- to enable rust-analyzer settings visit:

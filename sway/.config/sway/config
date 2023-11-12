@@ -250,8 +250,8 @@ bar {
 }
 
 # Launcher
-bindsym $mod+d exec fuzzel
-bindsym $mod+shift+d exec $scripts/fuzzel-extend.sh
+bindsym $mod+d exec keal
+# bindsym $mod+shift+d exec $scripts/fuzzel-extend.sh
 
 assign [class="discord"] 2
 assign [app_id="VencordDesktop"] 2
