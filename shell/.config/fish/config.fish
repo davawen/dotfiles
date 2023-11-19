@@ -68,7 +68,7 @@ alias update-grub='sudo grub2-mkconfig -o "$(readlink -e /etc/grub2-efi.conf)"'
 alias dnf='dnf5'
 
 abbr dnfi "sudo dnf5 install"
-abbr dnfu "sudo dnf5 update"
+abbr dnfu "sudo dnf5 upgrade"
 abbr dnfs "sudo dnf5 -C search"
 abbr dnfp "sudo dnf5 -C provides"
 abbr dnfl "sudo dnf5 -C list"
