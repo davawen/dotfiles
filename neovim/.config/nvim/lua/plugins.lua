@@ -34,6 +34,35 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+	{ 'stevearc/profile.nvim',
+		config = function ()
+			local should_profile = os.getenv("NVIM_PROFILE")
+			if should_profile then
+				require("profile").instrument_autocmds()
+				if should_profile:lower():match("^start") then
+					require("profile").start("*")
+				else
+					require("profile").instrument("*")
+				end
+			end
+
+			local function toggle_profile()
+				local prof = require("profile")
+				if prof.is_recording() then
+					prof.stop()
+					vim.ui.input({ prompt = "Save profile to:", completion = "file", default = "profile.json" }, function(filename)
+						if filename then
+							prof.export(filename)
+							vim.notify(string.format("Wrote %s", filename))
+						end
+					end)
+				else
+					prof.start("*")
+				end
+			end
+			vim.keymap.set("", "<f1>", toggle_profile)
+		end
+	},
 	'shaunsingh/nord.nvim',
 
 	-- Themes
@@ -105,7 +134,7 @@ local plugins = {
 	{ 'danymat/neogen',
 		config = function()
 			require('neogen').setup {
-				snippet_engine = "snippy"
+				snippet_engine = "luasnip"
 			}
 		end
 	},
@@ -135,35 +164,40 @@ local plugins = {
 		config = config('lsp')
 	},
 	{ 'j-hui/fidget.nvim',
-		tag = 'legacy',
 		config = function()
-			require('fidget').setup {}
+			require('fidget').setup {
+				progress = {
+					lsp = {
+						progress_ringbuf_size = 1000
+					}
+				}
+			}
 		end
 	},
 	{
-		"lewis6991/hover.nvim",
-		config = function()
-			require("hover").setup {
-				init = function()
-					-- Require providers
-					require("hover.providers.lsp")
-					-- require('hover.providers.gh') -- require('hover.providers.gh_user') -- require('hover.providers.jira')
-					require('hover.providers.man')
-					-- require('hover.providers.dictionary')
-				end,
-				preview_opts = {
-					border = nil
-				},
-				-- Whether the contents of a currently open hover window should be moved
-				-- to a :h preview-window when pressing the hover keymap.
-				preview_window = false,
-				title = true
-			}
-
-			-- Setup keymaps
-			vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
-			vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
-		end
+		-- "lewis6991/hover.nvim",
+		-- config = function()
+		-- 	require("hover").setup {
+		-- 		init = function()
+		-- 			-- Require providers
+		-- 			require("hover.providers.lsp")
+		-- 			-- require('hover.providers.gh') -- require('hover.providers.gh_user') -- require('hover.providers.jira')
+		-- 			require('hover.providers.man')
+		-- 			-- require('hover.providers.dictionary')
+		-- 		end,
+		-- 		preview_opts = {
+		-- 			border = nil
+		-- 		},
+		-- 		-- Whether the contents of a currently open hover window should be moved
+		-- 		-- to a :h preview-window when pressing the hover keymap.
+		-- 		preview_window = false,
+		-- 		title = true
+		-- 	}
+		--
+		-- 	-- Setup keymaps
+		-- 	vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
+		-- 	vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
+		-- end
 	},
 	'SmiteshP/nvim-navic',
 	'onsails/lspkind-nvim',
@@ -224,17 +258,19 @@ local plugins = {
 	},
 
 	-- Snippets
-	{ 'dcampos/nvim-snippy',
-		config = config('snippy')
+	{ 'L3MON4D3/LuaSnip',
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+		config = config('luasnip')
 	},
-	'honza/vim-snippets',
 
 	-- Completion
 	'hrsh7th/nvim-cmp',
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-nvim-lsp',
-	'dcampos/cmp-snippy',
+	'saadparwaiz1/cmp_luasnip',
 	'weilbith/nvim-code-action-menu',
 
 	-- Syntax highlight

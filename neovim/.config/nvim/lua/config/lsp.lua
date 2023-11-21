@@ -3,6 +3,7 @@ local cmp = require("cmp")
 
 local map, _ = unpack(require("utils.map"))
 
+---@diagnostic disable-next-line: missing-fields
 cmp.setup({
 	mapping = {
 		["<CR>"] = cmp.mapping.confirm {
@@ -51,17 +52,12 @@ cmp.setup({
 
 		{ name = "nvim_lsp" },
 		-- { name = "otter" },
-		{ name = "snippy" },
+		{ name = "luasnip" },
 		{ name = "buffer", keyword_length = 5 },
-	},
-	performance = {
-		-- debounce = 16,
-		-- throttle = 100,
-		-- async_budget = 10
 	},
 	snippet = {
 		expand = function(args)
-			require('snippy').expand_snippet(args.body)
+			require('luasnip').lsp_expand(args.body)
 		end,
 	},
 
@@ -86,11 +82,6 @@ cmp.setup({
 	-- 	completion = cmp.config.window.bordered(),
 	-- 	documentation = cmp.config.window.bordered()
 	-- },
-	experimental = {
-		ghost_text = {
-			enabled = true
-		}
-	},
 })
 
 -- nvim-code-action-menu
@@ -110,14 +101,11 @@ vim.api.nvim_set_keymap('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', o
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts) switched to hover.nvim
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -140,6 +128,13 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = vim.tbl_deep_extend("force", capabilities, {
+	workspace = {
+		didChangeWatchedFiles = {
+			dynamicRegistration = false
+		}
+	}
+})
 
 -- Automatic installation of language servers
 require("mason").setup()
@@ -359,7 +354,7 @@ lspconfig.texlab.setup{
 require('rust-tools').setup {
 	tools = { -- rust-tools options
         inlay_hints = {
-			auto = false
+			auto = false,
         }
     },
 

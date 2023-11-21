@@ -20,11 +20,11 @@ function icon() {
 }
 
 commands="$(icon run system-search)\n$(icon session user)\n$(icon terminal terminal)"
-command=$(printf "$commands" | fuzzel -d)
+command=$(printf "$commands" | /mnt/Projects/Rust/keal/target/release/keal -d)
 
 if [ $? -eq 0 ]; then
 	if [ "$command" = "run" ]; then
-		fuzzel
+		/mnt/Projects/Rust/keal/target/release/keal	
 	elif [ "$command" = "session" ]; then
 
 		commands="$(icon "log out" "system-logout")
@@ -33,7 +33,7 @@ $(icon "hibernate" "system-suspend-hibernate")
 $(icon "reboot" "system-reboot")
 $(icon "power off" "system-shutdown")"
 
-		command=$(printf "$commands" | fuzzel -d)
+		command=$(printf "$commands" | /mnt/Projects/Rust/keal/target/release/keal -d)
 		if [ $? -eq 0 ]; then
 			if [ "$command" = "log out" ]; then
 				sway exit
@@ -48,7 +48,7 @@ $(icon "power off" "system-shutdown")"
 			fi
 		fi
 	elif [ "$command" = "terminal" ]; then
-		command=$(list_execs | fuzzel -d)
+		command=$(list_execs | /mnt/Projects/Rust/keal/target/release/keal -d)
 		if [ -n "$command" ]; then
 			kitty $command
 		fi
