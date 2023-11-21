@@ -2,7 +2,7 @@
 	"layer": "top",
 	"modules-left": ["custom/launcher", "custom/nemo", "sway/workspaces", "sway/scratchpad", "sway/mode"],
 	"modules-center": [],
-	"modules-right": ["custom/playerctl", "tray", "battery", "pulseaudio", "network", "memory", "clock"],
+	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "memory", "clock"],
 	"custom/launcher": {
 		"exec": "echo \"  \nLaunch Fuzzel\n\"",
 		"interval": "once",

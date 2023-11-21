@@ -240,7 +240,8 @@ lspconfig.tsserver.setup{
         }
     },
     root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
-	single_file_support = false
+	single_file_support = true,
+	autostart = false
 }
 
 require("deno-nvim").setup {
