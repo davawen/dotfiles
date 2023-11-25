@@ -15,7 +15,7 @@ vim.o.tabstop = 4     -- number of visual spaces per tab
 vim.o.softtabstop = 4 -- number of spaces in tab when editing
 vim.o.shiftwidth = 4  -- number of spaces to use for autoindent
 
-vim.o.mouse = ""
+vim.o.mouse = "nvi"
 
 vim.o.breakindent = true -- indent word wrapped lines as much as the parent line
 vim.o.formatoptions = "l" -- ensures word-wrap doesn't split words
