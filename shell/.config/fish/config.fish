@@ -25,7 +25,7 @@ add_path "$BUN_INSTALL/bin"
 add_path "$HOME/.local/bin"
 # WARNING: Those two require PNPM above to be in the path and everything breaks if they aren't
 add_path "$(npm config get prefix)/bin"
-add_path "$(yarn global bin)"
+add_path "$(type -q yarn && yarn global bin)"
 add_path "$HOME/.local/share/cargo/bin/"
 add_path "/usr/local/cuda/bin"
 add_path "$DENO_INSTALL/bin"
@@ -73,6 +73,8 @@ abbr dnfs "sudo dnf5 -C search"
 abbr dnfp "sudo dnf5 -C provides"
 abbr dnfl "sudo dnf5 -C list"
 abbr dnff "sudo dnf5 -C info"
+
+abbr pcm "sudo pacman -S"
 
 abbr clang20 "clang++ -std=c++20"
 

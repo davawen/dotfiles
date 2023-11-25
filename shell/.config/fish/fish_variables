@@ -1,14 +1,12 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3400
-SETUVAR _fish_abbr_dinstall:sudo\x20dnf\x20install
 SETUVAR _fish_abbr_dlist:dnf\x20list\x20\x2dC
 SETUVAR _fish_abbr_dprovides:dnf\x20provides\x20\x2dC
 SETUVAR _fish_abbr_dsearch:dnf\x20search\x20\x2dC
 SETUVAR _fish_abbr_dupdate:sudo\x20dnf\x20update
 SETUVAR _fish_abbr_gpf:git\x20push\x20\x2d\x2dforce
 SETUVAR _fish_abbr_gptf:git\x20push\x20\x2d\x2dtags\x20\x2d\x2dforce
-SETUVAR _fish_abbr_install:sudo\x20dnf\x20install
 SETUVAR _fish_abbr_legendary:/usr/lib64/heroic\x2dgames\x2dlauncher\x2dbin/resources/app\x2easar\x2eunpacked/build/bin/linux/legendary
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR chain_links:chain\x2elinks\x2eroot\x1echain\x2elinks\x2ejobs\x1echain\x2elinks\x2epwd\x1echain\x2elinks\x2evcs_branch\x1echain\x2elinks\x2evcs_dirty\x1echain\x2elinks\x2evcs_stashed
