@@ -144,7 +144,7 @@ local plugins = {
 		config = function ()
 			require('neodev').setup { 
 				library = {
-					plugins = true,
+					plugins = false,
 				},
 				lspconfig = false
 			}
