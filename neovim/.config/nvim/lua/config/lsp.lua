@@ -383,6 +383,11 @@ require('rust-tools').setup {
 	}, -- rust-analyer options
 }
 
+lspconfig.zls.setup {
+	on_attach = on_attach,
+	capabilities = capabilities
+}
+
 lspconfig.wgsl_analyzer.setup{
 	on_attach = on_attach,
 	capabilities = capabilities,

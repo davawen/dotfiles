@@ -376,6 +376,7 @@ local plugins = {
 		cmd = { "Neogit", "NeogitMessages", "NeogitResetState" }
 	},
 	'wintermute-cell/gitignore.nvim',
+	'tveskag/nvim-blame-line',
 
 	-- Other
 	'wakatime/vim-wakatime',

@@ -38,7 +38,8 @@
 	},
 	"battery": {
 		"format": "{capacity}% {icon}",
-		"format-icons": ["", "", "", "", ""]
+		"format-charging": "{capacity}% 󰂄",
+		"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󱈏 "],
 	},
 	"tray": {
 		"spacing": 7,
