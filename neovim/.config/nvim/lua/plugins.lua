@@ -144,7 +144,7 @@ local plugins = {
 		config = function ()
 			require('neodev').setup { 
 				library = {
-					plugins = true,
+					plugins = false,
 				},
 				lspconfig = false
 			}
@@ -173,31 +173,6 @@ local plugins = {
 				}
 			}
 		end
-	},
-	{
-		-- "lewis6991/hover.nvim",
-		-- config = function()
-		-- 	require("hover").setup {
-		-- 		init = function()
-		-- 			-- Require providers
-		-- 			require("hover.providers.lsp")
-		-- 			-- require('hover.providers.gh') -- require('hover.providers.gh_user') -- require('hover.providers.jira')
-		-- 			require('hover.providers.man')
-		-- 			-- require('hover.providers.dictionary')
-		-- 		end,
-		-- 		preview_opts = {
-		-- 			border = nil
-		-- 		},
-		-- 		-- Whether the contents of a currently open hover window should be moved
-		-- 		-- to a :h preview-window when pressing the hover keymap.
-		-- 		preview_window = false,
-		-- 		title = true
-		-- 	}
-		--
-		-- 	-- Setup keymaps
-		-- 	vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
-		-- 	vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
-		-- end
 	},
 	'SmiteshP/nvim-navic',
 	'onsails/lspkind-nvim',
@@ -307,10 +282,6 @@ local plugins = {
 		branch = "v3.x"
 		-- lazy = true
 	},
-	-- { 'romgrk/barbar.nvim',
-	-- 	config = config('barbar'),
-	-- 	cond = false
-	-- },
 	{ 'mg979/vim-visual-multi', branch = 'master' },
 	{ 'stevearc/dressing.nvim',
 		config = function()
@@ -340,7 +311,7 @@ local plugins = {
 		end
 	},
 
-	-- Terminal
+	-- terminal
 	{ 'numToStr/FTerm.nvim',
 		config = function()
 			require('FTerm').setup {
@@ -359,6 +330,18 @@ local plugins = {
 			require('flatten').setup {}
 		end,
 		enabled = false
+	},
+	{
+		'mikesmithgh/kitty-scrollback.nvim',
+		enabled = true,
+		lazy = true,
+		cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+		event = { 'User KittyScrollbackLaunch' },
+		-- version = '*', -- latest stable version, may have breaking changes if major version changed
+		-- version = '^2.0.0', -- pin major version, include fixes and features that do not have breaking changes
+		config = function()
+			require('kitty-scrollback').setup()
+		end,
 	},
 
 	-- Git
