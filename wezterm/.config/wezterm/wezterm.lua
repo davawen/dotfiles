@@ -40,8 +40,8 @@ local act = wezterm.action
 
 return {
 	color_scheme = "Catppuccin Macchiato",
-	font = wezterm.font_with_fallback{ 'Greybeard 17px', 'Symbols Nerd Font' },
-	font_size = 12.75,
+	font = wezterm.font_with_fallback{ 'Iosevka', 'Symbols Nerd Font' },
+	font_size = 13.5,
 	keys = {
 		{ key = 'LeftArrow', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
 		{ key = 'RightArrow', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
