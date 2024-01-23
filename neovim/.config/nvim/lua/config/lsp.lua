@@ -60,34 +60,32 @@ cmp.setup({
 			require('luasnip').lsp_expand(args.body)
 		end,
 	},
-
 	formatting = {
+		fields = { "abbr", "kind", "menu" },
 		format = lspkind.cmp_format({
-			with_text = true,
-			-- max_width = 80,
-			ellipsis_char = "...",
+			-- max_width = 60,
+			mode = "symbol_text",
 			menu = {
 				buffer = "[buf]",
 				nvim_lsp = "[LSP]",
 				nvim_lua = "[api]",
 				path = "[path]",
 				luasnip = "[snip]"
-			}
+			},
+			before = function (entry, vim_item)
+				vim_item.menu = "" -- stop weird rust analyzer injecting types into this shit
+				return vim_item
+			end
 		})
 	},
 	view = {
-		entries = { "custom" }
+		entries = { "native" }
 	},
 	-- window = {
 	-- 	completion = cmp.config.window.bordered(),
 	-- 	documentation = cmp.config.window.bordered()
 	-- },
 })
-
--- nvim-code-action-menu
-vim.g.code_action_menu_window_border = 'single'
-vim.g.code_action_menu_show_details = false
-vim.g.code_action_menu_show_diff = true
 
 -- nvim LSP configuration
 -- Mappings.
@@ -113,7 +111,7 @@ local on_attach = function(client, bufnr)
 	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
 

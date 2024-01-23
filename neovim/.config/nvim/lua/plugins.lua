@@ -78,6 +78,10 @@ local plugins = {
 		end,
 		priority = 1000
 	},
+	{
+		"fynnfluegge/monet.nvim",
+		name = "monet",
+	},
 	'AlexvZyl/nordic.nvim',
 	'joshdick/onedark.vim',
 	'rebelot/kanagawa.nvim',
@@ -246,7 +250,14 @@ local plugins = {
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-nvim-lsp',
 	'saadparwaiz1/cmp_luasnip',
-	'weilbith/nvim-code-action-menu',
+	{ "aznhe21/actions-preview.nvim",
+		config = function()
+			require("actions-preview").setup {
+				-- priority list of preferred backend
+				backend = { "telescope", "nui" },
+			}
+		end,
+	},
 
 	-- Syntax highlight
 	'brgmnn/vim-opencl',
