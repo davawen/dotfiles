@@ -181,7 +181,11 @@ local plugins = {
 	'SmiteshP/nvim-navic',
 	'onsails/lspkind-nvim',
 	'ray-x/lsp_signature.nvim',
-	'simrat39/rust-tools.nvim',
+	{
+		'mrcjkb/rustaceanvim',
+		version = '^4', -- Recommended
+		ft = { 'rust' },
+	},
 	'sigmasd/deno-nvim',
 	{ 'mhartington/formatter.nvim',
 		config = function()
@@ -380,8 +384,6 @@ local plugins = {
 			require('Comment').setup {}
 		end
 	},
-	'mbbill/undotree',
-
 	{ 'windwp/nvim-autopairs',
 		config = config('autopairs')
 	},
@@ -418,6 +420,7 @@ local plugins = {
 		event = "VeryLazy"
 	},
 	{ 'davawen/neo-presence.lua', 
+		enabled = false,
 		build = "./build.sh",
 		config = function ()
 			require('neo-presence').setup {

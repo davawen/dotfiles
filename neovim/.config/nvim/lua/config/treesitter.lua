@@ -8,8 +8,8 @@
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = { "c", "cpp", "rust", "lua", "vim", "python", "query" },
-	ignore_install = { "comment" },
-	disable = { "comment" },
+	ignore_install = { "comment", "text" },
+	disable = { "comment", "text" },
 	auto_install = true,
 	highlight = {
 		enable = true,

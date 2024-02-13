@@ -181,6 +181,26 @@ lspconfig.clangd.setup{
 	capabilities = capabilities,
 }
 
+vim.g.rustaceanvim = {
+	-- Plugin configuration
+	tools = {
+
+	},
+	-- LSP configuration
+	server = {
+		on_attach = on_attach,
+		settings = {
+			-- rust-analyzer language server configuration
+			['rust-analyzer'] = {
+				cachePriming = false
+			},
+		},
+	},
+	-- DAP configuration
+	dap = {
+	},
+}
+
 lspconfig.pyright.setup {
 	python = {
 		analysis = {
@@ -346,40 +366,6 @@ lspconfig.texlab.setup{
 	},
 	single_file_support = true,
 	capabilities = capabilities
-}
-
--- Rust Tools configuration
-require('rust-tools').setup {
-	tools = { -- rust-tools options
-        inlay_hints = {
-			auto = false,
-        }
-    },
-
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-	server = {
-		-- standalone file support
-		-- setting it to false may improve startup time
-		standalone = false,
-		-- cmd = { "rustup",  "run", "stable", "rust-analyzer" },
-		on_attach = on_attach,
-		capabilities = capabilities,
-		filetypes = { "rust" },
-		-- Single file opening should is implemented but not sure how to enable it
-		single_file_support = false,
-		root_dir = lspconfig.util.root_pattern("Cargo.toml", "rust-project.json"),
-		settings = {
-			-- to enable rust-analyzer settings visit:
-			-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-			["rust-analyzer"] = {
-				-- enable clippy on save
-				cachePriming = false,
-				checkOnSave = {
-					command = "clippy"
-				},
-			}
-		},
-	}, -- rust-analyer options
 }
 
 lspconfig.zls.setup {
