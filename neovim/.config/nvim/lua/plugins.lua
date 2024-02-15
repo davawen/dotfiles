@@ -78,6 +78,10 @@ local plugins = {
 		end,
 		priority = 1000
 	},
+	{
+		"fynnfluegge/monet.nvim",
+		name = "monet",
+	},
 	'AlexvZyl/nordic.nvim',
 	'joshdick/onedark.vim',
 	'rebelot/kanagawa.nvim',
@@ -177,7 +181,11 @@ local plugins = {
 	'SmiteshP/nvim-navic',
 	'onsails/lspkind-nvim',
 	'ray-x/lsp_signature.nvim',
-	'simrat39/rust-tools.nvim',
+	{
+		'mrcjkb/rustaceanvim',
+		version = '^4', -- Recommended
+		ft = { 'rust' },
+	},
 	'sigmasd/deno-nvim',
 	{ 'mhartington/formatter.nvim',
 		config = function()
@@ -246,7 +254,14 @@ local plugins = {
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-nvim-lsp',
 	'saadparwaiz1/cmp_luasnip',
-	'weilbith/nvim-code-action-menu',
+	{ "aznhe21/actions-preview.nvim",
+		config = function()
+			require("actions-preview").setup {
+				-- priority list of preferred backend
+				backend = { "telescope", "nui" },
+			}
+		end,
+	},
 
 	-- Syntax highlight
 	'brgmnn/vim-opencl',
@@ -373,8 +388,6 @@ local plugins = {
 			require('Comment').setup {}
 		end
 	},
-	'mbbill/undotree',
-
 	{ 'windwp/nvim-autopairs',
 		config = config('autopairs')
 	},
@@ -411,6 +424,7 @@ local plugins = {
 		event = "VeryLazy"
 	},
 	{ 'davawen/neo-presence.lua', 
+		enabled = false,
 		build = "./build.sh",
 		config = function ()
 			require('neo-presence').setup {

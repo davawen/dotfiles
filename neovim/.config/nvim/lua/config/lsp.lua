@@ -60,34 +60,32 @@ cmp.setup({
 			require('luasnip').lsp_expand(args.body)
 		end,
 	},
-
 	formatting = {
+		fields = { "abbr", "kind", "menu" },
 		format = lspkind.cmp_format({
-			with_text = true,
-			-- max_width = 80,
-			ellipsis_char = "...",
+			-- max_width = 60,
+			mode = "symbol_text",
 			menu = {
 				buffer = "[buf]",
 				nvim_lsp = "[LSP]",
 				nvim_lua = "[api]",
 				path = "[path]",
 				luasnip = "[snip]"
-			}
+			},
+			before = function (entry, vim_item)
+				vim_item.menu = "" -- stop weird rust analyzer injecting types into this shit
+				return vim_item
+			end
 		})
 	},
 	view = {
-		entries = { "custom" }
+		entries = { "native" }
 	},
 	-- window = {
 	-- 	completion = cmp.config.window.bordered(),
 	-- 	documentation = cmp.config.window.bordered()
 	-- },
 })
-
--- nvim-code-action-menu
-vim.g.code_action_menu_window_border = 'single'
-vim.g.code_action_menu_show_details = false
-vim.g.code_action_menu_show_diff = true
 
 -- nvim LSP configuration
 -- Mappings.
@@ -113,7 +111,7 @@ local on_attach = function(client, bufnr)
 	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>CodeActionMenu<CR>', opts)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
 
@@ -181,6 +179,26 @@ lspconfig.clangd.setup{
 	},
     root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua", "meson.build"),
 	capabilities = capabilities,
+}
+
+vim.g.rustaceanvim = {
+	-- Plugin configuration
+	tools = {
+
+	},
+	-- LSP configuration
+	server = {
+		on_attach = on_attach,
+		settings = {
+			-- rust-analyzer language server configuration
+			['rust-analyzer'] = {
+				cachePriming = false
+			},
+		},
+	},
+	-- DAP configuration
+	dap = {
+	},
 }
 
 lspconfig.pyright.setup {
@@ -348,40 +366,6 @@ lspconfig.texlab.setup{
 	},
 	single_file_support = true,
 	capabilities = capabilities
-}
-
--- Rust Tools configuration
-require('rust-tools').setup {
-	tools = { -- rust-tools options
-        inlay_hints = {
-			auto = false,
-        }
-    },
-
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-	server = {
-		-- standalone file support
-		-- setting it to false may improve startup time
-		standalone = false,
-		-- cmd = { "rustup",  "run", "stable", "rust-analyzer" },
-		on_attach = on_attach,
-		capabilities = capabilities,
-		filetypes = { "rust" },
-		-- Single file opening should is implemented but not sure how to enable it
-		single_file_support = false,
-		root_dir = lspconfig.util.root_pattern("Cargo.toml", "rust-project.json"),
-		settings = {
-			-- to enable rust-analyzer settings visit:
-			-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-			["rust-analyzer"] = {
-				-- enable clippy on save
-				cachePriming = false,
-				checkOnSave = {
-					command = "clippy"
-				},
-			}
-		},
-	}, -- rust-analyer options
 }
 
 lspconfig.zls.setup {

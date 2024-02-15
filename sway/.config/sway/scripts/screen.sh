@@ -18,13 +18,15 @@ IMGCLASS=${3:-"swayimg-screenshot"}
 SLURPARG="-f %w:%h:%x:%y -d -b 00000066"
 # DESKTOPSIZE="0,0 3840x1510" -g "$DESKTOPSIZE"
 
-grim -c -t png -l 0 -s 1  "$TMPIMG"
-swayimg -b none -s real -c "$IMGCLASS" -n "$TMPIMG" &
+grim -c -t png -l 0 -s 1 "$TMPIMG"
+swayimg -s=real -c "general.app_id=$IMGCLASS" "$TMPIMG" &
+
+# swaymsg -q "[app_id=$IMGCLASS] focus"
 
 trim() {
 	(ffmpeg -loglevel warning -i "$TMPIMG" -vf "crop=$(slurp $SLURPARG)" -y \
         -c:v png -f image2pipe -pred 2 -compression_level 1 - ; \
-        swaymsg -q "[app_id=$IMGCLASS] focus; kill" 1>&2) | cat
+        swaymsg -q "[app_id=$IMGCLASS] kill" 1>&2) | cat
 }
 
 if [ $EDIT = "edit" ]; then

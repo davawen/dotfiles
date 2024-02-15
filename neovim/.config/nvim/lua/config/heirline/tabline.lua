@@ -176,8 +176,11 @@ local BufferlineFileName = {
     provider = function(self)
         -- self.filename will be defined later, just keep looking at the example!
         local filename = self.filename
-        filename = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
-        return " " .. filename
+        local short_name = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
+		if short_name == "mod.rs" then
+			short_name = vim.fn.fnamemodify(filename, ":h:t") .. "/mod.rs"
+		end
+        return " " .. short_name
     end,
     hl = function(self)
         return { bold = self.is_active or self.is_visible, italic = true }
