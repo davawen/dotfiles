@@ -1,6 +1,7 @@
-vim.g.mapleader = ";"
-
 local map, remap = unpack(require("utils.map"))
+
+map("n", "<Space>", "<Nop>")
+vim.g.mapleader = " "
 
 --- Returns a new function wich calls the given function with the given arguments
 ---@param fn function
@@ -24,12 +25,6 @@ map("n", "k", "gk")
 map("n", "gj", "j")
 map("n", "gk", "k")
 
--- Since leader key is ;, make \ be repetition
-map("n", "\\", ";")
-
--- Space opens command menu
-map("n", "<space>", ":")
-
 -- Force <c-c> for escape
 map("i", "<C-c>", "<esc>")
 map("i", "<C-v>", "<esc>")
@@ -48,7 +43,7 @@ map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open floating terminal
 map("n", "<leader>te", function () require('FTerm').toggle() end)
-remap("t", "<leader>te", "<C-\\><leader>te")
+remap("t", "<c-space>", "<C-\\>")
 
 vim.api.nvim_create_user_command('FTermExit', function () require('FTerm').exit() end, { bang = true })
 

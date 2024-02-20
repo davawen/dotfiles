@@ -146,7 +146,7 @@ local plugins = {
 	-- LSP
 	{ "folke/neodev.nvim",
 		config = function ()
-			require('neodev').setup { 
+			require('neodev').setup {
 				library = {
 					plugins = false,
 				},
@@ -419,7 +419,7 @@ local plugins = {
 		lazy = true,
 		event = "VeryLazy"
 	},
-	{ 'davawen/neo-presence.lua', 
+	{ 'davawen/neo-presence.lua',
 		enabled = false,
 		build = "./build.sh",
 		config = function ()
@@ -430,6 +430,15 @@ local plugins = {
 	},
 
 	'sotte/presenting.vim',
+
+	-- Games
+	{
+		"Febri-i/snake.nvim",
+		dependencies = {
+			"Febri-i/fscreen.nvim"
+		},
+		opts = {}
+	}
 }
 
 local opts = {

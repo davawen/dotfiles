@@ -4,9 +4,9 @@
 	"modules-center": [],
 	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "memory", "clock"],
 	"custom/launcher": {
-		"exec": "echo \"  \nLaunch Fuzzel\n\"",
+		"exec": "echo \"  \nLaunch Keal\n\"",
 		"interval": "once",
-		"on-click": "fuzzel"
+		"on-click": "keal"
 	},
 	"custom/nemo": {
 		"exec": "echo \"  \nLaunch nemo\n\"",

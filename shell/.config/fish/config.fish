@@ -90,5 +90,8 @@ alias xclipc='xclip -selection clipboard'
 # Starship
 starship init fish | source
 
+# Zoxide
+zoxide init fish | source
+
 # opam configuration
 source /home/davawen/.local/share/opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
