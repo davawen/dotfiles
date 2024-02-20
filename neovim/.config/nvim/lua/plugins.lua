@@ -366,7 +366,11 @@ local plugins = {
 			require('gitsigns').setup()
 		end
 	},
-	{ 'NeogitOrg/neogit', dependencies = 'nvim-lua/plenary.nvim',
+	{ 'NeogitOrg/neogit',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'sindrets/diffview.nvim'
+		},
 		config = function ()
 			require('neogit').setup {}
 		end,
