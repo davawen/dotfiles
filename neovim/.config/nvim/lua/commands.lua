@@ -46,3 +46,28 @@ vim.api.nvim_create_user_command('Load', function ()
 	end
 
 end, {})
+
+local term_id = nil
+local old_id = nil
+vim.api.nvim_create_user_command('Term', function ()
+	if term_id == nil then
+		old_id = vim.api.nvim_get_current_buf()
+
+		term_id = vim.api.nvim_create_buf(false, false)
+		vim.api.nvim_set_current_buf(term_id)
+		vim.fn.termopen("/usr/bin/fish")
+		vim.api.nvim_feedkeys('i', 'n', false)
+	else
+		local current = vim.api.nvim_get_current_buf()
+		if current ~= term_id then
+			old_id = current
+			vim.api.nvim_set_current_buf(term_id)
+		vim.api.nvim_feedkeys('i', 'n', false)
+		else
+			if old_id == nil then
+				old_id = vim.api.nvim_create_buf(true, false)
+			end
+			vim.api.nvim_set_current_buf(old_id)
+		end
+	end
+end, {})

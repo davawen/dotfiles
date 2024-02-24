@@ -41,8 +41,8 @@ map("n", "<leader>;", "mpA;<esc>`p")
 -- ;c cycles through unnamed and clipboard registers
 map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
--- Open floating terminal
-map("n", "<leader>te", function () require('FTerm').toggle() end)
+-- Open terminal
+map("n", "<leader>te", "<cmd>Term<Cr>", { silent = true })
 remap("t", "<c-space>", "<C-\\>")
 
 vim.api.nvim_create_user_command('FTermExit', function () require('FTerm').exit() end, { bang = true })

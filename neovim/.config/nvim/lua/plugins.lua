@@ -327,19 +327,6 @@ local plugins = {
 	},
 
 	-- terminal
-	{ 'numToStr/FTerm.nvim',
-		config = function()
-			require('FTerm').setup {
-				border = 'single',
-				dimensions = {
-					height = 0.95,
-					width = 0.5,
-					x = 1.0,
-					y = 0.5
-				}
-			}
-		end
-	},
 	{ 'willothy/flatten.nvim',
 		config = function()
 			require('flatten').setup {}
