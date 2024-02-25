@@ -43,7 +43,7 @@ map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
 -- Open terminal
 map("n", "<leader>te", "<cmd>Term<Cr>", { silent = true })
-remap("t", "<c-space>", "<C-\\>")
+map("t", "<c-space>te", "<C-\\><cmd>Term<Cr>", { silent = true })
 
 vim.api.nvim_create_user_command('FTermExit', function () require('FTerm').exit() end, { bang = true })
 
