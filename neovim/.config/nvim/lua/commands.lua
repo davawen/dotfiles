@@ -10,8 +10,8 @@ vim.api.nvim_create_user_command('Vte', 'vsplit | term', {})
 -- Creates a terminal in a new tab
 vim.api.nvim_create_user_command('Nte', 'tabnew | term', {})
 
--- Creates a terminal in a split and executes a command in it
-vim.api.nvim_create_user_command('Sh', 'FloatermNew --wintype=split --position=botright --width=1.0 --height=0.5 <args>', {})
+-- Toggle hex editing
+vim.api.nvim_create_user_command('Hex', require('hex').toggle, {})
 
 vim.api.nvim_create_user_command('Save', function ()
 	---@class string
@@ -50,7 +50,7 @@ end, {})
 local term_id = nil
 local old_id = nil
 vim.api.nvim_create_user_command('Term', function ()
-	if term_id == nil then
+	if term_id == nil or not vim.api.nvim_buf_is_valid(term_id) then
 		old_id = vim.api.nvim_get_current_buf()
 
 		term_id = vim.api.nvim_create_buf(false, false)

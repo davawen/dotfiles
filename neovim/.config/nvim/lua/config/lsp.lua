@@ -140,16 +140,11 @@ require("mason-lspconfig").setup()
 
 local lspconfig = require('lspconfig')
 
--- Disable virtual text for warnings
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, {
-		virtual_text = {
-			severity = vim.diagnostic.severity.ERROR
-		},
-		underline = true,
-		severity_sort = true
-	}
-)
+vim.diagnostic.config({
+	virtual_text = false,
+	underline = true,
+	severity_sort = true
+})
 
 lspconfig.clangd.setup{
 	on_attach = function (client, bufnr)

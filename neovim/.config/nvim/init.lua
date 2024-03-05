@@ -33,10 +33,9 @@ local map, _ = unpack(require("utils.map"))
 -- Neovide config
 vim.o.guifont = "Iosevka:h13.5"
 vim.g.neovide_refresh_rate = 60
-vim.g.neovide_cursor_animation_length = 0.05
-vim.g.neovide_cursor_trail_size = 0.2
+vim.g.neovide_cursor_animation_length = 0
+vim.g.neovide_cursor_trail_size = 0
 vim.g.neovide_cursor_animate_command_line = false
-vim.g.neovide_cursor_vfx_mode = "pixiedust"
 if vim.g.neovide then
 	vim.g.neovide_input_use_logo = 1 -- enable use of the logo (cmd) key
 	vim.keymap.set('v', '<D-c>', '"+y') -- Copy

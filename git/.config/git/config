@@ -16,5 +16,8 @@
 	defaultBranch = main
 [diff]
 	tool = nvimdiff
+	algorithm = histogram
 [merge]
 	tool = nvimdiff
+[rerere]
+	enabled = true

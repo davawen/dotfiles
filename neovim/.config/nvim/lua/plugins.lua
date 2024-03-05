@@ -223,12 +223,9 @@ local plugins = {
 	-- 		require('otter').activate({ 'python', 'c', 'cpp' })
 	-- 	end
 	-- },
-	{'dgagn/diagflow.nvim',
+	{'RaafatTurki/corn.nvim',
 		config = function ()
-			require('diagflow').setup {
-				padding_right = 1,
-				update_event = { 'DiagnosticChanged', 'BufEnter', 'WinScrolled' }
-			}
+			require('corn').setup { }
 		end
 	},
 
@@ -276,6 +273,7 @@ local plugins = {
 	'habamax/vim-godot',
 	{ 'xuhdev/vim-latex-live-preview', lazy = true },
 	'pest-parser/pest.vim',
+	{ 'RaafatTurki/hex.nvim' },
 
 	-- Navigation
 	{ 'nvim-telescope/telescope.nvim',
@@ -411,7 +409,7 @@ local plugins = {
 		event = "VeryLazy"
 	},
 	{ 'davawen/neo-presence.lua',
-		enabled = false,
+		-- enabled = false,
 		build = "./build.sh",
 		config = function ()
 			require('neo-presence').setup {
@@ -421,21 +419,44 @@ local plugins = {
 	},
 
 	'sotte/presenting.vim',
-
-	-- Games
 	{
-		"Febri-i/snake.nvim",
+		"nomnivore/ollama.nvim",
 		dependencies = {
-			"Febri-i/fscreen.nvim"
+			"nvim-lua/plenary.nvim",
 		},
-		opts = {}
-	}
+
+		-- All the user commands added by the plugin
+		cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
+
+		keys = {
+			-- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
+			{
+				"<leader>oo",
+				":<c-u>lua require('ollama').prompt()<cr>",
+				desc = "ollama prompt",
+				mode = { "n", "v" },
+			},
+
+			-- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
+			{
+				"<leader>oG",
+				":<c-u>lua require('ollama').prompt('Generate_Code')<cr>",
+				desc = "ollama Generate Code",
+				mode = { "n", "v" },
+			},
+		},
+
+		opts = {
+			model = "dolhpin-mistral"
+			-- your configuration overrides
+		}
+	},
 }
 
 local opts = {
 	install = {
 		missing = true,
-		-- colorscheme = { "catppuccin" }
+		colorscheme = { "catppuccin" }
 	},
 	lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json", -- lockfile generated after running update.
 	dev = {
