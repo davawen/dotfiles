@@ -52,6 +52,11 @@ require('neo-tree').setup {
 				}
 			end
 		},
+		mappings = {
+			["<c-space>"] = {
+				"toggle_node", nowait = false
+			}
+		}
 	},
 	sources = {
 		"filesystem",

@@ -52,12 +52,12 @@ cmp.setup({
 
 		{ name = "nvim_lsp" },
 		-- { name = "otter" },
-		{ name = "luasnip" },
+		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
 	},
 	snippet = {
 		expand = function(args)
-			require('luasnip').lsp_expand(args.body)
+			require('snippy').expand_snippet(args.body)
 		end,
 	},
 	formatting = {

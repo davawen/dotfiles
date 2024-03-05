@@ -63,12 +63,8 @@ local plugins = {
 			vim.keymap.set("", "<f1>", toggle_profile)
 		end
 	},
-	'shaunsingh/nord.nvim',
 
 	-- Themes
-	'shaunsingh/nord.nvim',
-	'sainnhe/everforest',
-	'habamax/vim-polar',
 	{ 'catppuccin/nvim', name ='catppuccin',
 		config = function ()
 			require('catppuccin').setup {
@@ -78,18 +74,11 @@ local plugins = {
 		end,
 		priority = 1000
 	},
-	{
-		"fynnfluegge/monet.nvim",
-		name = "monet",
-	},
-	'AlexvZyl/nordic.nvim',
 	'joshdick/onedark.vim',
+	'sainnhe/everforest',
 	'rebelot/kanagawa.nvim',
-	{ "bluz71/vim-nightfly-colors", name ="nightfly" },
-	'ribru17/bamboo.nvim',
 	'yorickpeterse/vim-paper',
 
-	'ryanoasis/vim-devicons',
 	'kyazdani42/nvim-web-devicons',
 
 	-- Status info
@@ -102,6 +91,7 @@ local plugins = {
 
 	-- Treesitter
 	{ 'nvim-treesitter/nvim-treesitter',
+		build = ":TSUpdate", -- update parsers on update
 		config = config('treesitter')
 	},
 	{ 'nvim-treesitter/nvim-treesitter-context',
@@ -132,13 +122,6 @@ local plugins = {
 					--       'impl_item',
 					--   },
 				},
-			}
-		end
-	},
-	{ 'danymat/neogen',
-		config = function()
-			require('neogen').setup {
-				snippet_engine = "luasnip"
 			}
 		end
 	},
@@ -213,16 +196,6 @@ local plugins = {
 			}
 		end
 	},
-	-- { 'jmbuhr/otter.nvim',
-	-- 	dependencies = {
-	-- 		'hrsh7th/nvim-cmp',
-	-- 		'neovim/nvim-lspconfig',
-	-- 		'nvim-treesitter/nvim-treesitter'
-	-- 	},
-	-- 	config = function ()
-	-- 		require('otter').activate({ 'python', 'c', 'cpp' })
-	-- 	end
-	-- },
 	{'RaafatTurki/corn.nvim',
 		config = function ()
 			require('corn').setup { }
@@ -238,11 +211,20 @@ local plugins = {
 	},
 
 	-- Snippets
-	{ 'L3MON4D3/LuaSnip',
-		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!).
-		build = "make install_jsregexp",
-		config = config('luasnip')
+	{ 'dcampos/nvim-snippy',
+		config = function ()
+			require('snippy').setup({
+				mappings = {
+					is = {
+						['<Tab>'] = 'expand_or_advance',
+						['<S-Tab>'] = 'previous',
+					},
+					nx = {
+						['<leader>x'] = 'cut_text',
+					},
+				},
+			})
+		end
 	},
 
 	-- Completion
@@ -250,7 +232,7 @@ local plugins = {
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-nvim-lsp',
-	'saadparwaiz1/cmp_luasnip',
+	'dcampos/cmp-snippy',
 	{ "aznhe21/actions-preview.nvim",
 		config = function()
 			require("actions-preview").setup {
@@ -267,9 +249,7 @@ local plugins = {
 	'evanleck/vim-svelte',
 
 	-- Filetype specific
-	'timonv/vim-cargo',
 	{ 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' },
-	'godlygeek/tabular',
 	'habamax/vim-godot',
 	{ 'xuhdev/vim-latex-live-preview', lazy = true },
 	'pest-parser/pest.vim',
@@ -285,7 +265,6 @@ local plugins = {
 			}
 		end
 	},
-	'MunifTanjim/nui.nvim',
 	{ 'nvim-neo-tree/neo-tree.nvim',
 		-- Remove neo-tree legacy commands before plugin is loaded
 		init = function()
@@ -295,7 +274,32 @@ local plugins = {
 		branch = "v3.x"
 		-- lazy = true
 	},
-	{ 'mg979/vim-visual-multi', branch = 'master' },
+	{
+		"smoka7/multicursors.nvim",
+		event = "VeryLazy",
+		dependencies = { 'smoka7/hydra.nvim', },
+		opts = {},
+		cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+		keys = {
+			{
+				mode = { 'v', 'n' },
+				'<Leader>m',
+				'<cmd>MCstart<cr>',
+				desc = 'Create a selection for selected text or word under the cursor',
+			},
+		},
+	},
+	'unblevable/quick-scope',
+	{ 'mizlan/iswap.nvim',
+		config = function ()
+			require('iswap').setup {
+				keys = 'qwertyuiop'
+			}
+		end
+	},
+
+	-- UI
+	'MunifTanjim/nui.nvim',
 	{ 'stevearc/dressing.nvim',
 		config = function()
 			require('dressing').setup {
@@ -306,30 +310,13 @@ local plugins = {
 			}
 		end
 	},
-	'unblevable/quick-scope',
-	{ 'ggandor/leap.nvim',
-		config = function()
-			require('leap').setup {}
-
-			vim.keymap.set("n", '<leader>s', '<Plug>(leap-forward-to)')
-			vim.keymap.set("n", '<leader>S', '<Plug>(leap-backward-to)')
-		end,
-		dependencies = 'tpope/vim-repeat',
-	},
-	{ 'mizlan/iswap.nvim',
-		config = function ()
-			require('iswap').setup {
-				keys = 'qwertyuiop'
-			}
-		end
-	},
 
 	-- terminal
 	{ 'willothy/flatten.nvim',
 		config = function()
 			require('flatten').setup {}
 		end,
-		enabled = false
+		event = "VeryLazy"
 	},
 	{
 		'mikesmithgh/kitty-scrollback.nvim',
@@ -392,8 +379,6 @@ local plugins = {
 		end,
 		event = "VeryLazy"
 	},
-	'fidian/hexmode',
-	-- { 'michaelb/sniprun', run = 'bash install.sh' }
 
 	'nvim-lua/plenary.nvim',
 	{ 'folke/todo-comments.nvim',
@@ -415,10 +400,10 @@ local plugins = {
 			require('neo-presence').setup {
 				autostart = true
 			}
-		end
+		end,
+		event = "VeryLazy"
 	},
 
-	'sotte/presenting.vim',
 	{
 		"nomnivore/ollama.nvim",
 		dependencies = {
@@ -449,7 +434,8 @@ local plugins = {
 		opts = {
 			model = "dolhpin-mistral"
 			-- your configuration overrides
-		}
+		},
+		event = "VeryLazy"
 	},
 }
 
