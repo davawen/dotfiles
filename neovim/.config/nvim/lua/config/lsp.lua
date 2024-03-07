@@ -373,6 +373,11 @@ lspconfig.wgsl_analyzer.setup{
 	capabilities = capabilities,
 }
 
+lspconfig.glsl_analyzer.setup {
+	on_attach = on_attach,
+	capabilities = capabilities
+}
+
 local function sumneko_workspace()
 	local library = {
 		vim.fn.expand("~/.luarocks/share/lua/5.4"),
