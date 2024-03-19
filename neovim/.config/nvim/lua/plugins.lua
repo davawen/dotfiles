@@ -254,6 +254,9 @@ local plugins = {
 	{ 'xuhdev/vim-latex-live-preview', lazy = true },
 	'pest-parser/pest.vim',
 	{ 'RaafatTurki/hex.nvim' },
+	{ 'kaarmu/typst.vim',
+		ft = "typst"
+	},
 
 	-- Navigation
 	{ 'nvim-telescope/telescope.nvim',
@@ -270,25 +273,10 @@ local plugins = {
 		init = function()
 			vim.g.neo_tree_remove_legacy_commands = 1
 		end,
-		config = config('neotree'),
-		branch = "v3.x"
+		config = config('neotree')
 		-- lazy = true
 	},
-	{
-		"smoka7/multicursors.nvim",
-		event = "VeryLazy",
-		dependencies = { 'smoka7/hydra.nvim', },
-		opts = {},
-		cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-		keys = {
-			{
-				mode = { 'v', 'n' },
-				'<Leader>m',
-				'<cmd>MCstart<cr>',
-				desc = 'Create a selection for selected text or word under the cursor',
-			},
-		},
-	},
+	"mg979/vim-visual-multi",
 	'unblevable/quick-scope',
 	{ 'mizlan/iswap.nvim',
 		config = function ()

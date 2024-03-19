@@ -4,7 +4,6 @@ vim.cmd([[
 	]])
 
 require('neo-tree').setup {
-	enable_normal_mode_for_inputs = true,
 	default_component_configs = {
 		indent = {
 			indent_size = 2,
@@ -70,6 +69,15 @@ require('neo-tree').setup {
 		sources = {
 			{ source = "filesystem", display_name = " 󰉓 Files " },
 			{ source = "git_status", display_name = " 󰊢 Git " },
+		}
+	},
+	event_handlers = {
+		{
+			event = "neo_tree_popup_input_ready",
+			handler = function (args)
+				-- map <esc> to enter normal mode
+				vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
+			end
 		}
 	}
 }

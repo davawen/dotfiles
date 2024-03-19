@@ -11,6 +11,7 @@ vim.filetype.add({ extension = { mypest = "mypest" } })
 vim.filetype.add({ extension = { sway = "swayconfig" } })
 vim.filetype.add({ filename = { ['hyprland.conf'] = 'hyprconf' } })
 vim.filetype.add({ pattern = { ['.*/waybar/config'] = 'json' } })
+vim.filetype.add({ extension = { typst = "typst" } })
 
 vim.filetype.add({
 	extension = {
