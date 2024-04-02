@@ -63,6 +63,7 @@ local plugins = {
 			vim.keymap.set("", "<f1>", toggle_profile)
 		end
 	},
+	"nvim-neotest/nvim-nio",
 
 	-- Themes
 	{ 'catppuccin/nvim', name ='catppuccin',
