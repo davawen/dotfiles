@@ -415,7 +415,7 @@ local plugins = {
 		},
 
 		opts = {
-			model = "dolhpin-mistral"
+			model = "dolphin-mistral"
 			-- your configuration overrides
 		},
 		event = "VeryLazy"
