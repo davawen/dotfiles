@@ -241,8 +241,8 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% # Low
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle # Mute
 
 # Sreen brightness controls -- # https://github.com/haikarainen/light
-bindsym XF86MonBrightnessUp exec light -A 5    # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 5  # decrease screen brightness
+bindsym XF86MonBrightnessUp exec blight set +5%    # increase screen brightness
+bindsym XF86MonBrightnessDown exec blight set -5%  # decrease screen brightness
 
 # multimedia keys
 bindsym XF86AudioPlay  exec playerctl play-pause
