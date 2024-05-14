@@ -1,0 +1,29 @@
+[
+    {
+        "context": "Editor && VimControl && !VimWaiting && !menu",
+        "bindings": {
+            // put key-bindings here if you want them to work in normal & visual mode
+        }
+    },
+    {
+        "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+        "bindings": {
+            // put key-bindings here if you want them to work only in normal mode
+            // "d b": "pane::CloseActiveItem",
+            "alt-,": ["workspace::SendKeystrokes", "ctrl-pageup"],
+            "alt-.": ["workspace::SendKeystrokes", "ctrl-pagedown"]
+        }
+    },
+    {
+        "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+        "bindings": {
+            // visual, visual line & visual block modes
+        }
+    },
+    {
+        "context": "Editor && vim_mode == insert && !menu",
+        "bindings": {
+            // put key-bindings here if you want them to work in insert mode
+        }
+    }
+]
