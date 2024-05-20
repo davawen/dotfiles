@@ -230,10 +230,10 @@ local plugins = {
 
 	-- Completion
 	'hrsh7th/nvim-cmp',
-	'hrsh7th/cmp-buffer',
-	'hrsh7th/cmp-path',
-	'hrsh7th/cmp-nvim-lsp',
-	'dcampos/cmp-snippy',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-nvim-lsp',
+    'dcampos/cmp-snippy',
 	{ "aznhe21/actions-preview.nvim",
 		config = function()
 			require("actions-preview").setup {
@@ -269,13 +269,18 @@ local plugins = {
 			}
 		end
 	},
-	{ 'nvim-neo-tree/neo-tree.nvim',
-		-- Remove neo-tree legacy commands before plugin is loaded
-		init = function()
-			vim.g.neo_tree_remove_legacy_commands = 1
-		end,
-		config = config('neotree')
-		-- lazy = true
+	{ 'stevearc/oil.nvim',
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function ()
+			require("oil").setup {
+				lsp_file_methods = {
+					timeout_ms = 50
+				}
+			}
+			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+			vim.keymap.set("n", "_", "<CMD>Oil .<CR>", { desc = "Open currend working directory" })
+		end
 	},
 	"mg979/vim-visual-multi",
 	'unblevable/quick-scope',

@@ -3,21 +3,37 @@
         "context": "Editor && VimControl && !VimWaiting && !menu",
         "bindings": {
             // put key-bindings here if you want them to work in normal & visual mode
+            "enter": "editor::SelectLargerSyntaxNode"
         }
     },
     {
         "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
         "bindings": {
             // put key-bindings here if you want them to work only in normal mode
-            // "d b": "pane::CloseActiveItem",
             "alt-,": ["workspace::SendKeystrokes", "ctrl-pageup"],
-            "alt-.": ["workspace::SendKeystrokes", "ctrl-pagedown"]
+            "alt-.": ["workspace::SendKeystrokes", "ctrl-pagedown"],
+            "space d b": "pane::CloseActiveItem",
+            "space f f": "file_finder::Toggle"
+        }
+    },
+    {
+        "context": "Editor && vim_mode == normal && !menu",
+        "bindings": {
+            // bindings that can happen when vim is waiting (after f, t, or d for example)
         }
     },
     {
         "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
         "bindings": {
             // visual, visual line & visual block modes
+            "S )": [
+                "workspace::SendKeystrokes",
+                "escape ` < i ( escape ` > a ) escape `"
+            ],
+            "S \"": [
+                "workspace::SendKeystrokes",
+                "escape ` < i \" escape ` > a \" escape"
+            ]
         }
     },
     {

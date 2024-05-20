@@ -27,5 +27,5 @@
             "api_url": "http://localhost:11434/v1"
         }
     },
-    "show_completions_on_input": false
+    "show_completions_on_input": true
 }

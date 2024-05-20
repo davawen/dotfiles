@@ -1,10 +1,10 @@
 local lspkind = require("lspkind")
-local cmp = require("cmp")
 
 local map, _ = unpack(require("utils.map"))
 
----@diagnostic disable-next-line: missing-fields
-cmp.setup({
+local cmp = require("cmp")
+
+cmp.setup {
 	mapping = {
 		["<CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Insert,
@@ -49,16 +49,9 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "path" },
-
 		{ name = "nvim_lsp" },
-		-- { name = "otter" },
 		{ name = "snippy" },
 		{ name = "buffer", keyword_length = 5 },
-	},
-	snippet = {
-		expand = function(args)
-			require('snippy').expand_snippet(args.body)
-		end,
 	},
 	formatting = {
 		fields = { "abbr", "kind", "menu" },
@@ -78,14 +71,12 @@ cmp.setup({
 			end
 		})
 	},
-	view = {
-		entries = { "native" }
-	},
-	-- window = {
-	-- 	completion = cmp.config.window.bordered(),
-	-- 	documentation = cmp.config.window.bordered()
-	-- },
-})
+	view = { entries = { "native" } },
+	performance = {
+		async_budget = 3,
+		debounce = 200
+	}
+}
 
 -- nvim LSP configuration
 -- Mappings.
@@ -124,6 +115,7 @@ function Inlay_hint()
 	vim.lsp.inlay_hint(0, nil)
 end
 
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities = vim.tbl_deep_extend("force", capabilities, {
@@ -149,15 +141,6 @@ vim.diagnostic.config({
 lspconfig.clangd.setup{
 	on_attach = function (client, bufnr)
 		on_attach(client, bufnr)
-		-- vim.api.nvim_create_autocmd("CursorHoldI", {
-		-- 	pattern = "*",
-		-- 	callback = function ()
-		-- 		if cmp.visible() then
-		-- 			cmp.complete()
-		-- 		end
-		-- 	end,
-		-- 	group = augroup
-		-- })
 	end,
 	cmd = {
 		"clangd",
