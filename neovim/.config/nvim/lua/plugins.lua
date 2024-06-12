@@ -97,19 +97,26 @@ local plugins = {
 	},
 
 	-- LSP
-	{ "folke/neodev.nvim",
-		config = function ()
-			require('neodev').setup {
-				library = {
-					plugins = false,
-				},
-				lspconfig = false
+	{ "folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				-- Library items can be absolute paths
+				-- "~/projects/my-awesome-lib",
+				-- Or relative, which means they will be resolved as a plugin
+				-- "LazyVim",
+				-- When relative, you can also provide a path to the library in the plugin dir
 			}
-		end,
+		}
 	},
 	{ "rcarriga/nvim-notify",
 		config = function ()
 			vim.notify = require("notify")
+			-- @allow missing_fields
+			vim.notify.setup {
+				timeout = 2500,
+				render = "compact",
+			}
 		end
 	},
 	{ 'neovim/nvim-lspconfig',
@@ -132,14 +139,11 @@ local plugins = {
 		end
 	},
 	'SmiteshP/nvim-navic',
-	'onsails/lspkind-nvim',
-	'ray-x/lsp_signature.nvim',
 	{
 		'mrcjkb/rustaceanvim',
 		version = '^4', -- Recommended
 		ft = { 'rust' },
 	},
-	'sigmasd/deno-nvim',
 	{ 'mhartington/formatter.nvim',
 		config = function()
 			require("formatter").setup {
@@ -166,11 +170,7 @@ local plugins = {
 			}
 		end
 	},
-	{'RaafatTurki/corn.nvim',
-		config = function ()
-			require('corn').setup { }
-		end
-	},
+	'ray-x/lsp_signature.nvim',
 
 	-- Debugging
 	{ 'mfussenegger/nvim-dap',
@@ -181,28 +181,12 @@ local plugins = {
 	},
 
 	-- Snippets
-	{ 'dcampos/nvim-snippy',
-		config = function ()
-			require('snippy').setup({
-				mappings = {
-					is = {
-						['<Tab>'] = 'expand_or_advance',
-						['<S-Tab>'] = 'previous',
-					},
-					nx = {
-						['<leader>x'] = 'cut_text',
-					},
-				},
-			})
-		end
-	},
 
 	-- Completion
 	'hrsh7th/nvim-cmp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
-    'dcampos/cmp-snippy',
+ --    'hrsh7th/cmp-buffer',
+ --    'hrsh7th/cmp-path',
 	{ "aznhe21/actions-preview.nvim",
 		config = function()
 			require("actions-preview").setup {
@@ -213,15 +197,9 @@ local plugins = {
 	},
 
 	-- Syntax highlight
-	'brgmnn/vim-opencl',
-	'tikhomirov/vim-glsl',
 	'timtro/glslView-nvim',
-	'evanleck/vim-svelte',
 
 	-- Filetype specific
-	{ 'shuntaka9576/preview-asciidoc.nvim', run = 'yarn install' },
-	'habamax/vim-godot',
-	{ 'xuhdev/vim-latex-live-preview', lazy = true },
 	'pest-parser/pest.vim',
 	{ 'RaafatTurki/hex.nvim' },
 	{ 'kaarmu/typst.vim',
@@ -253,13 +231,6 @@ local plugins = {
 	},
 	"mg979/vim-visual-multi",
 	'unblevable/quick-scope',
-	{ 'mizlan/iswap.nvim',
-		config = function ()
-			require('iswap').setup {
-				keys = 'qwertyuiop'
-			}
-		end
-	},
 
 	-- UI
 	'MunifTanjim/nui.nvim',
@@ -306,7 +277,6 @@ local plugins = {
 		lazy = true,
 		cmd = { "Neogit", "NeogitMessages", "NeogitResetState" }
 	},
-	'wintermute-cell/gitignore.nvim',
 	'tveskag/nvim-blame-line',
 
 	-- Other
@@ -314,7 +284,7 @@ local plugins = {
 	'junegunn/vim-easy-align',
 	{ 'numToStr/Comment.nvim',
 		config = function()
-			require('Comment').setup {}
+			require('Comment').setup()
 		end
 	},
 	{ 'windwp/nvim-autopairs',

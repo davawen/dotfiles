@@ -189,11 +189,19 @@ local lsp_name = {
 	hl = { fg = "subtext0", bold = true }
 }
 
+local navic = require("nvim-navic")
+local navic_context = {
+	condition = c.lsp_attached(),
+	provider = navic.get_location
+}
+
 local lsp = {
 	condition = c.lsp_attached,
-	update = { "DiagnosticChanged", "LspAttach", "LspDetach" },
+	update = { "CursorMoved", "DiagnosticChanged", "LspAttach", "LspDetach" },
 	u.surround({ "", "" }, "surface0", lsp_name),
-	diagnostics
+	diagnostics,
+	{ provider = " " },
+	navic_context
 }
 
 local file_name = {
@@ -333,7 +341,6 @@ return {
 	lsp,
 	{ provider = "%=" },
 	current_file,
-	{ provider = "%<%=" },
 	file,
 	{ provider = " | " },
 	ruler,

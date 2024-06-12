@@ -2,7 +2,7 @@
 	"layer": "top",
 	"modules-left": ["custom/launcher", "custom/nemo", "sway/workspaces", "sway/scratchpad", "sway/mode"],
 	"modules-center": [],
-	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "memory", "clock"],
+	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "cpu", "memory", "clock"],
 	"custom/launcher": {
 		"exec": "echo \"  \nLaunch Keal\n\"",
 		"interval": "once",
@@ -72,6 +72,10 @@
 		"tooltip-format-disconnected": "Disconnected",
 		"min-length": 22,
 		"max-length": 22
+	},
+	"cpu": {
+		"interval": 1,
+		"min-length": 3
 	},
 	"memory": {
 		"format": "{icon} {used}GB / {total}GB",

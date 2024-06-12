@@ -294,6 +294,7 @@ for_window [title="Event Tester"] floating enable
 for_window [app_id="firefox" title="Sharing Indicator"] floating enable
 
 for_window [title="Keal"] floating enable, border none
+for_window [title="xeyes"] floating enable
 
 # Sticky window
 for_window [instance="file_progress"]  sticky enable

@@ -14,6 +14,10 @@ require('nvim-treesitter.configs').setup {
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
+		disable = function (lang, bufnr) -- disable on big files
+			local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr))
+			return fsize > 500000
+		end
 	},
 	incremental_selection = {
 		enable = true,
