@@ -23,9 +23,12 @@ set --export BUN_INSTALL "$HOME/.bun"
 add_path "$PNPM_HOME"
 add_path "$BUN_INSTALL/bin"
 add_path "$HOME/.local/bin"
-# WARNING: Those two require PNPM above to be in the path and everything breaks if they aren't
-add_path "$(npm config get prefix)/bin"
-add_path "$(type -q yarn && yarn global bin)"
+if type -q npm
+	add_path "$(npm config get prefix)/bin"
+end
+if type -q yarn
+	add_path "$(yarn global bin)"
+end
 add_path "$HOME/.local/share/cargo/bin/"
 add_path "/usr/local/cuda/bin"
 add_path "$DENO_INSTALL/bin"
@@ -88,10 +91,16 @@ alias ytdl='yt-dlp'
 alias xclipc='xclip -selection clipboard'
 
 # Starship
-starship init fish | source
+if type -q starship
+	starship init fish | source
+else
+	echo "WARNING: starship is not installed"
+end
 
 # Zoxide
-zoxide init fish | source
+if type -q zoxide
+	zoxide init fish | source
+end
 
 # opam configuration
 source /home/davawen/.local/share/opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
