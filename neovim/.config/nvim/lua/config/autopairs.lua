@@ -7,6 +7,7 @@ npairs.setup {
 	enable_check_bracket_line = false, -- check bracket in same line
 	fast_wrap = {
 		map = '<M-e>',
+		chars = { '{', '[', '(', '"', "'", "$" },
 		pattern = [=[[%'%"%)%>%]%)%}%,%;]]=],
 		end_key = '$',
 		keys = 'asdfghjkl',
@@ -36,6 +37,11 @@ npairs.add_rule(
 npairs.add_rule(
 	Rule('\\[', '\\]', { "tex", "latex" })
 		:with_cr(cond.none())
+)
+
+-- Typst
+npairs.add_rule(
+	Rule('$', '$', { "typst" })
 )
 
 -- Add spaces
