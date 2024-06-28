@@ -202,8 +202,17 @@ local plugins = {
 	-- Filetype specific
 	'pest-parser/pest.vim',
 	{ 'RaafatTurki/hex.nvim' },
-	{ 'kaarmu/typst.vim',
-		ft = "typst"
+	{ 'kaarmu/typst.vim', ft = "typst" },
+	{
+		'chomosuke/typst-preview.nvim',
+		ft = 'typst',
+		version = '0.3.*',
+		build = function() require('typst-preview').update() end,
+		config = function ()
+			require('typst-preview').setup {
+				follow_cursor = false
+			}
+		end
 	},
 
 	-- Navigation
