@@ -46,7 +46,7 @@ local plugins = {
 				end
 			end
 
-			local function toggle_profile()
+			function ToggleProfile()
 				local prof = require("profile")
 				if prof.is_recording() then
 					prof.stop()
@@ -60,7 +60,7 @@ local plugins = {
 					prof.start("*")
 				end
 			end
-			vim.keymap.set("", "<f1>", toggle_profile)
+			vim.keymap.set("", "<f1>", ToggleProfile)
 		end
 	},
 	"nvim-neotest/nvim-nio",
@@ -234,6 +234,15 @@ local plugins = {
 					timeout_ms = 50
 				}
 			}
+
+			function ProfileOil()
+				local oil = require("oil")
+
+				ToggleProfile()
+
+				oil.open()
+			end
+
 			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 			vim.keymap.set("n", "_", "<CMD>Oil .<CR>", { desc = "Open currend working directory" })
 		end
@@ -286,7 +295,6 @@ local plugins = {
 		lazy = true,
 		cmd = { "Neogit", "NeogitMessages", "NeogitResetState" }
 	},
-	'tveskag/nvim-blame-line',
 
 	-- Other
 	'wakatime/vim-wakatime',
