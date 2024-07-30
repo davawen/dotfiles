@@ -220,7 +220,7 @@ local plugins = {
 		config = function()
 			require('telescope').setup {
 				defaults = {
-					file_ignore_patterns = { "build", "dist", "node_modules", "Cargo.lock" }
+					file_ignore_patterns = { "node_modules", "Cargo.lock" }
 				}
 			}
 		end

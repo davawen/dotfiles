@@ -53,6 +53,40 @@ map("n", "<leader>ts", function ()
 	end)
 end)
 
+-- Edit current terminal command line in new buffer
+map("t", "<C-u>", function ()
+	vim.cmd "y"
+
+	local buf = vim.api.nvim_create_buf(false, false)
+	local window = vim.api.nvim_open_win(buf, true, { vertical = true })
+
+	vim.cmd [[ normal! P ]]
+	vim.cmd [[ normal! ^dwgg$ ]]
+
+	vim.api.nvim_create_autocmd("WinClosed", {
+		pattern = tostring(window),
+		callback = function (ev)
+			vim.cmd [[ d ]] -- delete already present line in command
+
+			local content = vim.api.nvim_buf_get_lines(buf, 0, -1, true)
+			for _, line in ipairs(content) do
+				vim.api.nvim_paste(line, true, -1)
+			end
+
+			return true -- delete autocommand
+		end
+	})
+end)
+-- map("t", "<C-u>", "<C-\\><C-N>:y | vertical new | normal! P<CR> | ^dw")
+map("n", "<C-u>", "^D | :q!<CR> | i<C-c><C-\\><C-n>pi")
+
+-- "term stuff
+-- " let C-U open a new buffer to edit the current terminal line
+-- tnoremap <C-U> <C-\><C-N>:y \| vertical new \| normal! P<CR> \| ^dw
+-- nnoremap <C-U> ^D \|:q!<CR> \| i<C-c><C-\><C-n>pi
+-- " let ESC take out out of term mode
+-- tnoremap <ESC> <C-\><C-n>
+
 -- ctrl-u uppercases a word
 map("i", "<c-u>", "<esc>viwUea")
 

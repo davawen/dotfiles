@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"modules-left": ["custom/launcher", "custom/nemo", "sway/workspaces", "sway/scratchpad", "sway/mode"],
+	"modules-left": ["custom/launcher", "custom/nemo", "hyprland/workspaces", "sway/workspaces", "sway/scratchpad", "sway/mode"],
 	"modules-center": [],
 	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "cpu", "memory", "clock"],
 	"include": "$HOME/.config/waybar/workspaces/$(hostname).jsonc",
@@ -13,6 +13,11 @@
 		"exec": "echo \"  \nLaunch nemo\n\"",
 		"interval": "once",
 		"on-click": "nemo"
+	},
+	"hyprland/workspaces": {
+		"format": "{icon}",
+		"on-scroll-up": "hyprctl dispatch workspace e+1",
+		"on-scroll-down": "hyprctl dispatch workspace e-1"
 	},
 	"sway/window": {
 		"max-length": 50
