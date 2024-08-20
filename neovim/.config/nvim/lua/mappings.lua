@@ -41,6 +41,9 @@ map("n", "<leader>;", "mpA;<esc>`p")
 -- ;c cycles through unnamed and clipboard registers
 map("n", "<leader>cb", ':let @z=@" | let @"=@+ | let @+=@z<CR>')
 
+-- Open tree sitter tree
+map("n", "<leader>it", ":InspectTree<CR>")
+
 -- Open terminal
 map("n", "<leader>te", "<cmd>Term<Cr>", { silent = true })
 map("t", "<c-space>te", "<C-\\><cmd>Term<Cr>", { silent = true })

@@ -109,14 +109,9 @@ local plugins = {
 			}
 		}
 	},
-	{ "rcarriga/nvim-notify",
+	{ "Ajnasz/notify-send.nvim",
 		config = function ()
-			vim.notify = require("notify")
-			-- @allow missing_fields
-			vim.notify.setup {
-				timeout = 2500,
-				render = "compact",
-			}
+			require('notify-send').setup {}
 		end
 	},
 	{ 'neovim/nvim-lspconfig',
@@ -147,26 +142,26 @@ local plugins = {
 	{ 'mhartington/formatter.nvim',
 		config = function()
 			require("formatter").setup {
-			  -- Enable or disable logging
-			  logging = true,
-			  -- Set the log level
-			  log_level = vim.log.levels.WARN,
-			  -- All formatter configurations are opt-in
-			  filetype = {
-				-- Formatter configurations for filetype "lua" go here
-				-- and will be executed in order
-				cpp = require("formatter.filetypes.cpp").clangformat,
-				c = require("formatter.filetypes.c").clangformat,
-				typescript = require("formatter.filetypes.javascript").prettier,
+				-- Enable or disable logging
+				logging = true,
+				-- Set the log level
+				log_level = vim.log.levels.WARN,
+				-- All formatter configurations are opt-in
+				filetype = {
+					-- Formatter configurations for filetype "lua" go here
+					-- and will be executed in order
+					cpp = require("formatter.filetypes.cpp").clangformat,
+					c = require("formatter.filetypes.c").clangformat,
+					typescript = require("formatter.filetypes.javascript").prettier,
 
-				-- Use the special "*" filetype for defining formatter configurations on
-				-- any filetype
-				["*"] = {
-				  -- "formatter.filetypes.any" defines default configurations for any
-				  -- filetype
-				  require("formatter.filetypes.any").remove_trailing_whitespace
+					-- Use the special "*" filetype for defining formatter configurations on
+					-- any filetype
+					["*"] = {
+						-- "formatter.filetypes.any" defines default configurations for any
+						-- filetype
+						require("formatter.filetypes.any").remove_trailing_whitespace
+					}
 				}
-			  }
 			}
 		end
 	},
@@ -184,9 +179,9 @@ local plugins = {
 
 	-- Completion
 	'hrsh7th/nvim-cmp',
-    'hrsh7th/cmp-nvim-lsp',
- --    'hrsh7th/cmp-buffer',
- --    'hrsh7th/cmp-path',
+	'hrsh7th/cmp-nvim-lsp',
+	--    'hrsh7th/cmp-buffer',
+	--    'hrsh7th/cmp-path',
 	{ "aznhe21/actions-preview.nvim",
 		config = function()
 			require("actions-preview").setup {
@@ -213,6 +208,12 @@ local plugins = {
 				follow_cursor = false
 			}
 		end
+	},
+	{ 'MeanderingProgrammer/markdown.nvim',
+		ft = 'markdown',
+		main = "render-markdown",
+		opts = {},
+		name = "render-markdown"
 	},
 
 	-- Navigation
@@ -284,17 +285,37 @@ local plugins = {
 	},
 
 	-- Git
-	{ 'NeogitOrg/neogit',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'sindrets/diffview.nvim'
+	{
+		'isakbm/gitgraph.nvim',
+		opts = {
+			symbols = {
+				merge_commit = 'M',
+				commit = '*',
+			},
+			format = {
+				timestamp = '%H:%M:%S %d-%m-%Y',
+				fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
+			},
+			hooks = {
+				on_select_commit = function(commit)
+					print('selected commit:', commit.hash)
+				end,
+				on_select_range_commit = function(from, to)
+					print('selected range:', from.hash, to.hash)
+				end,
+			},
 		},
-		config = function ()
-			require('neogit').setup {}
-		end,
-		lazy = true,
-		cmd = { "Neogit", "NeogitMessages", "NeogitResetState" }
+		keys = {
+			{
+				"<leader>gl",
+				function()
+					require('gitgraph').draw({}, { all = true, max_count = 5000 })
+				end,
+				desc = "GitGraph - Draw",
+			},
+		},
 	},
+
 
 	-- Other
 	'wakatime/vim-wakatime',
@@ -347,40 +368,7 @@ local plugins = {
 		end,
 		event = "VeryLazy"
 	},
-
-	{
-		"nomnivore/ollama.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-
-		-- All the user commands added by the plugin
-		cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
-
-		keys = {
-			-- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
-			{
-				"<leader>oo",
-				":<c-u>lua require('ollama').prompt()<cr>",
-				desc = "ollama prompt",
-				mode = { "n", "v" },
-			},
-
-			-- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
-			{
-				"<leader>oG",
-				":<c-u>lua require('ollama').prompt('Generate_Code')<cr>",
-				desc = "ollama Generate Code",
-				mode = { "n", "v" },
-			},
-		},
-
-		opts = {
-			model = "dolphin-mistral"
-			-- your configuration overrides
-		},
-		event = "VeryLazy"
-	},
+	"vim-utils/vim-man"
 }
 
 local opts = {

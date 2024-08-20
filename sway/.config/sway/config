@@ -1,5 +1,17 @@
 include /etc/sway/config.d/*
 
+# == Startup applications ==
+# Notifications
+exec mako --ignore-timeout 1 --default-timeout 3000
+
+# polkit
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Email
+exec hydroxide serve > /tmp/hydroxide.log
+exec aerc 
+
+
 set $mod Mod4
 set $mod1 Mod1
 
@@ -31,13 +43,6 @@ set $focus-text-color    #87CEEB
 set $black       #282828
 set $darkblack   #1d2021
 set $transparent #000000AA
-
-# Notifications
-exec mako --ignore-timeout 1 --default-timeout 3000
-
-# polkit
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 
@@ -51,7 +56,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec $terminal
-bindsym $mod+x exec $terminal
+bindsym $mod+x exec xeyes
 
 # Custom bindsyms
 # bindsym $mod+p exec ~/.config/i3/bin/logout
@@ -158,6 +163,17 @@ workspace 8 output $output2
 bindgesture swipe:3:left workspace next
 bindgesture swipe:3:right workspace prev
 
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10 
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1, workspace 1
 bindsym $mod+Shift+2 move container to workspace 2, workspace 2
@@ -230,6 +246,8 @@ bindsym $mod+d exec keal
 
 assign [class="discord"] 2
 assign [app_id="VencordDesktop"] 2
+assign [class="thunderbird"] 5
+assign [title="aerc"] 5
 
 # Resize floating kitty window
 for_window [app_id="kitty" floating] resize set width 50ppt height 50ppt

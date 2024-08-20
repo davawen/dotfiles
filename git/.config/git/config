@@ -30,3 +30,10 @@
 	required = true
 [http]
 	postBuffer = 1048576000
+[sendemail]
+	smtpserver = localhost
+	smtpuser = davawen
+	smtencryption = none
+	smtpserverport = 1025
+	confirm = auto
+	annotate = yes
