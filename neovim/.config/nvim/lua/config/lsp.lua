@@ -55,11 +55,14 @@ cmp.setup {
 			return vim_item
 		end
 	},
+	snippet = {
+		expand = function (args) vim.snippet.expand(args.body) end
+	},
 	-- view = { entries = { "native" } },
-	-- performance = {
-	-- 	async_budget = 3,
-	-- 	debounce = 200
-	-- }
+	performance = {
+		debounce = 0,
+		throttle = 0
+	}
 }
 
 map({'i', 's'}, "<Tab>", function ()

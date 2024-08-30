@@ -111,7 +111,24 @@ local plugins = {
 	},
 	{ "Ajnasz/notify-send.nvim",
 		config = function ()
-			require('notify-send').setup {}
+			local notify = require('notify-send')
+			notify.setup {
+				override_vim_notify = false
+			}
+
+			local notifications = {}
+			vim.notify = function (msg, level, opts)
+				notify.send(msg, level, opts)
+
+				table.insert(notifications, msg)
+			end
+
+			function ShowNotifications()
+				for index, value in ipairs(notifications) do
+					print(index)
+					print(value)
+				end
+			end
 		end
 	},
 	{ 'neovim/nvim-lspconfig',
