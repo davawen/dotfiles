@@ -231,7 +231,7 @@ lspconfig.pest_ls.setup {
 	capabilities = capabilities
 }
 
-lspconfig.tsserver.setup{
+lspconfig.ts_ls.setup{
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "typescript-language-server", "--stdio" },
@@ -365,9 +365,17 @@ lspconfig.texlab.setup{
 	capabilities = capabilities
 }
 
-lspconfig.typst_lsp.setup {
+-- lspconfig.typst_lsp.setup {
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities
+-- }
+
+lspconfig.tinymist.setup {
 	on_attach = on_attach,
-	capabilities = capabilities
+	capabilities = capabilities,
+	settings = {
+		exportPdf = "onType"
+	}
 }
 
 lspconfig.zls.setup {

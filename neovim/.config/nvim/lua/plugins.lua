@@ -111,24 +111,24 @@ local plugins = {
 	},
 	{ "Ajnasz/notify-send.nvim",
 		config = function ()
-			local notify = require('notify-send')
-			notify.setup {
-				override_vim_notify = false
-			}
-
-			local notifications = {}
-			vim.notify = function (msg, level, opts)
-				notify.send(msg, level, opts)
-
-				table.insert(notifications, msg)
-			end
-
-			function ShowNotifications()
-				for index, value in ipairs(notifications) do
-					print(index)
-					print(value)
-				end
-			end
+			-- local notify = require('notify-send')
+			-- notify.setup {
+			-- 	override_vim_notify = false
+			-- }
+			--
+			-- local notifications = {}
+			-- vim.notify = function (msg, level, opts)
+			-- 	notify.send(msg, level, opts)
+			--
+			-- 	table.insert(notifications, msg)
+			-- end
+			--
+			-- function ShowNotifications()
+			-- 	for index, value in ipairs(notifications) do
+			-- 		print(index)
+			-- 		print(value)
+			-- 	end
+			-- end
 		end
 	},
 	{ 'neovim/nvim-lspconfig',
@@ -215,14 +215,14 @@ local plugins = {
 	'pest-parser/pest.vim',
 	{ 'RaafatTurki/hex.nvim' },
 	{ 'kaarmu/typst.vim', ft = "typst" },
-	{
-		'chomosuke/typst-preview.nvim',
-		ft = 'typst',
-		version = '0.3.*',
-		build = function() require('typst-preview').update() end,
+	{ 'chomosuke/typst-preview.nvim',
+		ft = "typst",
 		config = function ()
-			require('typst-preview').setup {
-				follow_cursor = false
+			require("typst-preview").setup {
+				open_cmd = "firefox --new-window %s --class typst-preview",
+				dependencies_bin = {
+					["typst-preview"] = vim.fn.expand("$HOME/.local/share/nvim/mason/bin/tinymist")
+				}
 			}
 		end
 	},
