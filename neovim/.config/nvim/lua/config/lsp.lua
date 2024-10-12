@@ -1,70 +1,5 @@
 local map, _ = unpack(require("utils.map"))
 
-local cmp = require("cmp")
-
-cmp.setup {
-	mapping = {
-		["<CR>"] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = false,
-		},
-		["<S-CR>"] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = true
-		},
-		["<C-CR>"] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = true
-		},
-		["<c-space>"] = cmp.mapping(function(_)
-			if cmp.visible() then
-				cmp.close()
-			else
-				cmp.complete()
-			end
-		end, { "i", "s" }),
-		["<c-J>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<c-K>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-
-		['<C-f>'] = cmp.mapping.scroll_docs(-4),
-		['<C-d>'] = cmp.mapping.scroll_docs(4),
-		['<C-e>'] = cmp.mapping.abort()
-	},
-	sources = {
-		-- { name = "path" },
-		{ name = "nvim_lsp" },
-		-- { name = "buffer", keyword_length = 5 },
-	},
-	formatting = {
-		fields = { "abbr", "kind", "menu" },
-		expandable_indicator = true,
-		format = function (entry, vim_item)
-			vim_item.menu = "" -- stop weird rust analyzer injecting types into this shit
-			return vim_item
-		end
-	},
-	snippet = {
-		expand = function (args) vim.snippet.expand(args.body) end
-	},
-	-- view = { entries = { "native" } },
-	performance = {
-		debounce = 0,
-		throttle = 0
-	}
-}
-
 map({'i', 's'}, "<Tab>", function ()
 	if vim.snippet.active { direction = 1 } then
 		return '<cmd>lua vim.snippet.jump(1)<cr>'
@@ -116,15 +51,6 @@ local on_attach = function(client, bufnr)
 		navic.attach(client, bufnr)
 	end
 
-	require("lsp_signature").on_attach({
-		floating_window = false,
-		hint_prefix = {
-			above = "↙ ",  -- when the hint is on the line above the current line
-			current = "← ",  -- when the hint is on the same line
-			below = "↖ "  -- when the hint is on the line below the current line
-		}
-	}, bufnr)
-
 	-- if client.server_capabilities.inlayHintProvider then
 	-- 	vim.lsp.inlay_hint(bufnr, true)
 	-- end
@@ -136,7 +62,7 @@ end
 
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities = vim.tbl_deep_extend("force", capabilities, {
 	workspace = {
 		didChangeWatchedFiles = {
@@ -264,16 +190,6 @@ lspconfig.ts_ls.setup{
 -- 	}
 -- }
 
-lspconfig.ocamllsp.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	single_file_support = true,
-	filetypes = vim.list_extend(
-		require('lspconfig.server_configurations.ocamllsp').default_config.filetypes,
-		{ "ocaml_interface", "ocamllex", "menhir" }
-	)
-}
-
 lspconfig.svelte.setup{
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -365,17 +281,13 @@ lspconfig.texlab.setup{
 	capabilities = capabilities
 }
 
--- lspconfig.typst_lsp.setup {
--- 	on_attach = on_attach,
--- 	capabilities = capabilities
--- }
-
 lspconfig.tinymist.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
-		exportPdf = "onType"
-	}
+		exportPdf = "never"
+	},
+	single_file_support = true
 }
 
 lspconfig.zls.setup {

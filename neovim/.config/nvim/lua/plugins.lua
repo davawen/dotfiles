@@ -182,7 +182,7 @@ local plugins = {
 			}
 		end
 	},
-	'ray-x/lsp_signature.nvim',
+	-- 'ray-x/lsp_signature.nvim',
 
 	-- Debugging
 	{ 'mfussenegger/nvim-dap',
@@ -195,8 +195,54 @@ local plugins = {
 	-- Snippets
 
 	-- Completion
-	'hrsh7th/nvim-cmp',
-	'hrsh7th/cmp-nvim-lsp',
+	{
+		'saghen/blink.cmp',
+		lazy = false,
+		-- version = 'v0.*',
+		build = "cargo build --release",
+		opts = {
+			keymap = {
+				show = "<C-space>",
+				hide = "<C-e>",
+				accept = "<CR>",
+				select_prev = { "<Up>", "<C-k>" },
+				select_next = { "<Down>", "<C-j>" },
+
+				show_documentation = {},
+				hide_documentation = {},
+				scroll_documentation_up = "<C-y>",
+				scroll_documentation_down = "<C-e>",
+			},
+			highlight = {
+				use_nvim_cmp_as_default = true,
+			},
+			nerd_font_variant = "normal",
+			trigger = {
+				completion = {
+					keyword_regex = '[%w_\\-]',
+					show_on_insert_on_trigger_character = false,
+				},
+				signature_help = { enabled = true }
+			},
+			sources = {
+				providers = {
+					{
+						{ 'blink.cmp.sources.lsp' },
+						{ 'blink.cmp.sources.path' },
+						{ 'blink.cmp.sources.snippets', score_offset = -3 },
+					},
+				}
+			},
+			windows = {
+				autocomplete = {
+					max_height = 20,
+					draw = "reversed"
+				}
+			}
+		},
+	},
+	-- 'hrsh7th/nvim-cmp',
+	-- 'hrsh7th/cmp-nvim-lsp',
 	--    'hrsh7th/cmp-buffer',
 	--    'hrsh7th/cmp-path',
 	{ "aznhe21/actions-preview.nvim",

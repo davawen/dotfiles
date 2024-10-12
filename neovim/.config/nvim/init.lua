@@ -28,6 +28,8 @@ vim.o.conceallevel = 0
 vim.o.laststatus = 3
 vim.o.showtabline = 2
 
+vim.o.signcolumn = "number"
+
 local map, _ = unpack(require("utils.map"))
 
 -- Neovide config
