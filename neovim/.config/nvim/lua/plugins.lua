@@ -203,7 +203,7 @@ local plugins = {
 		opts = {
 			keymap = {
 				show = "<C-space>",
-				hide = "<C-e>",
+				hide = "<C-space>",
 				accept = "<CR>",
 				select_prev = { "<Up>", "<C-k>" },
 				select_next = { "<Down>", "<C-j>" },
@@ -226,11 +226,9 @@ local plugins = {
 			},
 			sources = {
 				providers = {
-					{
-						{ 'blink.cmp.sources.lsp' },
-						{ 'blink.cmp.sources.path' },
-						{ 'blink.cmp.sources.snippets', score_offset = -3 },
-					},
+					{ 'blink.cmp.sources.lsp', name = "LSP" },
+					{ 'blink.cmp.sources.path', name = "Path" },
+					{ 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
 				}
 			},
 			windows = {
@@ -260,7 +258,7 @@ local plugins = {
 	-- Filetype specific
 	'pest-parser/pest.vim',
 	{ 'RaafatTurki/hex.nvim' },
-	{ 'kaarmu/typst.vim', ft = "typst" },
+	-- { 'kaarmu/typst.vim', ft = "typst" },
 	{ 'chomosuke/typst-preview.nvim',
 		ft = "typst",
 		config = function ()

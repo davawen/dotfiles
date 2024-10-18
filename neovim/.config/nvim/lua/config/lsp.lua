@@ -284,6 +284,7 @@ lspconfig.texlab.setup{
 lspconfig.tinymist.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
+	offset_encoding = "utf-8",
 	settings = {
 		exportPdf = "never"
 	},
