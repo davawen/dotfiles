@@ -1,21 +1,5 @@
 local map, _ = unpack(require("utils.map"))
 
-map({'i', 's'}, "<Tab>", function ()
-	if vim.snippet.active { direction = 1 } then
-		return '<cmd>lua vim.snippet.jump(1)<cr>'
-	else
-		return "<Tab>"
-	end
-end, { expr = true })
-
-map({'i', 's'}, "<S-Tab>", function ()
-	if vim.snippet.active { direction = -1 } then
-		return '<cmd>lua vim.snippet.jump(-1)<cr>'
-	else
-		return "<Tab>"
-	end
-end, { expr = true })
-
 -- nvim LSP configuration
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -62,7 +46,8 @@ end
 
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
 capabilities = vim.tbl_deep_extend("force", capabilities, {
 	workspace = {
 		didChangeWatchedFiles = {

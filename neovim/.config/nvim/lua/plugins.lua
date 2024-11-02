@@ -19,7 +19,6 @@ local config = function(path)
 	end
 end
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -202,16 +201,18 @@ local plugins = {
 		build = "cargo build --release",
 		opts = {
 			keymap = {
-				show = "<C-space>",
-				hide = "<C-space>",
-				accept = "<CR>",
-				select_prev = { "<Up>", "<C-k>" },
-				select_next = { "<Down>", "<C-j>" },
+				["<C-space>"] = { "show", "hide" },
+				["<CR>"] = { "accept", "fallback" },
+				["<Up>"] = { "select_prev", "fallback" },
+				["<C-k>"] = { "select_prev", "fallback" },
+				["<Down>"] = { "select_next", "fallback" },
+				["<C-j>"] = { "select_next", "fallback" },
 
-				show_documentation = {},
-				hide_documentation = {},
-				scroll_documentation_up = "<C-y>",
-				scroll_documentation_down = "<C-e>",
+				['<C-y>'] = { 'scroll_documentation_up', 'fallback' },
+				['<C-e>'] = { 'scroll_documentation_down', 'fallback' },
+
+				['<Tab>'] = { 'snippet_forward', 'fallback' },
+				['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 			},
 			highlight = {
 				use_nvim_cmp_as_default = true,
@@ -219,16 +220,26 @@ local plugins = {
 			nerd_font_variant = "normal",
 			trigger = {
 				completion = {
-					keyword_regex = '[%w_\\-]',
+					show_on_accept_on_trigger_character = false,
 					show_on_insert_on_trigger_character = false,
 				},
 				signature_help = { enabled = true }
 			},
+			fuzzy = {
+				prebuilt_binaries = {
+					download = false
+				}
+			},
 			sources = {
+				completion = {
+					enabled_providers = {
+						"lsp", "path", "snippets"
+					}
+				},
 				providers = {
-					{ 'blink.cmp.sources.lsp', name = "LSP" },
-					{ 'blink.cmp.sources.path', name = "Path" },
-					{ 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
+					lsp = { module = 'blink.cmp.sources.lsp', name = "LSP" },
+					path = { module = 'blink.cmp.sources.path', name = "Path" },
+					snippets = { module = 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
 				}
 			},
 			windows = {

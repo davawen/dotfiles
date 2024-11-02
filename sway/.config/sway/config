@@ -246,6 +246,7 @@ bindsym $mod+d exec keal
 
 assign [class="discord"] 2
 assign [app_id="VencordDesktop"] 2
+assign [app_id="vesktop"] 2
 assign [class="thunderbird"] 5
 assign [title="aerc"] 5
 
