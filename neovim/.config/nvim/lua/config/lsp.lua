@@ -98,6 +98,7 @@ vim.g.rustaceanvim = {
 	server = {
 		on_attach = on_attach,
 		settings = {
+			single_file_support = true,
 			-- rust-analyzer language server configuration
 			['rust-analyzer'] = {
 				cachePriming = false

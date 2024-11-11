@@ -244,8 +244,7 @@ local plugins = {
 			},
 			windows = {
 				autocomplete = {
-					max_height = 20,
-					draw = "reversed"
+					max_height = 20
 				}
 			}
 		},
