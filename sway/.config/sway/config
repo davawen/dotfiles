@@ -289,6 +289,8 @@ for_window [title="Makie" instance="GLWindow"] floating enable
 for_window [instance="file_progress"]  sticky enable
 for_window [class="info|Mate-color-select|gcolor2|timesup|QtPass|GtkFileChooserDialog"] sticky enable
 
+for_window [title = "My Sdl Window"] floating enable
+
 # Focus window settings
 no_focus [window_role="pop-up"]
 focus_on_window_activation focus 

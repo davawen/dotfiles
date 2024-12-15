@@ -1,13 +1,13 @@
- -- local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
- -- parser_config.hare_custom = {
- -- 	install_info = {
- -- 		url = "/home/davawen/.build/tree-sitter-hare",
- -- 		files = { "src/parser.c" }
- -- 	},
- -- 	filetype = "hare"
- -- }
- -- 
- -- vim.treesitter.language.add("hare", { path = "/home/davawen/.local/share/nvim/lazy/nvim-treesitter/parser/hare_custom.so" })
+-- local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+-- parser_config.hare_custom = {
+-- 	install_info = {
+-- 		url = "/home/davawen/.build/tree-sitter-hare",
+-- 		files = { "src/parser.c" }
+-- 	},
+-- 	filetype = "hare"
+-- }
+-- 
+-- vim.treesitter.language.add("hare", { path = "/home/davawen/.local/share/nvim/lazy/nvim-treesitter/parser/hare_custom.so" })
 
 require('nvim-treesitter.configs').setup {
 	ensure_installed = { "c", "cpp", "rust", "lua", "vim", "python", "query" },
@@ -33,7 +33,8 @@ require('nvim-treesitter.configs').setup {
 		}
 	},
 	indent = {
-		enable = true
+		enable = true,
+		disable = { "ocaml" }
 	}
 }
 

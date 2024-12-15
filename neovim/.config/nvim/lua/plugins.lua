@@ -198,6 +198,7 @@ local plugins = {
 		'saghen/blink.cmp',
 		lazy = false,
 		-- version = 'v0.*',
+		commit = "8b553f6",
 		build = "cargo build --release",
 		opts = {
 			keymap = {
@@ -217,13 +218,25 @@ local plugins = {
 			highlight = {
 				use_nvim_cmp_as_default = true,
 			},
+			signature = {
+				enabled = true
+			},
 			nerd_font_variant = "normal",
-			trigger = {
-				completion = {
-					show_on_accept_on_trigger_character = false,
-					show_on_insert_on_trigger_character = false,
+			completion = {
+				trigger = {
+					show_on_keyword = false,
+					show_on_trigger_character = false,
 				},
-				signature_help = { enabled = true }
+				menu = {
+					min_width = 20,
+					max_height = 20
+				},
+				documentation = {
+					auto_show = true
+				},
+				ghost_text = {
+					enabled = true
+				}
 			},
 			fuzzy = {
 				prebuilt_binaries = {
@@ -231,10 +244,8 @@ local plugins = {
 				}
 			},
 			sources = {
-				completion = {
-					enabled_providers = {
-						"lsp", "path", "snippets"
-					}
+				default = {
+					"lsp", "path", "snippets"
 				},
 				providers = {
 					lsp = { module = 'blink.cmp.sources.lsp', name = "LSP" },
@@ -242,11 +253,6 @@ local plugins = {
 					snippets = { module = 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
 				}
 			},
-			windows = {
-				autocomplete = {
-					max_height = 20
-				}
-			}
 		},
 	},
 	-- 'hrsh7th/nvim-cmp',
@@ -275,7 +281,7 @@ local plugins = {
 			require("typst-preview").setup {
 				open_cmd = "firefox --new-window %s --class typst-preview",
 				dependencies_bin = {
-					["typst-preview"] = vim.fn.expand("$HOME/.local/share/nvim/mason/bin/tinymist")
+					["typst-preview"] = vim.fn.expand("$CARGO_HOME/bin/tinymist")
 				}
 			}
 		end
