@@ -198,7 +198,7 @@ local plugins = {
 		'saghen/blink.cmp',
 		lazy = false,
 		-- version = 'v0.*',
-		commit = "8b553f6",
+		-- commit = "8b553f6",
 		build = "cargo build --release",
 		opts = {
 			keymap = {
@@ -215,20 +215,19 @@ local plugins = {
 				['<Tab>'] = { 'snippet_forward', 'fallback' },
 				['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 			},
-			highlight = {
-				use_nvim_cmp_as_default = true,
+			appearance = {
+				use_nvim_cmp_as_default = true
 			},
 			signature = {
 				enabled = true
 			},
-			nerd_font_variant = "normal",
 			completion = {
 				trigger = {
 					show_on_keyword = false,
 					show_on_trigger_character = false,
 				},
 				menu = {
-					min_width = 20,
+					min_width = 25,
 					max_height = 20
 				},
 				documentation = {
