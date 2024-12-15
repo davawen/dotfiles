@@ -250,7 +250,8 @@ local plugins = {
 					lsp = { module = 'blink.cmp.sources.lsp', name = "LSP" },
 					path = { module = 'blink.cmp.sources.path', name = "Path" },
 					snippets = { module = 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
-				}
+				},
+				cmdline = {}
 			},
 		},
 	},
