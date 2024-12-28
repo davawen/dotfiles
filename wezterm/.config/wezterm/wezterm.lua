@@ -39,8 +39,9 @@ wezterm.on(
 local act = wezterm.action
 
 return {
+	default_cursor_style = "SteadyBar",
 	color_scheme = "Catppuccin Macchiato",
-	font = wezterm.font_with_fallback{ 'Iosevka', 'Symbols Nerd Font' },
+	font = wezterm.font_with_fallback { { family = "Iosevka", weight = "Medium" }, "Symbols Nerd Font" },
 	font_size = 13.5,
 	keys = {
 		{ key = 'LeftArrow', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
