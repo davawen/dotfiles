@@ -242,6 +242,7 @@ local plugins = {
 					download = false
 				}
 			},
+			cmdline = { enabled = true },
 			sources = {
 				default = {
 					"lsp", "path", "snippets"
@@ -250,8 +251,7 @@ local plugins = {
 					lsp = { module = 'blink.cmp.sources.lsp', name = "LSP" },
 					path = { module = 'blink.cmp.sources.path', name = "Path" },
 					snippets = { module = 'blink.cmp.sources.snippets', name = "Snippets", score_offset = -3 },
-				},
-				cmdline = {}
+				}
 			},
 		},
 	},
@@ -395,7 +395,6 @@ local plugins = {
 
 
 	-- Other
-	'wakatime/vim-wakatime',
 	'junegunn/vim-easy-align',
 	{ 'numToStr/Comment.nvim',
 		config = function()

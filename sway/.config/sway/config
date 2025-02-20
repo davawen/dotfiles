@@ -117,12 +117,9 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# screenshot
-for_window [app_id="swayimg-screenshot"] fullscreen enable global
-
-bindsym Print exec $scripts/screen.sh 
-bindsym Shift+Print exec $scripts/screen.sh "edit"
-bindsym Ctrl+Print exec grimshot copy output
+bindsym Print exec sway-screenshot -m region --clipboard-only
+bindsym Shift+Print exec sway-screenshot -m window --clipboard-only
+bindsym Ctrl+Print exec sway-screenshot -m output --clipboard-only
 
 # Inputs - Get your inputs with the command:
 input "type:keyboard" {
