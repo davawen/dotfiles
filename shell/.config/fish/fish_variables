@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR __fish_initialized:3400
+SETUVAR __fish_initialized:3800
 SETUVAR _fish_abbr_dlist:dnf\x20list\x20\x2dC
 SETUVAR _fish_abbr_dprovides:dnf\x20provides\x20\x2dC
 SETUVAR _fish_abbr_dsearch:dnf\x20search\x20\x2dC

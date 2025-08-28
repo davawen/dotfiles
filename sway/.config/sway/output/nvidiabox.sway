@@ -1,8 +1,10 @@
-set $output1 HDMI-A-1
-set $output2 DP-1
+set $output1 DP-1
+set $output2 HDMI-A-1
 
-output $output1 mode 1920x1080 pos 1920 120 bg ~/Pictures/推しのこ/abiko_16_10.png fill
-output $output2 mode 1920x1200 pos 0 0 bg ~/Pictures/Wallpapers/pipes.png fill
+output $output1 mode 1920x1200 pos 1920 0 bg ~/Pictures/推しのこ/abiko_16_10.png fill
+output $output2 mode 1920x1080 pos 0 120 bg ~/Pictures/Wallpapers/pipes.png fill
+
+# output $output1 mode 1920x1200 pos 0 0 bg ~/Pictures/推しのこ/abiko_16_10.png fill
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP

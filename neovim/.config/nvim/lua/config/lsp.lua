@@ -68,6 +68,12 @@ vim.diagnostic.config({
 	severity_sort = true
 })
 
+lspconfig.ols.setup {
+	on_attach = function (client, bufnr)
+		on_attach(client, bufnr)
+	end,
+}
+
 lspconfig.clangd.setup{
 	on_attach = function (client, bufnr)
 		on_attach(client, bufnr)
