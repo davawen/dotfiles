@@ -130,14 +130,9 @@ local plugins = {
 			-- end
 		end
 	},
-	{ 'neovim/nvim-lspconfig',
-		dependencies = {
-			'williamboman/mason.nvim',
-			'williamboman/mason-lspconfig.nvim',
-			'j-hui/fidget.nvim',
-		},
-		config = config('lsp')
-	},
+	'williamboman/mason.nvim',
+	'williamboman/mason-lspconfig.nvim',
+	'neovim/nvim-lspconfig',
 	{ 'j-hui/fidget.nvim',
 		config = function()
 			require('fidget').setup {
@@ -152,8 +147,8 @@ local plugins = {
 	'SmiteshP/nvim-navic',
 	{
 		'mrcjkb/rustaceanvim',
-		version = '^4', -- Recommended
-		ft = { 'rust' },
+		version = '^6', -- Recommended
+		lazy = false
 	},
 	{ 'mhartington/formatter.nvim',
 		config = function()

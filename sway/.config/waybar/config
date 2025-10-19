@@ -12,7 +12,7 @@
 	"custom/nemo": {
 		"exec": "echo \"  \nLaunch nemo\n\"",
 		"interval": "once",
-		"on-click": "nemo"
+		"on-click": "thunar"
 	},
 	"hyprland/workspaces": {
 		"format": "{icon}",

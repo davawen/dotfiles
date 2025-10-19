@@ -101,7 +101,7 @@ end
 if type -q zoxide
 	zoxide init fish | source
 end
-
+echo "UwU, ^-^" | lolcat -F 0.5
 if [ "$(date +%j)" = "026" ]; printf "Happy birthday Avaine!!!\n%.0s" (seq 25) | lolcat; end;
 # opam configuration
 source /home/davawen/.local/share/opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

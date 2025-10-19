@@ -1,5 +1,3 @@
-local map, _ = unpack(require("utils.map"))
-
 -- nvim LSP configuration
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -12,25 +10,26 @@ vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', op
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
+-- Mappings.
+-- See `:help vim.lsp.*` for documentation on any of the below functions
+vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>ca', '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
+
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-	--vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.format{ async = true }<CR>', opts)
-
 	if client.server_capabilities.documentSymbolProvider then
 		navic.attach(client, bufnr)
 	end
@@ -45,6 +44,10 @@ function Inlay_hint()
 end
 
 
+-- Automatic installation of language servers
+require("mason").setup()
+require("mason-lspconfig").setup()
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
@@ -56,11 +59,10 @@ capabilities = vim.tbl_deep_extend("force", capabilities, {
 	}
 })
 
--- Automatic installation of language servers
-require("mason").setup()
-require("mason-lspconfig").setup()
-
-local lspconfig = require('lspconfig')
+vim.lsp.config('*', {
+	on_attach = on_attach,
+	capabilities = capabilities
+})
 
 vim.diagnostic.config({
 	virtual_text = false,
@@ -68,16 +70,7 @@ vim.diagnostic.config({
 	severity_sort = true
 })
 
-lspconfig.ols.setup {
-	on_attach = function (client, bufnr)
-		on_attach(client, bufnr)
-	end,
-}
-
-lspconfig.clangd.setup{
-	on_attach = function (client, bufnr)
-		on_attach(client, bufnr)
-	end,
+vim.lsp.config("clangd", {
 	cmd = {
 		"clangd",
 		"--background-index",
@@ -90,10 +83,9 @@ lspconfig.clangd.setup{
 	filetypes = { "c", "cpp", "cuda", "opencl" },
 	flags = {
 		debounce_text_changes = 150
-	},
-    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua", "meson.build"),
-	capabilities = capabilities,
-}
+	}
+    -- root_dir = vim.lsp.util.root_pattern("CMakeLists.txt", "Makefile", "xmake.lua", "meson.build"),
+})
 
 vim.g.rustaceanvim = {
 	-- Plugin configuration
@@ -102,7 +94,6 @@ vim.g.rustaceanvim = {
 	},
 	-- LSP configuration
 	server = {
-		on_attach = on_attach,
 		settings = {
 			single_file_support = true,
 			-- rust-analyzer language server configuration
@@ -116,42 +107,27 @@ vim.g.rustaceanvim = {
 	},
 }
 
-lspconfig.pyright.setup {
+vim.lsp.config("pyright", {
 	python = {
 		analysis = {
 			autoSearchPaths = true,
 			diagnosticMode = "workspace",
 			useLibraryCodeForTypes = true
 		}
-	},
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+	}
+})
 
-lspconfig.cssls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+-- vim.lsp.config.pylyzer.setup {
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities
+-- }
 
-lspconfig.html.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}
 
-lspconfig.emmet_ls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
+vim.lsp.config("emmet_ls", {
 	filetypes = { "css", "eruby", "html", "less", "sass", "scss", "svelte", "pug", "vue" }
-}
+})
 
-lspconfig.pest_ls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}
-
-lspconfig.ts_ls.setup{
-	on_attach = on_attach,
-	capabilities = capabilities,
+vim.lsp.config("ts_ls", {
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     init_options = {
@@ -167,28 +143,22 @@ lspconfig.ts_ls.setup{
             importModuleSpecifierPreference = 'non-relative'
         }
     },
-    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
+    -- root_dir = vim.lsp.config.util.root_pattern("package.json", "tsconfig.json"),
 	single_file_support = true,
-	autostart = false
+	autostart = true
+})
+
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
 }
 
--- require("deno-nvim").setup {
--- 	server = {
--- 		on_attach = on_attach,
--- 		capabilities = capabilities,
--- 		cmd = { "deno", "lsp" },
--- 		filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
--- 		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
--- 	}
+vim.lsp.enable("denols")
+
+-- vim.lsp.config.svelte.setup{
+-- 	root_dir = vim.lsp.config.util.root_pattern("svelte.config.js"),
 -- }
 
-lspconfig.svelte.setup{
-	on_attach = on_attach,
-	capabilities = capabilities,
-	root_dir = lspconfig.util.root_pattern("svelte.config.js"),
-}
-
-lspconfig.omnisharp.setup{
+vim.lsp.config("omnisharp", {
 	on_attach = function (client, bufnr)
 		on_attach(client, bufnr)
 		client.server_capabilities.semanticTokensProvider = nil
@@ -229,19 +199,15 @@ lspconfig.omnisharp.setup{
     -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
     -- true
     analyze_open_documents_only = false,
-	root_dir = lspconfig.util.root_pattern('*.sln', '*.csproj'),
-	capabilities = capabilities
-}
+	-- root_dir = vim.lsp.config.util.root_pattern('*.sln', '*.csproj'),
+})
 
-lspconfig.gdscript.setup {
-	on_attach = on_attach,
+vim.lsp.config("gdscript", {
 	filetypes = { "gd", "gdscript", "gdscript3" },
-	root_dir = lspconfig.util.root_pattern("project.godot", ".git"),
-	capabilities = capabilities
-}
+	-- root_dir = vim.lsp.config.util.root_pattern("project.godot", ".git"),
+})
 
-lspconfig.texlab.setup{
-	on_attach = on_attach,
+vim.lsp.config("texlab", {
 	cmd = { "texlab" },
 	filetypes = { "tex", "latex" },
 	settings = {
@@ -270,33 +236,17 @@ lspconfig.texlab.setup{
 	  }
 	},
 	single_file_support = true,
-	capabilities = capabilities
-}
+})
 
-lspconfig.tinymist.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	offset_encoding = "utf-8",
-	settings = {
-		exportPdf = "never"
-	},
-	single_file_support = true
-}
-
-lspconfig.zls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}
-
-lspconfig.wgsl_analyzer.setup{
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
-
-lspconfig.glsl_analyzer.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+-- vim.lsp.config.tinymist.setup {
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	offset_encoding = "utf-8",
+-- 	settings = {
+-- 		exportPdf = "never"
+-- 	},
+-- 	single_file_support = true
+-- }
 
 local function sumneko_workspace()
 	local library = {
@@ -309,9 +259,7 @@ local function sumneko_workspace()
 	return library
 end
 
-lspconfig.lua_ls.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -337,14 +285,9 @@ lspconfig.lua_ls.setup {
 			}
 		},
 	},
-}
+})
 
-lspconfig.gopls.setup{
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+vim.lsp.enable({"clangd", "pyright", "omnisharp", "lua_ls"})
+vim.lsp.enable({"zls", "wgsl_analyzer", "glsl_analyzer", "lua_ls", "gopls", "julials"})
+vim.lsp.enable({"cssls", "html", "emmet_ls"})
 
-lspconfig.julials.setup {
-	on_attach = on_attach,
-	capabilities = capabilities
-}

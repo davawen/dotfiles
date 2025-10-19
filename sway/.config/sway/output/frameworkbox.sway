@@ -1,7 +1,8 @@
 set $output1 eDP-1
 set $output2 eDP-1
 
-# output $output1 mode 2256x1504 scale 1.5 bg ~/Pictures/Wallpaper/wp9841200.jpg fill
-output $output1 mode 2256x1504 scale 1.5 bg ~/Downloads/Bel/SANSRIGUEUR...SECHERESSE.png fill
+output $output1 mode 2256x1504 scale 1.5 bg ~/Pictures/bolas.png fit
+# output $output1 mode 2256x1504 scale 1.5 bg ~/Pictures/Wallpaper/encore.jpg fit
+# output $output1 mode 2256x1504 scale 1.5 bg ~/Downloads/Bel/SANSRIGUEUR...SECHERESSE.png fill
 
 for_window [shell="xwayland"] title_format "%title :: %shell"
