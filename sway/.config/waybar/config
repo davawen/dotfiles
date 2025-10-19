@@ -10,7 +10,7 @@
 		"on-click": "keal"
 	},
 	"custom/nemo": {
-		"exec": "echo \"  \nLaunch nemo\n\"",
+		"exec": "echo \"  \nLaunch Thunar\n\"",
 		"interval": "once",
 		"on-click": "thunar"
 	},
