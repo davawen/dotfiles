@@ -152,6 +152,8 @@ vim.g.markdown_fenced_languages = {
   "ts=typescript"
 }
 
+-- Disable ts ls by default (prefer deno)
+vim.lsp.enable("ts_ls", false)
 vim.lsp.enable("denols")
 
 -- vim.lsp.config.svelte.setup{
@@ -290,4 +292,5 @@ vim.lsp.config("lua_ls", {
 vim.lsp.enable({"clangd", "pyright", "omnisharp", "lua_ls"})
 vim.lsp.enable({"ols", "zls", "wgsl_analyzer", "glsl_analyzer", "lua_ls", "gopls", "julials"})
 vim.lsp.enable({"cssls", "html", "emmet_ls"})
+vim.lsp.enable({"tinymist"})
 
