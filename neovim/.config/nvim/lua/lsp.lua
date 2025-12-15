@@ -144,13 +144,14 @@ vim.lsp.config("ts_ls", {
         }
     },
     -- root_dir = vim.lsp.config.util.root_pattern("package.json", "tsconfig.json"),
-	single_file_support = true,
-	autostart = true
+	single_file_support = true
 })
 
 vim.g.markdown_fenced_languages = {
   "ts=typescript"
 }
+
+vim.lsp.enable("ts_ls", false)
 
 vim.lsp.enable("denols")
 
@@ -238,15 +239,13 @@ vim.lsp.config("texlab", {
 	single_file_support = true,
 })
 
--- vim.lsp.config.tinymist.setup {
--- 	on_attach = on_attach,
--- 	capabilities = capabilities,
--- 	offset_encoding = "utf-8",
--- 	settings = {
--- 		exportPdf = "never"
--- 	},
--- 	single_file_support = true
--- }
+vim.lsp.config("tinymist", {
+	offset_encoding = "utf-8",
+	settings = {
+		exportPdf = "never"
+	},
+	single_file_support = true
+})
 
 local function sumneko_workspace()
 	local library = {

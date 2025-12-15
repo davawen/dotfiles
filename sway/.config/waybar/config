@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"modules-left": ["custom/launcher", "custom/nemo", "hyprland/workspaces", "sway/workspaces", "sway/scratchpad", "sway/mode"],
+	"modules-left": ["custom/launcher", "custom/nemo", "custom/idle", "hyprland/workspaces", "sway/workspaces", "sway/scratchpad", "sway/mode"],
 	"modules-center": [],
 	"modules-right": ["custom/playerctl", "tray", "bluetooth", "battery", "pulseaudio", "network", "cpu", "memory", "clock"],
 	"include": "$HOME/.config/waybar/workspaces/$(hostname).jsonc",
@@ -13,6 +13,12 @@
 		"exec": "echo \"  \nLaunch nemo\n\"",
 		"interval": "once",
 		"on-click": "thunar"
+	},
+	"custom/idle": {
+		"exec": "/home/davawen/.config/waybar/idle.sh echo",
+		"interval": "once",
+		"exec-on-event": true,
+		"on-click": "/home/davawen/.config/waybar/idle.sh toggle"
 	},
 	"hyprland/workspaces": {
 		"format": "{icon}",
