@@ -289,5 +289,5 @@ vim.lsp.config("lua_ls", {
 vim.lsp.enable({"clangd", "pyright", "omnisharp", "lua_ls"})
 vim.lsp.enable({"ols", "zls", "wgsl_analyzer", "glsl_analyzer", "lua_ls", "gopls", "julials"})
 vim.lsp.enable({"cssls", "html", "emmet_ls"})
-vim.lsp.enable({"tinymist"})
+-- vim.lsp.enable({"tinymist"})
 
