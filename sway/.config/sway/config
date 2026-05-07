@@ -117,9 +117,11 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-bindsym Print exec sway-screenshot -m region --clipboard-only
-bindsym Shift+Print exec sway-screenshot -m window --clipboard-only
-bindsym Ctrl+Print exec sway-screenshot -m output --clipboard-only
+set $screenshot $scripts/sway-screenshot.sh
+
+bindsym Print exec $screenshot -m region --clipboard-only
+bindsym Shift+Print exec $screenshot -m window --clipboard-only
+bindsym Ctrl+Print exec $screenshot -m output --clipboard-only
 
 # Inputs - Get your inputs with the command:
 input "type:keyboard" {
@@ -241,7 +243,7 @@ bar {
 
 # Launcher
 bindsym $mod+d exec keal
-# bindsym $mod+shift+d exec $scripts/fuzzel-extend.sh
+bindsym $mod+shift+d exec /mnt/Projects/Rust/daemon-window-test/target/debug/daemon-window-test
 
 assign [class="discord"] 2
 assign [app_id="VencordDesktop"] 2
