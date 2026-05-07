@@ -286,8 +286,17 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
+vim.lsp.config("ols", {
+	cmd = { "ols" },
+	filetypes = { "odin" },
+	single_file_support = true
+})
+vim.lsp.enable("ols")
+
 vim.lsp.enable({"clangd", "pyright", "omnisharp", "lua_ls"})
-vim.lsp.enable({"ols", "zls", "wgsl_analyzer", "glsl_analyzer", "lua_ls", "gopls", "julials"})
-vim.lsp.enable({"cssls", "html", "emmet_ls"})
+vim.lsp.enable({"zls", "wgsl_analyzer", "glsl_analyzer", "lua_ls", "gopls", "julials"})
+vim.lsp.enable("cssls")
+vim.lsp.enable("html")
+vim.lsp.enable("emmet_ls")
 -- vim.lsp.enable({"tinymist"})
 

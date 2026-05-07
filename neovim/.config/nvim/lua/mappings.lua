@@ -141,3 +141,9 @@ map("x", "ga", "<Plug>(EasyAlign)")
 -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
 map("n", "ga", "<Plug>(EasyAlign)")
 
+-- Tree sitter selection
+remap("n", "<CR>", "van")
+remap("v", "<CR>", "an")
+remap("v", "<BS>", "in")
+remap("v", "]<CR>", "]n")
+remap("v", "[<CR>", "[n")

@@ -72,12 +72,24 @@ local plugins = {
 			}
 			vim.cmd.colorscheme("catppuccin-macchiato")
 		end,
+		auto_integrations = true,
 		priority = 1000
 	},
 	'joshdick/onedark.vim',
 	'sainnhe/everforest',
 	'rebelot/kanagawa.nvim',
 	'yorickpeterse/vim-paper',
+
+	{
+		"arborist-ts/arborist.nvim",
+		config = function ()
+			require("arborist").setup {
+				update_cadence = "manual",
+				prefer_wasm = false,
+				install_popular = false
+			}
+		end
+	},
 
 	'kyazdani42/nvim-web-devicons',
 
@@ -87,12 +99,6 @@ local plugins = {
 	},
 	{ 'b0o/incline.nvim',
 		config = true
-	},
-
-	-- Treesitter
-	{ 'nvim-treesitter/nvim-treesitter',
-		build = ":TSUpdate", -- update parsers on update
-		config = config('treesitter')
 	},
 
 	-- LSP
@@ -132,7 +138,6 @@ local plugins = {
 	},
 	'williamboman/mason.nvim',
 	'williamboman/mason-lspconfig.nvim',
-	'neovim/nvim-lspconfig',
 	{ 'j-hui/fidget.nvim',
 		config = function()
 			require('fidget').setup {
@@ -192,7 +197,7 @@ local plugins = {
 	{
 		'saghen/blink.cmp',
 		lazy = false,
-		-- version = 'v0.*',
+		version = '1.*',
 		-- commit = "8b553f6",
 		build = "cargo build --release",
 		opts = {
@@ -280,12 +285,6 @@ local plugins = {
 				}
 			}
 		end
-	},
-	{ 'MeanderingProgrammer/markdown.nvim',
-		ft = 'markdown',
-		main = "render-markdown",
-		opts = {},
-		name = "render-markdown"
 	},
 
 	-- Navigation
