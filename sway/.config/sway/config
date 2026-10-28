@@ -122,8 +122,12 @@ set $screenshot $scripts/sway-screenshot.sh
 bindsym Print exec $screenshot -m region --clipboard-only
 bindsym Shift+Print exec $screenshot -m window --clipboard-only
 bindsym Ctrl+Print exec $screenshot -m output --clipboard-only
+bindsym Ctrl+Shift+Print exec flameshot gui -c
 
 # Inputs - Get your inputs with the command:
+
+exec fcitx5
+
 input "type:keyboard" {
 	xkb_layout us(altgr-intl)
     xkb_options caps:escape
@@ -135,6 +139,7 @@ input "type:pointer" {
 }
 
 input "type:touchpad" {
+    accel_profile flat
 	pointer_accel 0.33
 	tap enabled
 	dwt disabled
