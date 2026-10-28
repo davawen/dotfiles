@@ -286,6 +286,11 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
+vim.lsp.config("zls", {
+	cmd = { "zls" },
+	filetypes = { "zig" }
+})
+
 vim.lsp.config("ols", {
 	cmd = { "ols" },
 	filetypes = { "odin" },

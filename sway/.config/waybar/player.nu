@@ -16,14 +16,14 @@ let album = if ($album | is-empty) { "No album" } else { $"From album `($album)`
 
 let volume = playerctl -p $player volume | into string
 let volume = if ($volume | is-empty) { "" } else {
-	$"(($volume | into int) * 100 | into int) %"
+	$"(($volume | into decimal) * 100 | into int) %"
 }
 
 let icon = if $status == "Playing" { "󰏤" } else { "󰐊" }
 
 {
-	"text": $"󰒮 ($icon) 󰒭 ($volume) ($name)",
-	"tooltip": $album,
+	"text": $"($icon) ($name)",
+	"tooltip": $"($name) / ($album) / 󰕾 ($volume)",
 	"class": ($status | str downcase),
 	"percentage": 0
 } | to json -r

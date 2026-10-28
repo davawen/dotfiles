@@ -86,7 +86,10 @@ local plugins = {
 			require("arborist").setup {
 				update_cadence = "manual",
 				prefer_wasm = false,
-				install_popular = false
+				install_popular = false,
+				disable = {
+					indent = { "ocaml" }
+				}
 			}
 		end
 	},
@@ -304,6 +307,9 @@ local plugins = {
 			require("oil").setup {
 				lsp_file_methods = {
 					timeout_ms = 50
+				},
+				view_options = {
+					show_hidden = true
 				}
 			}
 
